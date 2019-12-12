@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">education</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">远洋教育</string>
+    <string name="title_clock">打卡</string>
+    <string name="title_student">学生</string>
+    <string name="title_report">报表</string>
 </resources>

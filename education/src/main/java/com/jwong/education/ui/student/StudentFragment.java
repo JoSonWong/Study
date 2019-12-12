@@ -1,4 +1,4 @@
-package com.jwong.education.ui.home;
+package com.jwong.education.ui.student;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.jwong.education.R;
 
-public class HomeFragment extends Fragment {
+public class StudentFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private StudentViewModel studentViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        studentViewModel =
+                ViewModelProviders.of(this).get(StudentViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_student, container, false);
+        final TextView textView = root.findViewById(R.id.text_dashboard);
+        studentViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

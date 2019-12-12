@@ -1,4 +1,4 @@
-package com.jwong.education.ui.dashboard;
+package com.jwong.education.ui.clock;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.jwong.education.R;
 
-public class DashboardFragment extends Fragment {
+public class ClockFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private ClockViewModel clockViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(this, new Observer<String>() {
+        clockViewModel =
+                ViewModelProviders.of(this).get(ClockViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_clock, container, false);
+        final TextView textView = root.findViewById(R.id.text_home);
+        clockViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

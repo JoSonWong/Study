@@ -1,14 +1,14 @@
-package com.jwong.education.ui.home;
+package com.jwong.education.ui.clock;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class ClockViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public ClockViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }
