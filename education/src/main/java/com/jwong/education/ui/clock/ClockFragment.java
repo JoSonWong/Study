@@ -14,22 +14,30 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.jwong.education.R;
 
-public class ClockFragment extends Fragment {
+public class ClockFragment extends Fragment implements View.OnClickListener {
 
     private ClockViewModel clockViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        clockViewModel =
-                ViewModelProviders.of(this).get(ClockViewModel.class);
+        clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         View root = inflater.inflate(R.layout.fragment_clock, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+        root.findViewById(R.id.btn_clock).setOnClickListener(this);
         clockViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
         return root;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_clock:
+
+                break;
+        }
     }
 }
