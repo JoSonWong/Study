@@ -3,5 +3,15 @@
     <string name="title_clock">打卡</string>
     <string name="title_student">学生</string>
     <string name="title_report">报表</string>
+    <string name="title_setting">设置</string>
     <string name="clock">打卡</string>
+    <string name="add_curriculum">添加课程</string>
+    <string name="update_curriculum">修改课程</string>
+    <string name="pls_input_curriculum_name">请输入课程名称，如：英语</string>
+    <string name="my_curriculum">我的课程</string>
+    <string name="curriculum_name">课程名称</string>
+    <string name="curriculum_price">课时原价</string>
+    <string name="pls_input_curriculum_price">请输入课程原价，如：10.0</string>
+    <string name="add">添加</string>
+    <string name="my_student">我的学生</string>
 </resources>

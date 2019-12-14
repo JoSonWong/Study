@@ -12,6 +12,8 @@ public class Student extends BaseDao{
     @Id(autoincrement = true)
     private Long id;//学生Id
 
+    private String name;//姓名
+
     private Integer sex;//性别，0未知，1男，2女
 
     private Date birthday;//生日
@@ -32,14 +34,13 @@ public class Student extends BaseDao{
 
     private String guardian2Phone;//监护人2电话
 
-    private Date createdAt;//
-
-    @Generated(hash = 1958270154)
-    public Student(Long id, Integer sex, Date birthday, Date recruitTime,
-            Date recruitGrade, Date currentGrade, Integer studentType,
-            String guardian1, String guardian1Phone, String guardian2,
-            String guardian2Phone, Date createdAt) {
+    @Generated(hash = 1373249178)
+    public Student(Long id, String name, Integer sex, Date birthday,
+            Date recruitTime, Date recruitGrade, Date currentGrade,
+            Integer studentType, String guardian1, String guardian1Phone,
+            String guardian2, String guardian2Phone) {
         this.id = id;
+        this.name = name;
         this.sex = sex;
         this.birthday = birthday;
         this.recruitTime = recruitTime;
@@ -50,7 +51,6 @@ public class Student extends BaseDao{
         this.guardian1Phone = guardian1Phone;
         this.guardian2 = guardian2;
         this.guardian2Phone = guardian2Phone;
-        this.createdAt = createdAt;
     }
 
     @Generated(hash = 1556870573)
@@ -63,6 +63,14 @@ public class Student extends BaseDao{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getSex() {
@@ -143,14 +151,6 @@ public class Student extends BaseDao{
 
     public void setGuardian2Phone(String guardian2Phone) {
         this.guardian2Phone = guardian2Phone;
-    }
-
-    public Date getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
 }

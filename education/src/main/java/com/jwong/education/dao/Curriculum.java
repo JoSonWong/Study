@@ -2,6 +2,7 @@ package com.jwong.education.dao;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
@@ -10,6 +11,7 @@ public class Curriculum extends BaseDao {
     @Id(autoincrement = true)
     private Long id;//课程id，自增
 
+    @Index(unique = true)//设置唯一性
     private String name;//课程名称
 
     private Double price;//课程价格
@@ -41,15 +43,12 @@ public class Curriculum extends BaseDao {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return this.price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
     }
+
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -23,11 +24,11 @@ public class ReportFragment extends Fragment {
         reportViewModel =
                 ViewModelProviders.of(this).get(ReportViewModel.class);
         View root = inflater.inflate(R.layout.fragment_report, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
+        final CalendarView calendarView = root.findViewById(R.id.calendarView);
         reportViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
             }
         });
         return root;

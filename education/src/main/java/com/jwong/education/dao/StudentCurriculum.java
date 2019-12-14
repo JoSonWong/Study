@@ -60,5 +60,4 @@ public class StudentCurriculum extends BaseDao {
     public void setDiscountPrice(Double discountPrice) {
         this.discountPrice = discountPrice;
     }
-
 }

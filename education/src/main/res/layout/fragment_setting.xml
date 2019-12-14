@@ -11,25 +11,28 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spinner"
+        <TextView
+            android:id="@+id/tv_my_curriculum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="start"
+            android:padding="8dp"
+            android:text="@string/my_curriculum"
+            android:textSize="20sp" />
 
         <Button
-            android:id="@+id/tv_add"
+            android:id="@+id/tv_add_curriculum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@string/add"
             android:textSize="20sp" />
-
     </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_student"
+        android:id="@+id/rv_curriculum"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

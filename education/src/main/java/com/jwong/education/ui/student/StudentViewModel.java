@@ -4,16 +4,26 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.jwong.education.StudyApplication;
+import com.jwong.education.dao.Student;
+import com.jwong.education.db.StudentDbService;
+
+import java.util.List;
+
 public class StudentViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<List<Student>> data;
 
     public StudentViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        data = new MutableLiveData<>();
+        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Student>> getStudentList() {
+        return data;
+    }
+
+    public void addStudent(Student student){
+        StudentDbService.getInstance(StudyApplication.getDbController()).insertOrReplace(student);
     }
 }

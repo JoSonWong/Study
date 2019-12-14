@@ -1,7 +1,6 @@
 package com.jwong.education.ui.clock;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.jwong.education.R;
-import com.jwong.education.dao.Curriculum;
 
 public class ClockFragment extends Fragment implements View.OnClickListener {
 
@@ -23,10 +21,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_clock, container, false);
         root.findViewById(R.id.btn_clock).setOnClickListener(this);
         clockViewModel.getCurriculumList().observe(this, curriculumList -> {
-            for (Curriculum curriculum : curriculumList) {
-                Log.d(getClass().getSimpleName(), "课程id：" + curriculum.getId()
-                        + " 名称：" + curriculum.getName() + " 原价：" + curriculum.getPrice());
-            }
+
         });
         return root;
     }
@@ -35,7 +30,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_clock:
-                clockViewModel.addCurriculum();
+
                 break;
         }
     }

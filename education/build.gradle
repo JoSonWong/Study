@@ -42,7 +42,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'com.haibin:calendarview:3.6.7'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }
 greendao {
-    schemaVersion 1 //当前数据库版本
+    schemaVersion 3 //当前数据库版本
 }

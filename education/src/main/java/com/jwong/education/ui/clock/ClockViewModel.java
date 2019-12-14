@@ -17,25 +17,11 @@ public class ClockViewModel extends ViewModel {
 
     public ClockViewModel() {
         this.curriculumList = new MutableLiveData<>();
-        this.curriculumList.postValue(queryCurriculum());
     }
 
     public LiveData<List<Curriculum>> getCurriculumList() {
         return curriculumList;
     }
 
-    public void addCurriculum() {
-        Curriculum curriculum = new Curriculum();
-        curriculum.setName("数学");
-        curriculum.setPrice(130);
-        curriculum.setRemarks("");
-        curriculum.setCreatedAt(new Date());
-        curriculum.setUpdatedAt(new Date());
-        curriculum.setDeletedAt(null);
-        StudyApplication.getDbController().insert(curriculum);
-    }
 
-    public List<Curriculum> queryCurriculum() {
-        return StudyApplication.getDbController().searchAll();
-    }
 }
