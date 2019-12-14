@@ -62,10 +62,9 @@ public class CurriculumDbService {
      * @param curriculum
      */
     public long update(Curriculum curriculum) {
-        Curriculum oldStudent = curriculumDao.queryBuilder().where(CurriculumDao.Properties.Id.eq(curriculum.getId())).build().unique();//拿到之前的记录
-        if (oldStudent != null) {
-            curriculumDao.update(oldStudent);
-            return oldStudent.getId();
+        if (curriculum != null) {
+            curriculumDao.update(curriculum);
+            return curriculum.getId();
         }
         return 0;
     }

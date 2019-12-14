@@ -23,7 +23,13 @@ public class StudentViewModel extends ViewModel {
         return data;
     }
 
-    public void addStudent(Student student){
-        StudentDbService.getInstance(StudyApplication.getDbController()).insertOrReplace(student);
+    public void addStudent(Student student) {
+        StudentDbService.getInstance(StudyApplication.getDbController()).insert(student);
+        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
+    }
+
+    public void updateStudent(Student student) {
+        StudentDbService.getInstance(StudyApplication.getDbController()).update(student);
+        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
     }
 }

@@ -1,15 +1,10 @@
-package com.jwong.education.dao;
+package com.jwong.education.dto;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Id;
-
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class Student extends BaseDao {
+public class StudentDTO extends BaseDTO implements Serializable {
 
-    @Id(autoincrement = true)
     private Long id;//学生Id
 
     private String name;//姓名
@@ -42,12 +37,11 @@ public class Student extends BaseDao {
 
     private String guardian2Phone;//监护人2电话
 
-    @Generated(hash = 1566862112)
-    public Student(Long id, String name, String avatar, Integer sex, Date birthday,
-                   Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
-                   Integer currentGradeCode, String currentGrade, Integer studentType,
-                   String studentTypeName, String guardian1, String guardian1Phone,
-                   String guardian2, String guardian2Phone) {
+    public StudentDTO(Long id, String name, String avatar, Integer sex, Date birthday,
+                      Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
+                      Integer currentGradeCode, String currentGrade, Integer studentType,
+                      String studentTypeName, String guardian1, String guardian1Phone,
+                      String guardian2, String guardian2Phone) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
@@ -66,8 +60,7 @@ public class Student extends BaseDao {
         this.guardian2Phone = guardian2Phone;
     }
 
-    @Generated(hash = 1556870573)
-    public Student() {
+    public StudentDTO() {
     }
 
     public Long getId() {

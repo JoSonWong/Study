@@ -60,10 +60,9 @@ public class StudentDbService {
      * @param student
      */
     public long update(Student student) {
-        Student oldStudent = studentDao.queryBuilder().where(StudentDao.Properties.Id.eq(student.getId())).build().unique();//拿到之前的记录
-        if (oldStudent != null) {
-            studentDao.update(oldStudent);
-            return oldStudent.getId();
+        if (student != null) {
+            studentDao.update(student);
+            return student.getId();
         }
         return 0;
     }

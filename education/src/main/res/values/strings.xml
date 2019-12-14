@@ -14,4 +14,19 @@
     <string name="pls_input_curriculum_price">请输入课程原价，如：10.0</string>
     <string name="add">添加</string>
     <string name="my_student">我的学生</string>
+    <string name="student_name">姓名</string>
+    <string name="sex">性别</string>
+    <string name="birthday">生日</string>
+    <string name="recruit_date">招收日期</string>
+    <string name="recruit_grade">招收年级</string>
+    <string name="current_grade">当前年级</string>
+    <string name="student_type">类别</string>
+    <string name="guardian1">监护人1</string>
+    <string name="phone">电话</string>
+    <string name="guardian2">监护人2</string>
+    <string name="add_student">添加学生信息</string>
+    <string name="pls_input_student_name">请输入学生姓名</string>
+    <string name="add_student_success">添加学生成功</string>
+    <string name="student_info">学生信息</string>
+    <string name="update_student_info">修改学生信息</string>
 </resources>

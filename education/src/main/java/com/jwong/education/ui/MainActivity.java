@@ -1,8 +1,9 @@
-package com.jwong.education;
+package com.jwong.education.ui;
 
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jwong.education.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
