@@ -43,3 +43,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'org.greenrobot:greendao:3.2.2'
 }
+greendao {
+    schemaVersion 1 //当前数据库版本
+}
