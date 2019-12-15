@@ -1,43 +1,41 @@
 package com.jwong.education.ui.student;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
-import com.jwong.education.dao.Curriculum;
 import com.jwong.education.dao.Student;
 import com.jwong.education.dto.StudentDTO;
 import com.jwong.education.ui.StudentInfoActivity;
-import com.jwong.education.util.DateFormatUtil;
 
-public class StudentFragment extends Fragment implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
+public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
 
     private StudentViewModel studentViewModel;
     private Spinner spinner;
     private RecyclerView recyclerView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,14 +44,13 @@ public class StudentFragment extends Fragment implements View.OnClickListener, B
         recyclerView = root.findViewById(R.id.rv_student);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        root.findViewById(R.id.tv_add).setOnClickListener(this);
         spinner = root.findViewById(R.id.spinner);
         spinner.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.student_types)));
         spinner.setOnItemSelectedListener(listener);
         spinner.setSelection(1);
         studentViewModel.getStudentList().observe(this, students -> {
-            StudentAdapter adapter = new StudentAdapter(R.layout.list_item_student, students);
+            StudentAdapter adapter = new StudentAdapter(R.layout.list_item_student, students,false);
             adapter.setOnItemClickListener(this);
             recyclerView.setAdapter(adapter);
         });
@@ -99,16 +96,6 @@ public class StudentFragment extends Fragment implements View.OnClickListener, B
     }
 
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_add:
-                Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
-                startActivityForResult(intent, 1200);
-                break;
-        }
-    }
-
     private AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -121,5 +108,11 @@ public class StudentFragment extends Fragment implements View.OnClickListener, B
         }
     };
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(getClass().getSimpleName(), "onOptionsItemSelected item:" + item.getItemId());
+        Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
+        startActivityForResult(intent, 1200);
+        return super.onOptionsItemSelected(item);
+    }
 }

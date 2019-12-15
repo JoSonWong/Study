@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,18 +22,23 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
 import com.jwong.education.dao.Curriculum;
 
-public class SettingFragment extends Fragment implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
+public class SettingFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
 
     private SettingViewModel settingViewModel;
     private RecyclerView recyclerView;
     private CurriculumAdapter curriculumAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         settingViewModel =
                 ViewModelProviders.of(this).get(SettingViewModel.class);
         View root = inflater.inflate(R.layout.fragment_setting, container, false);
-        root.findViewById(R.id.tv_add_curriculum).setOnClickListener(this);
         recyclerView = root.findViewById(R.id.rv_curriculum);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
@@ -40,21 +47,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener, B
                 Log.d(getClass().getSimpleName(), "课程id：" + item.getId()
                         + " 名称：" + item.getName() + " 原价：" + item.getPrice());
             }
-            curriculumAdapter = new CurriculumAdapter(R.layout.list_item_curriculum, curriculumList);
+            curriculumAdapter = new CurriculumAdapter(R.layout.list_item_curriculum, curriculumList, false);
             curriculumAdapter.setOnItemClickListener(this);
             recyclerView.setAdapter(curriculumAdapter);
         });
         return root;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_add_curriculum:
-                showInput();
-                break;
-        }
-    }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -98,5 +97,12 @@ public class SettingFragment extends Fragment implements View.OnClickListener, B
                     }
                 });
         builder.create().show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(getClass().getSimpleName(), "onOptionsItemSelected item:" + item.getItemId());
+        showInput();
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -16,19 +16,19 @@ public class ClockRecord extends BaseDao {
 
     private Long studentId;//学生id
 
-    private Long studentName;//学生姓名
+    private String studentName;//学生姓名
 
     private Long curriculumId;//课程id
 
-    private Long curriculumName;//课程名称
+    private String curriculumName;//课程名称
 
     private Double curriculumPrice;//课程原价
 
     private Double curriculumDiscountPrice;//课程优惠价
 
-    @Generated(hash = 1972379454)
-    public ClockRecord(Long id, Date clockTime, Long studentId, Long studentName,
-            Long curriculumId, Long curriculumName, Double curriculumPrice,
+    @Generated(hash = 855376337)
+    public ClockRecord(Long id, Date clockTime, Long studentId, String studentName,
+            Long curriculumId, String curriculumName, Double curriculumPrice,
             Double curriculumDiscountPrice) {
         this.id = id;
         this.clockTime = clockTime;
@@ -68,11 +68,11 @@ public class ClockRecord extends BaseDao {
         this.studentId = studentId;
     }
 
-    public Long getStudentName() {
+    public String getStudentName() {
         return this.studentName;
     }
 
-    public void setStudentName(Long studentName) {
+    public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
 
@@ -84,11 +84,11 @@ public class ClockRecord extends BaseDao {
         this.curriculumId = curriculumId;
     }
 
-    public Long getCurriculumName() {
+    public String getCurriculumName() {
         return this.curriculumName;
     }
 
-    public void setCurriculumName(Long curriculumName) {
+    public void setCurriculumName(String curriculumName) {
         this.curriculumName = curriculumName;
     }
 
@@ -107,5 +107,6 @@ public class ClockRecord extends BaseDao {
     public void setCurriculumDiscountPrice(Double curriculumDiscountPrice) {
         this.curriculumDiscountPrice = curriculumDiscountPrice;
     }
+
 
 }

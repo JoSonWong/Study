@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.StudentInfoActivity"/>
+        <activity android:name=".ui.StudentInfoActivity" />
+        <activity android:name=".ui.StudentSelectActivity" />
+        <activity android:name=".ui.CurriculumSelectActivity" />
     </application>
 
 </manifest>

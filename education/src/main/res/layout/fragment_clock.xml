@@ -1,41 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+
+    <LinearLayout
+        android:id="@+id/ll_clock"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_add_curriculum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_curriculum" />
+
+            <TextView
+                android:id="@+id/tv_curriculum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_add_student"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_student" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_student"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_clock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/clock"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="28sp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_clock_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_clock">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/clock_history" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_class"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_clock_history"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_student"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -3,7 +3,7 @@
     <string name="title_clock">打卡</string>
     <string name="title_student">学生</string>
     <string name="title_report">报表</string>
-    <string name="title_setting">设置</string>
+    <string name="title_setting">我的课程</string>
     <string name="clock">打卡</string>
     <string name="add_curriculum">添加课程</string>
     <string name="update_curriculum">修改课程</string>
@@ -29,4 +29,7 @@
     <string name="add_student_success">添加学生成功</string>
     <string name="student_info">学生信息</string>
     <string name="update_student_info">修改学生信息</string>
+    <string name="select_curriculum">选择课程</string>
+    <string name="clock_history">打卡历史</string>
+    <string name="curriculum">课程</string>
 </resources>
