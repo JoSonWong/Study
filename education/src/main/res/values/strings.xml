@@ -32,4 +32,7 @@
     <string name="select_curriculum">选择课程</string>
     <string name="clock_history">打卡历史</string>
     <string name="curriculum">课程</string>
+    <string name="update_discount_price">修改课时优惠价</string>
+    <string name="discount_price">优惠价</string>
+    <string name="pls_input_discount_price">请输入课时优惠价，如8.0</string>
 </resources>

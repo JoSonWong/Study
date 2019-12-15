@@ -17,7 +17,7 @@ public class StudentCurriculumAdapter extends BaseQuickAdapter<StudentCurriculum
 
     @Override
     protected void convert(BaseViewHolder helper, StudentCurriculum item) {
-        helper.setText(R.id.tv_number, item.getId() + "");
+        helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getCurriculum().getName());
         helper.setText(R.id.tv_price, item.getCurriculum().getPrice() + "");
         helper.setText(R.id.tv_discount_price, item.getDiscountPrice() + "");

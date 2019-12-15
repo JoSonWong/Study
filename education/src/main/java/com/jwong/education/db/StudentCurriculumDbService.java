@@ -1,8 +1,11 @@
 package com.jwong.education.db;
 
+import android.util.Log;
+
 import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.dao.StudentCurriculumDao;
 
+import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
@@ -51,7 +54,30 @@ public class StudentCurriculumDbService {
      * @param studentCurriculum
      */
     public long insert(StudentCurriculum studentCurriculum) {
-        return studentCurriculumDao.insert(studentCurriculum);
+        Log.d(getClass().getSimpleName(), "添加学生课程，学生id：" + studentCurriculum.getStudentId()
+                + " 课程id：" + studentCurriculum.getCurriculumId());
+        List<StudentCurriculum> list = query(studentCurriculum.getStudentId(), studentCurriculum.getCurriculumId());
+        if (list == null || list.isEmpty()) {
+            Log.d(getClass().getSimpleName(), "插入学生课程，学生id：" + studentCurriculum.getStudentId()
+                    + " 课程id：" + studentCurriculum.getCurriculumId());
+            return studentCurriculumDao.insert(studentCurriculum);
+        }
+        return 0;
+    }
+
+    public List<StudentCurriculum> query(long studentId, long curriculumId) {
+//        List<StudentCurriculum> list = studentCurriculumDao.queryBuilder().where(studentCurriculumDao.queryBuilder()
+//                .and(StudentCurriculumDao.Properties.StudentId.eq(studentId),
+//                        studentCurriculumDao.queryBuilder().or(StudentCurriculumDao.Properties.统一编号.like("%" + keywords + "%"),
+//                                JBXXDao.Properties.位置.like("%" + keywords + "%"),
+//                                JBXXDao.Properties.名称.like("%" + keywords + "%")))).list();
+        Log.d(getClass().getSimpleName(), "query studentId:" + studentId + " curriculumId:" + curriculumId);
+//        QueryBuilder<StudentCurriculum> queryBuilder = studentCurriculumDao.queryBuilder();
+//        queryBuilder.and(StudentCurriculumDao.Properties.StudentId.eq(studentId),
+//                StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId));
+        Query query = studentCurriculumDao.queryBuilder().where(StudentCurriculumDao.Properties.StudentId.eq(studentId)
+                , StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId)).build();
+        return query.list();
     }
 
     /**
@@ -86,7 +112,16 @@ public class StudentCurriculumDbService {
     /**
      * 删除数据
      */
-    public void delete(String wherecluse) {
-        studentCurriculumDao.queryBuilder().where(StudentCurriculumDao.Properties.Id.eq(wherecluse)).buildDelete().executeDeleteWithoutDetachingEntities();
+    public void delete(long id) {
+        studentCurriculumDao.queryBuilder().where(StudentCurriculumDao.Properties.Id.eq(id)).buildDelete().executeDeleteWithoutDetachingEntities();
+    }
+
+    public void delete(long studentId, long curriculumId) {
+        List<StudentCurriculum> list = query(studentId, curriculumId);
+        if (list != null && !list.isEmpty()) {
+            for (StudentCurriculum item : list) {
+                delete(item.getId());
+            }
+        }
     }
 }

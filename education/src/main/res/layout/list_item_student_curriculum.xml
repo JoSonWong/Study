@@ -24,16 +24,18 @@
 
     <TextView
         android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
+        android:layout_weight="1"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tv_discount_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
+        android:layout_weight="1"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="20sp" />
 
