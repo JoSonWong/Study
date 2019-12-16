@@ -10,6 +10,7 @@ import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,7 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
         }
         recyclerView = findViewById(R.id.rv_student);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         if (curriculumId > 0) {
             studentCurriculumViewModel = ViewModelProviders.of(this).get(StudentCurriculumViewModel.class);
             studentCurriculumViewModel.queryCurriculumStudentList(curriculumId).observe(this, studentCurriculumList -> {

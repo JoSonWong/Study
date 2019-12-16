@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,13 +45,15 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
         recyclerView = root.findViewById(R.id.rv_student);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
         spinner = root.findViewById(R.id.spinner);
         spinner.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.student_types)));
         spinner.setOnItemSelectedListener(listener);
         spinner.setSelection(1);
         studentViewModel.getStudentList().observe(this, students -> {
-            StudentAdapter adapter = new StudentAdapter(R.layout.list_item_student, students,false);
+            StudentAdapter adapter = new StudentAdapter(R.layout.list_item_student, students, false);
             adapter.setOnItemClickListener(this);
             recyclerView.setAdapter(adapter);
         });

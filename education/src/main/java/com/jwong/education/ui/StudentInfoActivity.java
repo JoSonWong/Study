@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,6 +80,8 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         rvStudentCurriculum = findViewById(R.id.rv_curriculum);
         rvStudentCurriculum.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
+        rvStudentCurriculum.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         spSex.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.sex_types)));
         spRecruitGrade.setAdapter(new ArrayAdapter<>(this,

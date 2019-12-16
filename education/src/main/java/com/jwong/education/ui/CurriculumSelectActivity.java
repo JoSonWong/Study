@@ -10,6 +10,7 @@ import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,11 +48,12 @@ public class CurriculumSelectActivity extends AppCompatActivity implements BaseQ
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setTitle(R.string.select_curriculum);
         }
-        settingViewModel =
-                ViewModelProviders.of(this).get(SettingViewModel.class);
+        settingViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
         recyclerView = findViewById(R.id.rv_curriculum);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         settingViewModel.getCurriculumList().observe(this, curriculumList -> {
             curriculumAdapter = new CurriculumAdapter(R.layout.list_item_curriculum, curriculumList, true);
             if (checkedList != null && checkedList.length > 0) {

@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,8 @@ public class SettingFragment extends Fragment implements BaseQuickAdapter.OnItem
         recyclerView = root.findViewById(R.id.rv_curriculum);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL));
         settingViewModel.getCurriculumList().observe(this, curriculumList -> {
             for (Curriculum item : curriculumList) {
                 Log.d(getClass().getSimpleName(), "课程id：" + item.getId()
