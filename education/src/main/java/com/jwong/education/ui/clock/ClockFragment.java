@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +24,6 @@ import com.jwong.education.dto.CurriculumDTO;
 import com.jwong.education.dto.StudentDTO;
 import com.jwong.education.ui.CurriculumSelectActivity;
 import com.jwong.education.ui.StudentSelectActivity;
-import com.jwong.education.ui.student.StudentAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +31,10 @@ import java.util.List;
 public class ClockFragment extends Fragment implements View.OnClickListener {
 
     private ClockViewModel clockViewModel;
-    private View viewClock;
-    private TextView tvCurriculum;
+    private TextView tvCurriculum, tvStudent;
     private RecyclerView rvStudent, rvClockHistory;
     private CurriculumDTO curriculumDTO;
-    private StudentAdapter studentAdapter;
+    private StudentClockAdapter studentAdapter;
 
 
     @Override
@@ -49,20 +48,26 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         View root = inflater.inflate(R.layout.fragment_clock, container, false);
         root.findViewById(R.id.btn_clock).setOnClickListener(this);
-        viewClock = root.findViewById(R.id.ll_clock);
-        root.findViewById(R.id.tv_add_curriculum).setOnClickListener(this);
-        root.findViewById(R.id.tv_add_student).setOnClickListener(this);
+        tvStudent = root.findViewById(R.id.tv_student);
+        tvStudent.setOnClickListener(this);
         tvCurriculum = root.findViewById(R.id.tv_curriculum);
+        tvCurriculum.setOnClickListener(this);
         rvStudent = root.findViewById(R.id.rv_student);
         rvClockHistory = root.findViewById(R.id.rv_clock_history);
 
-        rvStudent.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
+//        rvStudent.setLayoutManager(new LinearLayoutManager(getContext(),
+//                LinearLayoutManager.VERTICAL, false));
+        rvStudent.setLayoutManager(new GridLayoutManager(getContext(), 4));
+
         rvClockHistory.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
 
-        clockViewModel.getClockRecordList().observe(this, curriculumList -> {
-
+        clockViewModel.getClockRecordList(5).observe(this, clockRecords -> {
+            if (clockRecords != null) {
+                ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords);
+//            adapter.setOnItemClickListener(this);
+                rvClockHistory.setAdapter(adapter);
+            }
         });
         return root;
     }
@@ -71,35 +76,48 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_clock:
-                if (viewClock.getVisibility() == View.VISIBLE) {
-//                    clockViewModel.addClockRecord();
+                if (curriculumDTO != null && studentAdapter != null && !studentAdapter.getData().isEmpty()) {
+                    clockViewModel.insertClockRecord(curriculumDTO, studentAdapter.getData());
                 } else {
-                    viewClock.setVisibility(View.VISIBLE);
-                }
-                break;
-            case R.id.tv_add_curriculum:
-                Intent intent = new Intent(getActivity(), CurriculumSelectActivity.class);
-                intent.putExtra("is_multiple", false);
-                startActivityForResult(intent, 1100);
-                break;
-            case R.id.tv_add_student:
-                intent = new Intent(getActivity(), StudentSelectActivity.class);
-                intent.putExtra("is_multiple", true);
-                if (studentAdapter != null) {
-                    List<Student> list = studentAdapter.getData();
-                    if (list != null && !list.isEmpty()) {
-                        long[] ids = new long[list.size()];
-                        for (int i = 0; i < list.size(); i++) {
-                            ids[i] = list.get(i).getId();
-                        }
-                        intent.putExtra("checked_list", ids);
+                    if (curriculumDTO == null) {
+                        startSelectCurriculumActivity();
+                    } else if (studentAdapter == null || !studentAdapter.getData().isEmpty()) {
+                        startSelectStudentActivity();
                     }
                 }
-                startActivityForResult(intent, 1200);
+                break;
+            case R.id.tv_curriculum:
+                startSelectCurriculumActivity();
+                break;
+            case R.id.tv_student:
+                startSelectStudentActivity();
                 break;
             default:
                 break;
         }
+    }
+
+    private void startSelectCurriculumActivity() {
+        Intent intent = new Intent(getActivity(), CurriculumSelectActivity.class);
+        intent.putExtra("is_multiple", false);
+        startActivityForResult(intent, 1100);
+    }
+
+    private void startSelectStudentActivity() {
+        Intent intent = new Intent(getActivity(), StudentSelectActivity.class);
+        intent.putExtra("is_multiple", true);
+        intent.putExtra("curriculumId", curriculumDTO.getId());
+        if (studentAdapter != null) {
+            List<Student> list = studentAdapter.getData();
+            if (!list.isEmpty()) {
+                long[] ids = new long[list.size()];
+                for (int i = 0; i < list.size(); i++) {
+                    ids[i] = list.get(i).getId();
+                }
+                intent.putExtra("checked_list", ids);
+            }
+        }
+        startActivityForResult(intent, 1200);
     }
 
 
@@ -116,6 +134,14 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
                 if (curriculumDTOS != null && !curriculumDTOS.isEmpty()) {
                     curriculumDTO = curriculumDTOS.get(0);
                     tvCurriculum.setText(curriculumDTO.getName());
+                    tvCurriculum.setVisibility(View.VISIBLE);
+                    if (studentAdapter != null && !studentAdapter.getData().isEmpty()) {
+                        studentAdapter.getData().clear();
+                        studentAdapter.notifyDataSetChanged();
+                    }
+                    tvStudent.setVisibility(View.GONE);
+                    rvStudent.setVisibility(View.GONE);
+                    startSelectStudentActivity();
                 }
             } else if (requestCode == 1200) {
                 List<Student> students = new ArrayList<>();
@@ -130,8 +156,10 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
                         students.add(student);
                     }
                 }
-                studentAdapter = new StudentAdapter(R.layout.list_item_student, students, false);
+                studentAdapter = new StudentClockAdapter(students);
                 rvStudent.setAdapter(studentAdapter);
+                tvStudent.setVisibility(View.VISIBLE);
+                rvStudent.setVisibility(View.VISIBLE);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

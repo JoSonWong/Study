@@ -6,9 +6,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
+import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.dto.StudentDTO;
 import com.jwong.education.ui.student.StudentAdapter;
+import com.jwong.education.ui.student.StudentCurriculumViewModel;
 import com.jwong.education.ui.student.StudentViewModel;
-import com.jwong.education.util.DateFormatUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,14 +30,17 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
 
     private RecyclerView recyclerView;
     private StudentViewModel studentViewModel;
+    private StudentCurriculumViewModel studentCurriculumViewModel;
     private StudentAdapter studentAdapter;
     private boolean isMultiple;
     private long[] checkedList;
+    private long curriculumId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_student);
+        curriculumId = getIntent().getLongExtra("curriculumId", 0);
         isMultiple = getIntent().getBooleanExtra("is_multiple", false);
         checkedList = getIntent().getLongArrayExtra("checked_list");
         ActionBar actionBar = getSupportActionBar();
@@ -51,16 +52,35 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
         }
         recyclerView = findViewById(R.id.rv_student);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
 
-        studentViewModel.getStudentList().observe(this, students -> {
-            studentAdapter = new StudentAdapter(R.layout.list_item_student, students, true);
-            if (checkedList != null && checkedList.length > 0) {
-                studentAdapter.setCheckedList(checkedList);
-            }
-            studentAdapter.setOnItemClickListener(this);
-            recyclerView.setAdapter(studentAdapter);
-        });
+        if (curriculumId > 0) {
+            studentCurriculumViewModel = ViewModelProviders.of(this).get(StudentCurriculumViewModel.class);
+            studentCurriculumViewModel.queryCurriculumStudentList(curriculumId).observe(this, studentCurriculumList -> {
+                if (studentCurriculumList != null && !studentCurriculumList.isEmpty()) {
+                    List<Student> students = new ArrayList<>();
+                    for (StudentCurriculum item : studentCurriculumList) {
+                        students.add(item.getStudent());
+                    }
+                    studentAdapter = new StudentAdapter(R.layout.list_item_student, students, true);
+                    if (checkedList != null && checkedList.length > 0) {
+                        studentAdapter.setCheckedList(checkedList);
+                    }
+                    studentAdapter.setOnItemClickListener(this);
+                    recyclerView.setAdapter(studentAdapter);
+                }
+
+            });
+        } else {
+            studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
+            studentViewModel.getStudentList().observe(this, students -> {
+                studentAdapter = new StudentAdapter(R.layout.list_item_student, students, true);
+                if (checkedList != null && checkedList.length > 0) {
+                    studentAdapter.setCheckedList(checkedList);
+                }
+                studentAdapter.setOnItemClickListener(this);
+                recyclerView.setAdapter(studentAdapter);
+            });
+        }
 
     }
 
@@ -70,7 +90,7 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
             studentAdapter.clearChecked();
             studentAdapter.notifyDataSetChanged();
         }
-        Student student = studentViewModel.getStudentList().getValue().get(position);
+        Student student = (Student) adapter.getData().get(position);
         studentAdapter.setCheck(student.getId(), !studentAdapter.isCheck(student.getId()));
         studentAdapter.notifyItemChanged(position);
     }

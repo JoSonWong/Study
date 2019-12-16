@@ -4,6 +4,7 @@ import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.ClockRecordDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.List;
 
@@ -88,5 +89,14 @@ public class ClockDbService {
      */
     public void delete(String wherecluse) {
         clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.Id.eq(wherecluse)).buildDelete().executeDeleteWithoutDetachingEntities();
+    }
+
+    /**
+     * 查询所有数据
+     */
+    public List<ClockRecord> searchAllGroupByCurriculumAndTime(int limit) {
+        return clockRecordDao.queryBuilder().limit(limit).orderDesc(ClockRecordDao.Properties.ClockTime)
+                .where(new WhereCondition.StringCondition(ClockRecordDao.Properties.CurriculumId.columnName + ">" + 0
+                        + " GROUP BY " + ClockRecordDao.Properties.ClockTime.columnName)).list();
     }
 }

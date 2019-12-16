@@ -48,6 +48,11 @@ public class StudentCurriculumViewModel extends ViewModel {
         StudentCurriculumDbService.getInstance(StudyApplication.getDbController()).delete(studentCurriculum.getStudentId(), studentCurriculum.getCurriculumId());
     }
 
+    public LiveData<List<StudentCurriculum>> queryCurriculumStudentList(long curriculumId) {
+        data.postValue(StudentCurriculumDbService.getInstance(StudyApplication.getDbController()).queryGroupByStudent(curriculumId));
+        return data;
+    }
+
     public void handleSelectedCurriculum(long studentId, List<CurriculumDTO> curriculumDTOS) {
         List<StudentCurriculum> oldList = getStudentCurriculum(studentId);
         LongSparseArray<StudentCurriculum> oldSparse = new LongSparseArray();

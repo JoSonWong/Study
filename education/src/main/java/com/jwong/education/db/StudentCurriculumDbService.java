@@ -7,6 +7,7 @@ import com.jwong.education.dao.StudentCurriculumDao;
 
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.List;
 
@@ -123,5 +124,17 @@ public class StudentCurriculumDbService {
                 delete(item.getId());
             }
         }
+    }
+
+
+    public List<StudentCurriculum> queryGroupByStudent(long curriculumId) {
+        return studentCurriculumDao.queryBuilder().where(
+                new WhereCondition.StringCondition(StudentCurriculumDao.Properties.CurriculumId.columnName + "=" + curriculumId
+                        + " GROUP BY " + StudentCurriculumDao.Properties.StudentId.columnName)).list();
+//        Query query = studentCurriculumDao.queryBuilder().where(
+//                new WhereCondition.StringCondition(StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId)
+//                        + "GROUP BY STUDENT_ID"))
+//                .orderAsc(StudentCurriculumDao.Properties.Id).build();
+//        return query.list();
     }
 }
