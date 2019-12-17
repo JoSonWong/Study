@@ -10,8 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_curriculum_clock"
+        android:background="@drawable/selector_clock"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="24sp"
@@ -21,7 +20,7 @@
         android:id="@+id/tv_student"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/title_student"
         android:textSize="16sp"
         android:visibility="gone" />
@@ -36,12 +35,15 @@
 
     <Button
         android:id="@+id/btn_clock"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:background="@drawable/selector_clock"
         android:gravity="center"
         android:text="@string/clock"
-        android:textSize="28sp" />
+        android:textColor="@android:color/white"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tv_clock_history"
@@ -54,6 +56,6 @@
         android:id="@+id/rv_clock_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2" />
+        android:layout_weight="1" />
 
 </LinearLayout>

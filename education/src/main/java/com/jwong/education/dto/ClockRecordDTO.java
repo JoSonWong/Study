@@ -1,15 +1,10 @@
-package com.jwong.education.dao;
+package com.jwong.education.dto;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-
+import java.io.Serializable;
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
 
-@Entity
-public class ClockRecord extends BaseDao {
+public class ClockRecordDTO extends BaseDTO implements Serializable {
 
-    @Id(autoincrement = true)
     private Long id;//记录id
 
     private Date clockTime;//打卡时间
@@ -26,12 +21,12 @@ public class ClockRecord extends BaseDao {
 
     private Double curriculumDiscountPrice;//课程优惠价
 
-    private Integer clockType;//0正常，1调课，2请假
+    private Integer clockType;
 
-    @Generated(hash = 237762877)
-    public ClockRecord(Long id, Date clockTime, Long studentId, String studentName,
-            Long curriculumId, String curriculumName, Double curriculumPrice,
-            Double curriculumDiscountPrice, Integer clockType) {
+
+    public ClockRecordDTO(Long id, Date clockTime, Long studentId, String studentName,
+                          Long curriculumId, String curriculumName, Double curriculumPrice,
+                          Double curriculumDiscountPrice, Integer clockType) {
         this.id = id;
         this.clockTime = clockTime;
         this.studentId = studentId;
@@ -43,8 +38,7 @@ public class ClockRecord extends BaseDao {
         this.clockType = clockType;
     }
 
-    @Generated(hash = 675671732)
-    public ClockRecord() {
+    public ClockRecordDTO() {
     }
 
     public Long getId() {
@@ -118,6 +112,5 @@ public class ClockRecord extends BaseDao {
     public void setClockType(Integer clockType) {
         this.clockType = clockType;
     }
-
 
 }

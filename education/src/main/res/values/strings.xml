@@ -37,5 +37,22 @@
     <string name="pls_input_discount_price">请输入课时优惠价，如8.0</string>
     <string name="pls_select_curriculum">请先选择课程</string>
     <string name="pls_select_curriculum_and_student">请先选择课程和学生</string>
-
+    <string name="clock_success">打卡成功</string>
+    <string name="path_card">补卡</string>
+    <string name="clock_detail">打卡详情</string>
+    <string name="select_clock_type">选择打卡类型</string>
+    <string name="student_id_x">学生id：%s</string>
+    <string name="student_name_x">学生姓名：%s</string>
+    <string name="curriculum_id_x">课程id：%s</string>
+    <string name="curriculum_name_x">课程名称：%s</string>
+    <string name="curriculum_price_x">课时原价：%s</string>
+    <string name="curriculum_discount_price_x">课时优惠价：%s</string>
+    <string name="curriculum_discount">课时优惠价：</string>
+    <string name="clock_type_normal">上课</string>
+    <string name="clock_type_adjustment">调课</string>
+    <string name="clock_type_leave">请假</string>
+    <string name="student_clock_detail">学生打卡详情</string>
+    <string name="update_success">修改成功！</string>
+    <string name="update_fail">修改失败！</string>
+    <string name="delete_record">删除记录</string>
 </resources>

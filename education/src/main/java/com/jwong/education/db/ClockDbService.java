@@ -6,6 +6,7 @@ import com.jwong.education.dao.ClockRecordDao;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
+import java.util.Date;
 import java.util.List;
 
 public class ClockDbService {
@@ -87,8 +88,8 @@ public class ClockDbService {
     /**
      * 删除数据
      */
-    public void delete(String wherecluse) {
-        clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.Id.eq(wherecluse)).buildDelete().executeDeleteWithoutDetachingEntities();
+    public void delete(long id) {
+        clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.Id.eq(id)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     /**
@@ -98,5 +99,14 @@ public class ClockDbService {
         return clockRecordDao.queryBuilder().limit(limit).orderDesc(ClockRecordDao.Properties.ClockTime)
                 .where(new WhereCondition.StringCondition(ClockRecordDao.Properties.CurriculumId.columnName + ">" + 0
                         + " GROUP BY " + ClockRecordDao.Properties.ClockTime.columnName)).list();
+    }
+
+
+    /**
+     * 查询所有数据
+     */
+    public List<ClockRecord> searchClockRecordDetail(long curriculumId, Date date) {
+        return clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.CurriculumId.eq(curriculumId)
+                , ClockRecordDao.Properties.ClockTime.eq(date)).build().list();
     }
 }

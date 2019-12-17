@@ -22,6 +22,7 @@
         <activity android:name=".ui.StudentInfoActivity" />
         <activity android:name=".ui.StudentSelectActivity" />
         <activity android:name=".ui.CurriculumSelectActivity" />
+        <activity android:name=".ui.ClockDetailActivity" />
     </application>
 
 </manifest>

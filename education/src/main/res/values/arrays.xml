@@ -25,4 +25,10 @@
         <item>高二</item>
         <item>高三</item>
     </string-array>
+
+    <string-array name="clock_types">
+        <item>@string/clock_type_normal</item>
+        <item>@string/clock_type_adjustment</item>
+        <item>@string/clock_type_leave</item>
+    </string-array>
 </resources>

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,17 +20,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
+import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.Student;
+import com.jwong.education.dto.ClockRecordDTO;
 import com.jwong.education.dto.CurriculumDTO;
 import com.jwong.education.dto.StudentDTO;
+import com.jwong.education.ui.ClockDetailActivity;
 import com.jwong.education.ui.CurriculumSelectActivity;
 import com.jwong.education.ui.StudentSelectActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClockFragment extends Fragment implements View.OnClickListener {
+public class ClockFragment extends Fragment implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
 
     private ClockViewModel clockViewModel;
     private TextView tvCurriculum, tvStudent;
@@ -68,7 +73,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
         clockViewModel.getClockRecordList(5).observe(this, clockRecords -> {
             if (clockRecords != null) {
                 ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords);
-//            adapter.setOnItemClickListener(this);
+                adapter.setOnItemClickListener(this);
                 rvClockHistory.setAdapter(adapter);
             }
         });
@@ -81,6 +86,9 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_clock:
                 if (curriculumDTO != null && studentAdapter != null && !studentAdapter.getData().isEmpty()) {
                     clockViewModel.insertClockRecord(curriculumDTO, studentAdapter.getData());
+                    Toast.makeText(getContext(), R.string.clock_success, Toast.LENGTH_SHORT).show();
+                    clearStudent();
+                    clearCurriculum();
                 } else {
                     if (curriculumDTO == null) {
                         startSelectCurriculumActivity();
@@ -107,7 +115,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
     }
 
     private void startSelectStudentActivity() {
-        Intent intent = new Intent(getActivity(), StudentSelectActivity.class);
+        Intent intent = new Intent(getContext(), StudentSelectActivity.class);
         intent.putExtra("is_multiple", true);
         intent.putExtra("curriculumId", curriculumDTO.getId());
         if (studentAdapter != null) {
@@ -130,6 +138,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 1100) {
@@ -138,12 +147,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
                     curriculumDTO = curriculumDTOS.get(0);
                     tvCurriculum.setText(curriculumDTO.getName());
                     tvCurriculum.setVisibility(View.VISIBLE);
-                    if (studentAdapter != null && !studentAdapter.getData().isEmpty()) {
-                        studentAdapter.getData().clear();
-                        studentAdapter.notifyDataSetChanged();
-                    }
-                    tvStudent.setVisibility(View.GONE);
-                    rvStudent.setVisibility(View.GONE);
+                    clearStudent();
                     startSelectStudentActivity();
                 }
             } else if (requestCode == 1200) {
@@ -168,4 +172,29 @@ public class ClockFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void clearCurriculum() {
+        tvCurriculum.setText("");
+        curriculumDTO = null;
+        tvCurriculum.setVisibility(View.GONE);
+    }
+
+    private void clearStudent() {
+        if (studentAdapter != null && !studentAdapter.getData().isEmpty()) {
+            studentAdapter.getData().clear();
+            studentAdapter.notifyDataSetChanged();
+        }
+        tvStudent.setVisibility(View.GONE);
+        rvStudent.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        ClockRecord clockRecord = (ClockRecord) adapter.getData().get(position);
+        Intent intent = new Intent(getContext(), ClockDetailActivity.class);
+        ClockRecordDTO recordDTO = new ClockRecordDTO(clockRecord.getId(), clockRecord.getClockTime(), clockRecord.getStudentId(),
+                clockRecord.getStudentName(), clockRecord.getCurriculumId(), clockRecord.getCurriculumName(),
+                clockRecord.getCurriculumPrice(), clockRecord.getCurriculumDiscountPrice(), clockRecord.getClockType());
+        intent.putExtra("clockRecord", recordDTO);
+        startActivity(intent);
+    }
 }
