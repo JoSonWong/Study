@@ -1,4 +1,4 @@
-package com.jwong.education.ui;
+package com.jwong.education.ui.curriculum;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
 import com.jwong.education.dao.Curriculum;
-import com.jwong.education.dao.Student;
 import com.jwong.education.dto.CurriculumDTO;
-import com.jwong.education.dto.StudentDTO;
-import com.jwong.education.ui.setting.CurriculumAdapter;
-import com.jwong.education.ui.setting.SettingViewModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,7 +26,7 @@ import java.util.List;
 public class CurriculumSelectActivity extends AppCompatActivity implements BaseQuickAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
-    private SettingViewModel settingViewModel;
+    private CurriculumViewModel settingViewModel;
     private CurriculumAdapter curriculumAdapter;
     private boolean isMultiple;
     private long[] checkedList;
@@ -38,7 +34,7 @@ public class CurriculumSelectActivity extends AppCompatActivity implements BaseQ
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_setting);
+        setContentView(R.layout.fragment_curriculum);
         isMultiple = getIntent().getBooleanExtra("is_multiple", false);
         checkedList = getIntent().getLongArrayExtra("checked_list");
         ActionBar actionBar = getSupportActionBar();
@@ -48,7 +44,7 @@ public class CurriculumSelectActivity extends AppCompatActivity implements BaseQ
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setTitle(R.string.select_curriculum);
         }
-        settingViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
+        settingViewModel = ViewModelProviders.of(this).get(CurriculumViewModel.class);
         recyclerView = findViewById(R.id.rv_curriculum);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));

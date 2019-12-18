@@ -27,9 +27,8 @@ import com.jwong.education.dao.Student;
 import com.jwong.education.dto.ClockRecordDTO;
 import com.jwong.education.dto.CurriculumDTO;
 import com.jwong.education.dto.StudentDTO;
-import com.jwong.education.ui.ClockDetailActivity;
-import com.jwong.education.ui.CurriculumSelectActivity;
-import com.jwong.education.ui.StudentSelectActivity;
+import com.jwong.education.ui.curriculum.CurriculumSelectActivity;
+import com.jwong.education.ui.student.StudentSelectActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,25 +50,21 @@ public class ClockFragment extends Fragment implements View.OnClickListener, Bas
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         View root = inflater.inflate(R.layout.fragment_clock, container, false);
         root.findViewById(R.id.btn_clock).setOnClickListener(this);
         tvStudent = root.findViewById(R.id.tv_student);
         tvStudent.setOnClickListener(this);
         tvCurriculum = root.findViewById(R.id.tv_curriculum);
         tvCurriculum.setOnClickListener(this);
+        root.findViewById(R.id.tv_more).setOnClickListener(this);
         rvStudent = root.findViewById(R.id.rv_student);
         rvClockHistory = root.findViewById(R.id.rv_clock_history);
-
-//        rvStudent.setLayoutManager(new LinearLayoutManager(getContext(),
-//                LinearLayoutManager.VERTICAL, false));
         rvStudent.setLayoutManager(new GridLayoutManager(getContext(), 4));
-
         rvClockHistory.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         rvClockHistory.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-
+        clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         clockViewModel.getClockRecordList(5).observe(this, clockRecords -> {
             if (clockRecords != null) {
                 ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords);
@@ -92,7 +87,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener, Bas
                 } else {
                     if (curriculumDTO == null) {
                         startSelectCurriculumActivity();
-                    } else if (studentAdapter == null || !studentAdapter.getData().isEmpty()) {
+                    } else if (studentAdapter == null || studentAdapter.getData().isEmpty()) {
                         startSelectStudentActivity();
                     }
                 }
@@ -102,6 +97,10 @@ public class ClockFragment extends Fragment implements View.OnClickListener, Bas
                 break;
             case R.id.tv_student:
                 startSelectStudentActivity();
+                break;
+            case R.id.tv_more:
+                Intent intent = new Intent(getContext(), ClockHistoryActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

@@ -109,4 +109,13 @@ public class ClockDbService {
         return clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.CurriculumId.eq(curriculumId)
                 , ClockRecordDao.Properties.ClockTime.eq(date)).build().list();
     }
+
+
+    /**
+     * 查询所有数据
+     */
+    public List<ClockRecord> searchClockRecordByStudentId(long studentId) {
+        return clockRecordDao.queryBuilder().orderDesc(ClockRecordDao.Properties.Id)
+                .where(ClockRecordDao.Properties.StudentId.eq(studentId)).build().list();
+    }
 }

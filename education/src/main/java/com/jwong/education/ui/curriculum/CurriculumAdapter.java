@@ -1,4 +1,4 @@
-package com.jwong.education.ui.setting;
+package com.jwong.education.ui.curriculum;
 
 import android.util.LongSparseArray;
 
@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.Curriculum;
-import com.jwong.education.dao.Student;
 
 import java.util.ArrayList;
 import java.util.List;

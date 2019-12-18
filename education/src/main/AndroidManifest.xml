@@ -19,10 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.StudentInfoActivity" />
-        <activity android:name=".ui.StudentSelectActivity" />
-        <activity android:name=".ui.CurriculumSelectActivity" />
-        <activity android:name=".ui.ClockDetailActivity" />
+        <activity android:name=".ui.clock.ClockHistoryActivity" />
+        <activity android:name=".ui.student.StudentActivity" />
+        <activity android:name=".ui.student.StudentInfoActivity" />
+        <activity android:name=".ui.student.StudentSelectActivity" />
+        <activity android:name=".ui.curriculum.CurriculumSelectActivity" />
+        <activity android:name=".ui.clock.ClockDetailActivity" />
     </application>
 
 </manifest>

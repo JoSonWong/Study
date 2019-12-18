@@ -1,4 +1,4 @@
-package com.jwong.education.ui;
+package com.jwong.education.ui.student;
 
 import android.content.Intent;
 import android.os.Bundle;

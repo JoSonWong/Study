@@ -1,4 +1,4 @@
-package com.jwong.education.ui.setting;
+package com.jwong.education.ui.curriculum;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,11 +11,11 @@ import com.jwong.education.db.CurriculumDbService;
 import java.util.Date;
 import java.util.List;
 
-public class SettingViewModel extends ViewModel {
+public class CurriculumViewModel extends ViewModel {
 
     private MutableLiveData<List<Curriculum>> curriculumList;
 
-    public SettingViewModel() {
+    public CurriculumViewModel() {
         curriculumList = new MutableLiveData<>();
         curriculumList.postValue(CurriculumDbService.getInstance(StudyApplication.getDbController()).searchAll());
     }

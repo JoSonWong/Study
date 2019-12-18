@@ -13,14 +13,21 @@ import java.util.List;
 public class StudentViewModel extends ViewModel {
 
     private MutableLiveData<List<Student>> data;
+    private MutableLiveData<Student> studentData;
 
     public StudentViewModel() {
         data = new MutableLiveData<>();
-        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
+        studentData = new MutableLiveData<>();
     }
 
     public LiveData<List<Student>> getStudentList() {
+        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
         return data;
+    }
+
+    public LiveData<Student> getStudent(long id) {
+        studentData.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchById(id));
+        return studentData;
     }
 
     public void addStudent(Student student) {

@@ -89,4 +89,12 @@ public class StudentDbService {
     public void delete(String wherecluse) {
         studentDao.queryBuilder().where(StudentDao.Properties.Name.eq(wherecluse)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
+
+    /**
+     * 按条件查询数据
+     */
+    public Student searchById(long id) {
+        QueryBuilder<Student> queryMenu = studentDao.queryBuilder();
+      return queryMenu.where(StudentDao.Properties.Id.eq(id)).unique();
+    }
 }

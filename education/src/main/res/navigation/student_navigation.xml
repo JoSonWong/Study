@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/student_navigation"
+    app:startDestination="@+id/navigation_student_info">
+
+    <fragment
+        android:id="@+id/navigation_student_info"
+        android:name="com.jwong.education.ui.student.StudentInfoFragment"
+        android:label="@string/student_info"
+        tools:layout="@layout/fragment_student_info" />
+
+    <fragment
+        android:id="@+id/navigation_student_curriculum"
+        android:name="com.jwong.education.ui.student.StudentCurriculumFragment"
+        android:label="@string/curriculum"
+        tools:layout="@layout/fragment_student_curriculum" />
+
+    <fragment
+        android:id="@+id/navigation_student_clock"
+        android:name="com.jwong.education.ui.student.StudentClockFragment"
+        android:label="@string/clock_record"
+        tools:layout="@layout/fragment_student_clock" />
+
+</navigation>

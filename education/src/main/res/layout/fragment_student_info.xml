@@ -255,7 +255,6 @@
                 android:inputType="phone" />
 
         </TableRow>
-
     </TableLayout>
 
 </ScrollView>

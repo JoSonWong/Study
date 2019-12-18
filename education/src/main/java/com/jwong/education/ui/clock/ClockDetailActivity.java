@@ -1,20 +1,17 @@
-package com.jwong.education.ui;
+package com.jwong.education.ui.clock;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.LongSparseArray;
-import android.util.SparseLongArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,18 +29,12 @@ import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.Student;
 import com.jwong.education.dto.ClockRecordDTO;
-import com.jwong.education.dto.CurriculumDTO;
 import com.jwong.education.dto.StudentDTO;
-import com.jwong.education.ui.clock.ClockRecordDetailAdapter;
-import com.jwong.education.ui.clock.ClockViewModel;
-import com.jwong.education.ui.clock.StudentClockAdapter;
-import com.jwong.education.ui.student.StudentAdapter;
+import com.jwong.education.ui.student.StudentSelectActivity;
 import com.jwong.education.util.DateFormatUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ClockDetailActivity extends AppCompatActivity implements View.OnClickListener,
         BaseQuickAdapter.OnItemClickListener {

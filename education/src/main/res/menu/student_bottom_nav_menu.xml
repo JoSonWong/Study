@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_student_info"
+        android:icon="@drawable/ic_student_black_24dp"
+        android:title="@string/student_info" />
+
+    <item
+        android:id="@+id/navigation_student_curriculum"
+        android:icon="@drawable/ic_report_black_24dp"
+        android:title="@string/curriculum" />
+
+    <item
+        android:id="@+id/navigation_student_clock"
+        android:icon="@drawable/ic_clock_black_24dp"
+        android:title="@string/clock_record" />
+
+</menu>

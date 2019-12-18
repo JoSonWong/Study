@@ -24,7 +24,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
 import com.jwong.education.dto.StudentDTO;
-import com.jwong.education.ui.StudentInfoActivity;
 
 public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
 
@@ -63,14 +62,9 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Student student = studentViewModel.getStudentList().getValue().get(position);
-        StudentDTO studentDTO = new StudentDTO(student.getId(), student.getName(), student.getAvatar(),
-                student.getSex(), student.getBirthday(), student.getRecruitTime(), student.getRecruitGradeCode(),
-                student.getRecruitGradeName(), student.getCurrentGradeCode(), student.getCurrentGrade(),
-                student.getStudentType(), student.getStudentTypeName(), student.getGuardian1(),
-                student.getGuardian1Phone(), student.getGuardian2(), student.getGuardian2Phone());
-        Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
-        intent.putExtra("student", studentDTO);
+        Student student = (Student) adapter.getData().get(position);
+        Intent intent = new Intent(getActivity(), StudentActivity.class);
+        intent.putExtra("studentId", student.getId());
         startActivityForResult(intent, 1100);
     }
 

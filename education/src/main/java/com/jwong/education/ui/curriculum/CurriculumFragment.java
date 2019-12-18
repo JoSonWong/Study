@@ -1,4 +1,4 @@
-package com.jwong.education.ui.setting;
+package com.jwong.education.ui.curriculum;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -23,9 +23,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
 import com.jwong.education.dao.Curriculum;
 
-public class SettingFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
+public class CurriculumFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
 
-    private SettingViewModel settingViewModel;
+    private CurriculumViewModel settingViewModel;
     private RecyclerView recyclerView;
     private CurriculumAdapter curriculumAdapter;
 
@@ -38,8 +38,8 @@ public class SettingFragment extends Fragment implements BaseQuickAdapter.OnItem
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         settingViewModel =
-                ViewModelProviders.of(this).get(SettingViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_setting, container, false);
+                ViewModelProviders.of(this).get(CurriculumViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_curriculum, container, false);
         recyclerView = root.findViewById(R.id.rv_curriculum);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));

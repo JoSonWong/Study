@@ -5,7 +5,7 @@
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="20sp">
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/tv_number"

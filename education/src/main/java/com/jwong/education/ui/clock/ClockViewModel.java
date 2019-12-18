@@ -20,9 +20,12 @@ import java.util.List;
 public class ClockViewModel extends ViewModel {
 
     private MutableLiveData<List<ClockRecord>> clockRecordList;
+    private MutableLiveData<List<ClockRecord>> studentClockRecordList;
+
 
     public ClockViewModel() {
         this.clockRecordList = new MutableLiveData<>();
+        this.studentClockRecordList = new MutableLiveData<>();
     }
 
     public LiveData<List<ClockRecord>> getClockRecordList(int limit) {
@@ -74,5 +77,13 @@ public class ClockViewModel extends ViewModel {
         insertClockRecord(date, curriculum.getId(), curriculum.getName(), curriculum.getPrice(), students, 0);
         this.clockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
                 .searchAllGroupByCurriculumAndTime(5));
+    }
+
+
+
+    public LiveData<List<ClockRecord>> getStudentClockRecordList(long studentId) {
+        this.studentClockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchClockRecordByStudentId(studentId));
+        return studentClockRecordList;
     }
 }
