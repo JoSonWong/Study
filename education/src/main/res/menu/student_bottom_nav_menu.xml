@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_student_info"
-        android:icon="@drawable/ic_student_black_24dp"
+        android:icon="@drawable/ic_student_info_black_24dp"
         android:title="@string/student_info" />
 
     <item
@@ -15,5 +15,10 @@
         android:id="@+id/navigation_student_clock"
         android:icon="@drawable/ic_clock_black_24dp"
         android:title="@string/clock_record" />
+
+    <item
+        android:id="@+id/navigation_student_tuition"
+        android:icon="@drawable/ic_tuition_black_24dp"
+        android:title="@string/tuition" />
 
 </menu>

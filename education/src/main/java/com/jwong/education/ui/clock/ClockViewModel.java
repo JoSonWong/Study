@@ -13,6 +13,7 @@ import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.db.ClockDbService;
 import com.jwong.education.db.StudentCurriculumDbService;
 import com.jwong.education.dto.CurriculumDTO;
+import com.jwong.education.util.DateFormatUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -80,10 +81,16 @@ public class ClockViewModel extends ViewModel {
     }
 
 
-
     public LiveData<List<ClockRecord>> getStudentClockRecordList(long studentId) {
         this.studentClockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
                 .searchClockRecordByStudentId(studentId));
         return studentClockRecordList;
     }
+
+    public List<ClockRecord> getStudentClockRecordList(long studentId, Date from, Date to) {
+
+        return ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchClockRecord(studentId, from, to);
+    }
+
 }

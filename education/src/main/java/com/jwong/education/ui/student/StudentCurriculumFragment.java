@@ -42,7 +42,6 @@ public class StudentCurriculumFragment extends Fragment implements View.OnClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setMenuVisibility(true);
     }
 
 
@@ -128,4 +127,9 @@ public class StudentCurriculumFragment extends Fragment implements View.OnClickL
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.top_nav_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 }

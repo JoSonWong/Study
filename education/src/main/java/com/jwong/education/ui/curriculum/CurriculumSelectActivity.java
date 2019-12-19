@@ -2,6 +2,7 @@ package com.jwong.education.ui.curriculum;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ public class CurriculumSelectActivity extends AppCompatActivity implements BaseQ
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setLogo(R.drawable.ic_check_white_24dp);
             actionBar.setTitle(R.string.select_curriculum);
         }
         settingViewModel = ViewModelProviders.of(this).get(CurriculumViewModel.class);
@@ -74,15 +76,19 @@ public class CurriculumSelectActivity extends AppCompatActivity implements BaseQ
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_nav_menu, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.top_nav_menu, menu);
+        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
+        moreItem.setIcon(R.drawable.ic_check_white_24dp);
+        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(getClass().getSimpleName(), "item:" + item.getItemId());
         switch (item.getItemId()) {
-            case R.id.action_ok:
+            case Menu.FIRST:
                 Intent data = new Intent();
                 List<Curriculum> curriculumList = curriculumAdapter.getCheckedList();
                 List<CurriculumDTO> studentDTOS = new ArrayList<>();

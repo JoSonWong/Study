@@ -99,15 +99,18 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_nav_menu, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.top_nav_menu, menu);
+        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
+        moreItem.setIcon(R.drawable.ic_check_white_24dp);
+        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_ok:
+            case  Menu.FIRST:
                 Intent data = new Intent();
                 List<Student> students = studentAdapter.getCheckedList();
                 List<StudentDTO> studentDTOS = new ArrayList<>();

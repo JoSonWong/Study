@@ -85,8 +85,6 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

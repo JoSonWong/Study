@@ -3,7 +3,7 @@
     <string name="title_clock">打卡</string>
     <string name="title_student">学生</string>
     <string name="title_report">报表</string>
-    <string name="title_setting">我的课程</string>
+    <string name="title_curriculum">课程</string>
     <string name="clock">打卡</string>
     <string name="add_curriculum">添加课程</string>
     <string name="update_curriculum">修改课程</string>
@@ -57,4 +57,14 @@
     <string name="delete_record">删除记录</string>
     <string name="clock_record">打卡记录</string>
     <string name="more">更多>>></string>
+    <string name="tuition">学费</string>
+    <string name="create_curriculum_cost">生成课时费</string>
+    <string name="curriculum_cost">课时费</string>
+    <string name="material_cost">资料费</string>
+    <string name="other_cost">其他费用</string>
+    <string name="create_tuition">生成学费单</string>
+    <string name="tip">温馨提醒</string>
+    <string name="month_curriculum_exists">%s课时费已存在，是否覆盖？</string>
+    <string name="student_not_clock_record">%s该学生无打卡记录</string>
+    <string name="cost_detail">费用详情</string>
 </resources>

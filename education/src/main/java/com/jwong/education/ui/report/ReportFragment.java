@@ -33,18 +33,14 @@ public class ReportFragment extends Fragment {
                 ViewModelProviders.of(this).get(ReportViewModel.class);
         View root = inflater.inflate(R.layout.fragment_report, container, false);
         final CalendarView calendarView = root.findViewById(R.id.calendarView);
-        reportViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
+        reportViewModel.getStudentCost(1).observe(this, costs -> {
         });
         return root;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(getClass().getSimpleName(),"onOptionsItemSelected item:"+item.getItemId());
+        Log.d(getClass().getSimpleName(), "onOptionsItemSelected item:" + item.getItemId());
         return super.onOptionsItemSelected(item);
     }
 }

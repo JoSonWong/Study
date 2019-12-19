@@ -1,7 +1,10 @@
 package com.jwong.education.db;
 
+import android.util.Log;
+
 import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.ClockRecordDao;
+import com.jwong.education.util.DateFormatUtil;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -89,7 +92,8 @@ public class ClockDbService {
      * 删除数据
      */
     public void delete(long id) {
-        clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.Id.eq(id)).buildDelete().executeDeleteWithoutDetachingEntities();
+        clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.Id.eq(id))
+                .buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     /**
@@ -118,4 +122,19 @@ public class ClockDbService {
         return clockRecordDao.queryBuilder().orderDesc(ClockRecordDao.Properties.Id)
                 .where(ClockRecordDao.Properties.StudentId.eq(studentId)).build().list();
     }
+
+
+    /**
+     * 查询所有数据
+     */
+    public List<ClockRecord> searchClockRecord(long studentId, Date from, Date to) {
+        Log.d(getClass().getSimpleName(), "查询学生：" + studentId + " 打卡范围[" + DateFormatUtil.convert2DateTime(from) + ","
+                + DateFormatUtil.convert2DateTime(to)+"]");
+        List<ClockRecord> list = clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.StudentId.eq(studentId),
+                ClockRecordDao.Properties.ClockType.eq(0), ClockRecordDao.Properties.ClockTime.ge(from),
+                ClockRecordDao.Properties.ClockTime.le(to)).build().list();
+        Log.d(getClass().getSimpleName(), "查询学生打卡记录：" + (list == null ? "NULL" : list.size()));
+        return list;
+    }
+
 }

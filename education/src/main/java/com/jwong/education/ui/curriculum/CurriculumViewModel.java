@@ -17,10 +17,10 @@ public class CurriculumViewModel extends ViewModel {
 
     public CurriculumViewModel() {
         curriculumList = new MutableLiveData<>();
-        curriculumList.postValue(CurriculumDbService.getInstance(StudyApplication.getDbController()).searchAll());
     }
 
     public LiveData<List<Curriculum>> getCurriculumList() {
+        curriculumList.postValue(CurriculumDbService.getInstance(StudyApplication.getDbController()).searchAll());
         return curriculumList;
     }
 

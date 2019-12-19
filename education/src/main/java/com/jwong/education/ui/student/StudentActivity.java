@@ -39,23 +39,16 @@ public class StudentActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_student_info, R.id.navigation_student_curriculum,
-                R.id.navigation_student_clock).build();
+                R.id.navigation_student_clock,R.id.navigation_student_tuition).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-//        Bundle bundle = new Bundle();
-//        bundle.putLong("studentId", studentId);
-//        navController.navigate(R.id.navigation_student_info, bundle);
-//        navController.navigate(R.id.navigation_student_curriculum, bundle);
-//        navController.navigate(R.id.navigation_student_clock, bundle);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_nav_menu, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.top_nav_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

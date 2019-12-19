@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/navigation_setting"
         android:name="com.jwong.education.ui.curriculum.CurriculumFragment"
-        android:label="@string/title_setting"
-        tools:layout="@layout/fragment_curriculumxml" />
+        android:label="@string/title_curriculum"
+        tools:layout="@layout/fragment_curriculum" />
 </navigation>

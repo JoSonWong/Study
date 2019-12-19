@@ -16,9 +16,9 @@ public class StudentMonthCost extends BaseDao {
 
     private Integer month;//月
 
-    private Integer costType;//费用类型
+    private Integer costType;//费用类型;0课时费，1资料费，2其他费用
 
-    private String costName;//费用名称
+    private String costName;//费用名称；0课时费，1资料费，2其他费用
 
     private Double price;//价格
 

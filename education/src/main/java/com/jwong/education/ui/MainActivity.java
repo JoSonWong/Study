@@ -113,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
 //        ft.commit();
 //    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_nav_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.top_nav_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
 //    @Override
 //    public boolean onSupportNavigateUp() {

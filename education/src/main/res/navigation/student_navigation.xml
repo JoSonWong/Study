@@ -23,4 +23,9 @@
         android:label="@string/clock_record"
         tools:layout="@layout/fragment_student_clock" />
 
+    <fragment
+        android:id="@+id/navigation_student_tuition"
+        android:name="com.jwong.education.ui.student.StudentTuitionFragment"
+        android:label="@string/tuition"
+        tools:layout="@layout/fragment_student_tuition" />
 </navigation>

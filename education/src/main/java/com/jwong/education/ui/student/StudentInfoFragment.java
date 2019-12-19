@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,7 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         setHasOptionsMenu(false);
         setMenuVisibility(false);
     }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -141,5 +144,11 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         student.setGuardian2Phone(etGuardian2Phone.getText().toString());
         studentViewModel.updateStudent(student);
         Log.d(getClass().getSimpleName(), "保持学生信息");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.pictrue_list, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

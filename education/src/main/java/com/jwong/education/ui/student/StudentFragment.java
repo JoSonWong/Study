@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,5 +113,11 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
         Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
         startActivityForResult(intent, 1200);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.top_nav_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }
