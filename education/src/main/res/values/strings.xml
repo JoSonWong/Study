@@ -67,4 +67,12 @@
     <string name="month_curriculum_exists">%s课时费已存在，是否覆盖？</string>
     <string name="student_not_clock_record">%s该学生无打卡记录</string>
     <string name="cost_detail">费用详情</string>
+    <string name="save_success">保存成功！</string>
+    <string name="cost_name">费用名称</string>
+    <string name="pls_input_cost_name">请输入费用名称，如：资料费</string>
+    <string name="cost_price">费用</string>
+    <string name="pls_input_cost">请输入费用，如：10.0</string>
+    <string name="add_cost">添加费用</string>
+    <string name="add_cost_success">添加费用成功</string>
+
 </resources>

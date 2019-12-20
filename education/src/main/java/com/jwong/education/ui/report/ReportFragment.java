@@ -29,8 +29,7 @@ public class ReportFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        reportViewModel =
-                ViewModelProviders.of(this).get(ReportViewModel.class);
+        reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
         View root = inflater.inflate(R.layout.fragment_report, container, false);
         final CalendarView calendarView = root.findViewById(R.id.calendarView);
         reportViewModel.getStudentCost(1).observe(this, costs -> {

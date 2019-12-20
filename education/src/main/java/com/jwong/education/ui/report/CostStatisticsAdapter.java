@@ -8,19 +8,17 @@ import com.jwong.education.util.FormatUtils;
 
 import java.util.List;
 
-public class CostAdapter extends BaseQuickAdapter<StudentMonthCost, BaseViewHolder> {
+public class CostStatisticsAdapter extends BaseQuickAdapter<StudentMonthCost, BaseViewHolder> {
 
 
-    public CostAdapter(List<StudentMonthCost> data) {
-        super(R.layout.list_item_cost, data);
+    public CostStatisticsAdapter(List<StudentMonthCost> data) {
+        super(R.layout.list_item_cost_statistics, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, StudentMonthCost item) {
-        helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
-        helper.setText(R.id.tv_name, item.getCostName());
+        helper.setText(R.id.tv_date, item.getYear() + "-" + item.getMonth());
         helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
         helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getDiscountPrice()));
-        helper.setText(R.id.tv_date, item.getYear() + "-" + item.getMonth());
     }
 }

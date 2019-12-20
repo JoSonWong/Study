@@ -13,7 +13,6 @@ import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.db.ClockDbService;
 import com.jwong.education.db.StudentCurriculumDbService;
 import com.jwong.education.dto.CurriculumDTO;
-import com.jwong.education.util.DateFormatUtil;
 
 import java.util.Date;
 import java.util.List;

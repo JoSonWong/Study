@@ -24,7 +24,7 @@ public class ReportViewModel extends ViewModel {
     }
 
     public void insert(StudentMonthCost cost) {
-        MonthCostDbService.getInstance(StudyApplication.getDbController()).insertOrReplace(cost);
+        MonthCostDbService.getInstance(StudyApplication.getDbController()).insert(cost);
         data.postValue(MonthCostDbService.getInstance(StudyApplication.getDbController()).searchCostByStudentId(cost.getStudentId()));
     }
 

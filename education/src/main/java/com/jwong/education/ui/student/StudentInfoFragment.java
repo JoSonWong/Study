@@ -1,7 +1,6 @@
 package com.jwong.education.ui.student;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,8 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
-import com.jwong.education.dto.StudentDTO;
-import com.jwong.education.util.DateFormatUtil;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,8 +36,7 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(false);
-        setMenuVisibility(false);
+        setHasOptionsMenu(true);
     }
 
 
@@ -74,8 +72,8 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         studentViewModel.getStudent(StudentActivity.studentId).observe(this, student -> {
             etName.setText(student.getName());
             spSex.setSelection(student.getSex());
-            etBirthday.setText(DateFormatUtil.convert2Date(student.getBirthday()));
-            etRecruitDate.setText(DateFormatUtil.convert2Date(student.getRecruitTime()));
+            etBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
+            etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
             spRecruitGrade.setSelection(student.getRecruitGradeCode());
             spCurrentGrade.setSelection(student.getCurrentGradeCode());
             spStudentType.setSelection(student.getStudentType());
@@ -83,6 +81,8 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
             etGuardian1Phone.setText(student.getGuardian1Phone());
             etGuardian2.setText(student.getGuardian2());
             etGuardian2Phone.setText(student.getGuardian2Phone());
+
+            setEditMode(false);
         });
         return root;
     }
@@ -101,7 +101,7 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
 
     private void showDatePicker(EditText editText) {
         Calendar calendar = Calendar.getInstance();
-        Date date = DateFormatUtil.convert2Date(editText.getText().toString());
+        Date date = FormatUtils.convert2Date(editText.getText().toString());
         if (date != null) {
             calendar.setTime(date);
         }
@@ -113,15 +113,40 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         dpd.show();
     }
 
+    private boolean isEditMode = false;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        saveStudent();
+        if (isEditMode) {
+            saveStudent();
+            Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
+            setEditMode(false);
+        } else {
+            setEditMode(true);
+        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onPause() {
+//        saveStudent();
         super.onPause();
+    }
+
+    private void setEditMode(boolean isEditMode) {
+        this.isEditMode = isEditMode;
+        etName.setEnabled(isEditMode);
+        spSex.setEnabled(isEditMode);
+        etBirthday.setEnabled(isEditMode);
+        etRecruitDate.setEnabled(isEditMode);
+        spRecruitGrade.setEnabled(isEditMode);
+        spCurrentGrade.setEnabled(isEditMode);
+        spStudentType.setEnabled(isEditMode);
+        etGuardian1.setEnabled(isEditMode);
+        etGuardian1Phone.setEnabled(isEditMode);
+        etGuardian2.setEnabled(isEditMode);
+        etGuardian2Phone.setEnabled(isEditMode);
+
     }
 
     private void saveStudent() {
@@ -130,8 +155,8 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         student.setName(etName.getText().toString());
         student.setAvatar("");
         student.setSex(spSex.getSelectedItemPosition());
-        student.setBirthday(DateFormatUtil.convert2Date(etBirthday.getText().toString()));
-        student.setRecruitTime(DateFormatUtil.convert2Date(etRecruitDate.getText().toString()));
+        student.setBirthday(FormatUtils.convert2Date(etBirthday.getText().toString()));
+        student.setRecruitTime(FormatUtils.convert2Date(etRecruitDate.getText().toString()));
         student.setRecruitGradeCode(spRecruitGrade.getSelectedItemPosition());
         student.setRecruitGradeName(getResources().getStringArray(R.array.grades)[spRecruitGrade.getSelectedItemPosition()]);
         student.setCurrentGradeCode(spCurrentGrade.getSelectedItemPosition());
@@ -148,7 +173,9 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.pictrue_list, menu);
+        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
+        moreItem.setIcon(R.drawable.ic_mode_edit_white_24dp);
+        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

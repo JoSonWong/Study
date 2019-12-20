@@ -3,6 +3,7 @@ package com.jwong.education.ui.student;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,16 +24,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
+import com.jwong.education.dao.Student;
 import com.jwong.education.dao.StudentMonthCost;
 import com.jwong.education.ui.clock.ClockViewModel;
 import com.jwong.education.ui.report.CostAdapter;
+import com.jwong.education.ui.report.CostStatisticsAdapter;
 import com.jwong.education.ui.report.ReportViewModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-public class StudentTuitionFragment extends Fragment implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
+public class StudentCostFragment extends Fragment implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
 
     private ClockViewModel clockViewModel;
     private ReportViewModel reportViewModel;
@@ -60,11 +68,30 @@ public class StudentTuitionFragment extends Fragment implements View.OnClickList
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
 
         reportViewModel.getStudentCost(StudentActivity.studentId).observe(this, costs -> {
+
+            List<StudentMonthCost> monthCosts = new ArrayList<>();
             if (costs != null) {
-                CostAdapter adapter = new CostAdapter(costs);
-                adapter.setOnItemClickListener(this);
-                rvTuition.setAdapter(adapter);
+                Map<String, StudentMonthCost> map = new HashMap<>();
+                for (StudentMonthCost cost : costs) {
+                    String key = cost.getYear() + "-" + cost.getMonth();
+                    StudentMonthCost exist;
+                    if ((exist = map.get(key)) != null) {
+                        exist.setDiscountPrice(exist.getDiscountPrice() + cost.getDiscountPrice());
+                        exist.setPrice(exist.getPrice() + cost.getDiscountPrice());
+                        map.put(key, exist);
+                    } else {
+                        map.put(key, cost);
+                    }
+                }
+                Iterator<Map.Entry<String, StudentMonthCost>> entries = map.entrySet().iterator();
+                while (entries.hasNext()) {
+                    Map.Entry<String, StudentMonthCost> entry = entries.next();
+                    monthCosts.add(entry.getValue());
+                }
             }
+            CostStatisticsAdapter adapter = new CostStatisticsAdapter(monthCosts);
+            adapter.setOnItemClickListener(this);
+            rvTuition.setAdapter(adapter);
         });
         return root;
     }
@@ -177,8 +204,8 @@ public class StudentTuitionFragment extends Fragment implements View.OnClickList
         if (list != null && !list.isEmpty()) {
             StudentMonthCost monthCost = new StudentMonthCost();
             monthCost.setStudentId(StudentActivity.studentId);
-            monthCost.setCostType(getResources().getIntArray(R.array.cost_type)[0]);
-            monthCost.setCostName(getResources().getStringArray(R.array.cost_type_name)[0]);
+            monthCost.setCostType(0);
+            monthCost.setCostName(getString(R.string.curriculum_cost));
             monthCost.setYear(calendar.get(Calendar.YEAR));
             monthCost.setMonth(calendar.get(Calendar.MONTH) + 1);
             double price = 0;

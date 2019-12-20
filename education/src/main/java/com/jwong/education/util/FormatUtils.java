@@ -2,10 +2,11 @@ package com.jwong.education.util;
 
 import android.util.Log;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateFormatUtil {
+public class FormatUtils {
 
     public static Date convert2Date(String dateStr) {
         try {
@@ -46,5 +47,10 @@ public class DateFormatUtil {
             Log.e("DateFormatUtil", "转日期出错了", e);
         }
         return "";
+    }
+
+    public static String priceFormat(double price) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return df.format(price);
     }
 }

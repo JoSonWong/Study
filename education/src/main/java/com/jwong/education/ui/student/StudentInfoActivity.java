@@ -1,11 +1,8 @@
 package com.jwong.education.ui.student;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,17 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
-import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.dto.StudentDTO;
-import com.jwong.education.util.DateFormatUtil;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -72,8 +65,8 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         if (student != null) {
             etName.setText(student.getName());
             spSex.setSelection(student.getSex());
-            etBirthday.setText(DateFormatUtil.convert2Date(student.getBirthday()));
-            etRecruitDate.setText(DateFormatUtil.convert2Date(student.getRecruitTime()));
+            etBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
+            etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
             spRecruitGrade.setSelection(student.getRecruitGradeCode());
             spCurrentGrade.setSelection(student.getCurrentGradeCode());
             spStudentType.setSelection(student.getStudentType());
@@ -103,8 +96,8 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
                 student.setName(etName.getText().toString());
                 student.setAvatar("");
                 student.setSex(spSex.getSelectedItemPosition());
-                student.setBirthday(DateFormatUtil.convert2Date(etBirthday.getText().toString()));
-                student.setRecruitTime(DateFormatUtil.convert2Date(etRecruitDate.getText().toString()));
+                student.setBirthday(FormatUtils.convert2Date(etBirthday.getText().toString()));
+                student.setRecruitTime(FormatUtils.convert2Date(etRecruitDate.getText().toString()));
                 student.setRecruitGradeCode(spRecruitGrade.getSelectedItemPosition());
                 student.setRecruitGradeName(getResources().getStringArray(R.array.grades)[spRecruitGrade.getSelectedItemPosition()]);
                 student.setCurrentGradeCode(spCurrentGrade.getSelectedItemPosition());
@@ -137,7 +130,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
 
     private void showDatePicker(EditText editText) {
         Calendar calendar = Calendar.getInstance();
-        Date date = DateFormatUtil.convert2Date(editText.getText().toString());
+        Date date = FormatUtils.convert2Date(editText.getText().toString());
         if (date != null) {
             calendar.setTime(date);
         }

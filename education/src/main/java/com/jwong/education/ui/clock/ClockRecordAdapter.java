@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
-import com.jwong.education.util.DateFormatUtil;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class ClockRecordAdapter extends BaseQuickAdapter<ClockRecord, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, ClockRecord item) {
         helper.setText(R.id.tv_name, item.getCurriculumName());
-        helper.setText(R.id.tv_date_time, DateFormatUtil.convert2DateTime(item.getClockTime()));
+        helper.setText(R.id.tv_date_time, FormatUtils.convert2DateTime(item.getClockTime()));
 
     }
 }

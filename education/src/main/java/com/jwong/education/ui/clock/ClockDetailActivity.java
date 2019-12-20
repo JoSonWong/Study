@@ -31,7 +31,7 @@ import com.jwong.education.dao.Student;
 import com.jwong.education.dto.ClockRecordDTO;
 import com.jwong.education.dto.StudentDTO;
 import com.jwong.education.ui.student.StudentSelectActivity;
-import com.jwong.education.util.DateFormatUtil;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         tvCurriculum.setText(clockRecordDTO.getCurriculumName());
-        tvClockTime.setText(DateFormatUtil.convert2DateTime(clockRecordDTO.getClockTime()));
+        tvClockTime.setText(FormatUtils.convert2DateTime(clockRecordDTO.getClockTime()));
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         clockViewModel.getClockRecordDetailList(clockRecordDTO.getCurriculumId(),
                 clockRecordDTO.getClockTime()).observe(this, clockRecords -> {

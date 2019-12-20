@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.ClockRecordDao;
-import com.jwong.education.util.DateFormatUtil;
+import com.jwong.education.util.FormatUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
@@ -128,8 +128,8 @@ public class ClockDbService {
      * 查询所有数据
      */
     public List<ClockRecord> searchClockRecord(long studentId, Date from, Date to) {
-        Log.d(getClass().getSimpleName(), "查询学生：" + studentId + " 打卡范围[" + DateFormatUtil.convert2DateTime(from) + ","
-                + DateFormatUtil.convert2DateTime(to)+"]");
+        Log.d(getClass().getSimpleName(), "查询学生：" + studentId + " 打卡范围[" + FormatUtils.convert2DateTime(from) + ","
+                + FormatUtils.convert2DateTime(to)+"]");
         List<ClockRecord> list = clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.StudentId.eq(studentId),
                 ClockRecordDao.Properties.ClockType.eq(0), ClockRecordDao.Properties.ClockTime.ge(from),
                 ClockRecordDao.Properties.ClockTime.le(to)).build().list();

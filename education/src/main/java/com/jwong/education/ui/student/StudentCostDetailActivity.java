@@ -1,11 +1,15 @@
 package com.jwong.education.ui.student;
 
-import android.content.Intent;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
-import com.jwong.education.dao.ClockRecord;
-import com.jwong.education.dto.ClockRecordDTO;
-import com.jwong.education.ui.clock.ClockDetailActivity;
-import com.jwong.education.ui.clock.ClockRecordAdapter;
-import com.jwong.education.ui.clock.ClockViewModel;
+import com.jwong.education.dao.StudentMonthCost;
 import com.jwong.education.ui.report.CostAdapter;
 import com.jwong.education.ui.report.ReportViewModel;
 
@@ -74,7 +74,7 @@ public class StudentCostDetailActivity extends AppCompatActivity implements Base
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_ok:
-
+                showInput();
                 break;
             case android.R.id.home:// 点击返回图标事件
                 this.finish();
@@ -89,5 +89,33 @@ public class StudentCostDetailActivity extends AppCompatActivity implements Base
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
+    }
+
+    private void showInput() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dlg_input_cost, null);
+        EditText etName = view.findViewById(R.id.et_name);
+        EditText etPrice = view.findViewById(R.id.et_price);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.add_cost)
+                .setView(view)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    if (!TextUtils.isEmpty(etName.getText()) && !TextUtils.isEmpty(etPrice.getText())) {
+                        StudentMonthCost cost = new StudentMonthCost();
+                        cost.setStudentId(studentId);
+                        cost.setYear(year);
+                        cost.setMonth(month);
+                        cost.setCostType(1);
+                        cost.setCostName(etName.getText().toString());
+                        double price = Double.parseDouble(etPrice.getText().toString());
+                        cost.setPrice(price);
+                        cost.setDiscountPrice(price);
+                        reportViewModel.insert(cost);
+                        Toast.makeText(this, R.string.add_cost_success, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, TextUtils.isEmpty(etName.getText()) ? R.string.pls_input_cost_name
+                                : R.string.pls_input_cost, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.create().show();
     }
 }
