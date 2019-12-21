@@ -28,13 +28,21 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jwong.education.R;
+import com.jwong.education.dao.ClockRecord;
+import com.jwong.education.dao.StudentMonthCost;
+import com.jwong.education.ui.clock.ClockViewModel;
+import com.jwong.education.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 public class ReportFragment extends Fragment {
 
     private ReportViewModel reportViewModel;
-    private PieChart pieChart;
+    private ClockViewModel clockViewModel;
+    private PieChart pieChart, pieChartCurriculum;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,22 +50,28 @@ public class ReportFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_report, container, false);
-
         pieChart = root.findViewById(R.id.pie_chart);
+        pieChartCurriculum = root.findViewById(R.id.pie_chart_curriculum);
 
-        reportViewModel.getStudentCost(1).observe(this, costs -> {
-        });
+        reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
+        clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
+
         return root;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        drawIncome();
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        reportViewModel.getDateCost(year, month)
+                .observe(this, costs -> drawIncome(costs, pieChart, getString(R.string.year_x_month_x_income, year, month)));
+        Map<String, Double> map = clockViewModel.getDateCost(
+                Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month));
+        drawIncome(map, pieChartCurriculum, getString(R.string.year_x_month_x_curriculum_income, year, month));
     }
 
     @Override
@@ -66,23 +80,23 @@ public class ReportFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void drawIncome() {
+    private void drawIncome(Map<String, Double> mapCost, PieChart pieChart, String title) {
         //饼状图
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraOffsets(5, 10, 5, 5);
 
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
+        pieChart.setDragDecelerationFrictionCoef(1f);
         //设置中间文件
-        pieChart.setCenterText("2019年12收入情况");
-        pieChart.setCenterTextSize(32);
+        pieChart.setCenterText(title);
+        pieChart.setCenterTextSize(24);
         pieChart.setCenterTextColor(Color.BLACK);
 
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(Color.WHITE);
 
         pieChart.setTransparentCircleColor(Color.WHITE);
-        pieChart.setTransparentCircleAlpha(110);
+        pieChart.setTransparentCircleAlpha(255);
 
         pieChart.setHoleRadius(50f);
         pieChart.setTransparentCircleRadius(50f);
@@ -98,34 +112,30 @@ public class ReportFragment extends Fragment {
         pieChart.setOnChartValueSelectedListener(onChartValueSelectedListener);
         //模拟数据
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(40, "优秀"));
-        entries.add(new PieEntry(20, "满分"));
-        entries.add(new PieEntry(30, "及格"));
-        entries.add(new PieEntry(10, "不及格"));
-
+        for (Map.Entry<String, Double> entry : mapCost.entrySet()) {
+            entries.add(new PieEntry(entry.getValue().floatValue(), entry.getKey()));
+        }
         //设置数据
-        setData(entries);
-//        pieChart.animateY(1400, Easing.EasingFunction.EaseInOutQuad);
-        pieChart.animateXY(1400, 1400);
+        setData(entries, pieChart);
+        pieChart.animateXY(1000, 1000);
         Legend l = pieChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(0f);
-        l.setYOffset(0f);
+        l.setXEntrySpace(10f);
+        l.setYEntrySpace(10f);
+        l.setYOffset(10f);
 
         // 输入标签样式
         pieChart.setEntryLabelColor(Color.WHITE);
         pieChart.setEntryLabelTextSize(20f);
         //设置数据
-
     }
 
-    private void setData(ArrayList<PieEntry> entries) {
-        PieDataSet dataSet = new PieDataSet(entries, "三年级一班");
-        dataSet.setSliceSpace(3f);
+    private void setData(ArrayList<PieEntry> entries, PieChart pieChart) {
+        PieDataSet dataSet = new PieDataSet(entries, "");
+        dataSet.setSliceSpace(5f);
         dataSet.setSelectionShift(5f);
         //数据和颜色
         ArrayList<Integer> colors = new ArrayList<>();
@@ -141,6 +151,7 @@ public class ReportFragment extends Fragment {
             colors.add(c);
         colors.add(ColorTemplate.getHoloBlue());
         dataSet.setColors(colors);
+        dataSet.setDrawValues(true);
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
@@ -153,7 +164,7 @@ public class ReportFragment extends Fragment {
         pieChart.invalidate();
     }
 
-    private OnChartValueSelectedListener onChartValueSelectedListener=new OnChartValueSelectedListener() {
+    private OnChartValueSelectedListener onChartValueSelectedListener = new OnChartValueSelectedListener() {
         @Override
         public void onValueSelected(Entry e, Highlight h) {
 

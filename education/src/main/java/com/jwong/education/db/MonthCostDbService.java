@@ -117,4 +117,12 @@ public class MonthCostDbService {
     }
 
 
+    /**
+     * 查询所有数据
+     */
+    public List<StudentMonthCost> searchCost(int year, int month) {
+        return studentMonthCostDao.queryBuilder().where(StudentMonthCostDao.Properties.Year.eq(year),
+                StudentMonthCostDao.Properties.Month.eq(month)).build().list();
+    }
+
 }

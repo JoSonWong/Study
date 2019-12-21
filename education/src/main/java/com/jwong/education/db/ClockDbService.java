@@ -147,4 +147,12 @@ public class ClockDbService {
                 .buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
+
+    /**
+     * 查询所有数据
+     */
+    public List<ClockRecord> searchClockRecord(Date from, Date to) {
+        return clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.ClockType.eq(0), ClockRecordDao.Properties.ClockTime.ge(from),
+                ClockRecordDao.Properties.ClockTime.le(to)).build().list();
+    }
 }

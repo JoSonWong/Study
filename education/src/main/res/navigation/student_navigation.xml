@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_student_tuition"
-        android:name="com.jwong.education.ui.student.StudentCostFragment"
+        android:name="com.jwong.education.ui.student.StudentCostDetailFragment"
         android:label="@string/tuition"
-        tools:layout="@layout/fragment_student_tuition" />
+        tools:layout="@layout/activity_cost_detail" />
 </navigation>

@@ -15,7 +15,9 @@ import com.jwong.education.db.StudentCurriculumDbService;
 import com.jwong.education.dto.CurriculumDTO;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClockViewModel extends ViewModel {
 
@@ -97,4 +99,25 @@ public class ClockViewModel extends ViewModel {
                 .searchAllGroupByCurriculumAndTime(5));
     }
 
+
+    public List<ClockRecord> getMonthClockRecordList(Date from, Date to) {
+        return ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchClockRecord(from, to);
+    }
+
+    public Map<String, Double> getDateCost(Date from, Date to) {
+        List<ClockRecord> list = getMonthClockRecordList(from, to);
+        Map<String, Double> map = new HashMap<>();
+        for (ClockRecord cost : list) {
+            String key = cost.getCurriculumName();
+            Double existDiscountPrice;
+            if ((existDiscountPrice = map.get(key)) != null) {
+                double discountPrice = existDiscountPrice + cost.getCurriculumDiscountPrice();
+                map.put(key, discountPrice);
+            } else {
+                map.put(key, cost.getCurriculumDiscountPrice());
+            }
+        }
+        return map;
+    }
 }

@@ -3,8 +3,6 @@ package com.jwong.education.ui.student;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,22 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
-import com.jwong.education.dao.Student;
 import com.jwong.education.dao.StudentMonthCost;
 import com.jwong.education.ui.clock.ClockViewModel;
-import com.jwong.education.ui.report.CostAdapter;
 import com.jwong.education.ui.report.CostStatisticsAdapter;
 import com.jwong.education.ui.report.ReportViewModel;
+import com.jwong.education.util.Utils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class StudentCostFragment extends Fragment implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
 
@@ -55,7 +45,7 @@ public class StudentCostFragment extends Fragment implements View.OnClickListene
         setHasOptionsMenu(true);
     }
 
-
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_student_tuition, container, false);
@@ -64,11 +54,8 @@ public class StudentCostFragment extends Fragment implements View.OnClickListene
                 LinearLayoutManager.VERTICAL, false));
         rvTuition.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
-
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
-
         return root;
     }
 
@@ -171,29 +158,15 @@ public class StudentCostFragment extends Fragment implements View.OnClickListene
 
 
     private StudentMonthCost createMonthCost(int yearValue, int monthValue) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, yearValue);
-        calendar.set(Calendar.MONTH, monthValue - 1);
-        int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int firstDay = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
-        calendar.set(Calendar.DAY_OF_MONTH, lastDay);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        Date to = calendar.getTime();
-        calendar.set(Calendar.DAY_OF_MONTH, firstDay);
-        calendar.set(Calendar.HOUR_OF_DAY, 00);
-        calendar.set(Calendar.MINUTE, 00);
-        calendar.set(Calendar.SECOND, 00);
-        Date from = calendar.getTime();
-        List<ClockRecord> list = clockViewModel.getStudentClockRecordList(StudentActivity.studentId, from, to);
+        List<ClockRecord> list = clockViewModel.getStudentClockRecordList(StudentActivity.studentId,
+                Utils.getYearMonthFirstDate(yearValue, monthValue), Utils.getYearMonthLastDate(yearValue, monthValue));
         if (list != null && !list.isEmpty()) {
             StudentMonthCost monthCost = new StudentMonthCost();
             monthCost.setStudentId(StudentActivity.studentId);
             monthCost.setCostType(0);
             monthCost.setCostName(getString(R.string.curriculum_cost));
-            monthCost.setYear(calendar.get(Calendar.YEAR));
-            monthCost.setMonth(calendar.get(Calendar.MONTH) + 1);
+            monthCost.setYear(yearValue);
+            monthCost.setMonth(monthValue);
             double price = 0;
             double discountPrice = 0;
             for (ClockRecord record : list) {

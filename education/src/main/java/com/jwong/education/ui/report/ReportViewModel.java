@@ -20,10 +20,12 @@ public class ReportViewModel extends ViewModel {
 
     private MutableLiveData<List<StudentMonthCost>> data;
     private MutableLiveData<List<StudentMonthCost>> dataStatistic;
+    private MutableLiveData<Map<String, Double>> dataMonth;
 
     public ReportViewModel() {
         data = new MutableLiveData<>();
         dataStatistic = new MutableLiveData<>();
+        dataMonth = new MutableLiveData<>();
     }
 
     public LiveData<List<StudentMonthCost>> getStudentCost(long studentId) {
@@ -48,6 +50,7 @@ public class ReportViewModel extends ViewModel {
 
 
     public LiveData<List<StudentMonthCost>> getStudentCost(long studentId, int year, int month) {
+        Log.d(getClass().getSimpleName(), "查询学生费用信息 studentId：" + studentId + " year：" + year + " month：" + month);
         data.postValue(MonthCostDbService.getInstance(StudyApplication.getDbController()).searchCost(studentId, year, month));
         return data;
     }
@@ -110,6 +113,21 @@ public class ReportViewModel extends ViewModel {
     }
 
 
-
+    public LiveData<Map<String, Double>> getDateCost(int year, int month) {
+        List<StudentMonthCost> list = MonthCostDbService.getInstance(StudyApplication.getDbController()).searchCost(year, month);
+        Map<String, Double> map = new HashMap<>();
+        for (StudentMonthCost cost : list) {
+            String key = cost.getCostName();
+            Double existDiscountPrice;
+            if ((existDiscountPrice = map.get(key)) != null) {
+                double discountPrice = existDiscountPrice + cost.getDiscountPrice();
+                map.put(key, discountPrice);
+            } else {
+                map.put(key, cost.getDiscountPrice());
+            }
+        }
+        dataMonth.postValue(map);
+        return dataMonth;
+    }
 
 }
