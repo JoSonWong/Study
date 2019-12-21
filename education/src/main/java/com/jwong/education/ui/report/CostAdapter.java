@@ -10,9 +10,11 @@ import java.util.List;
 
 public class CostAdapter extends BaseQuickAdapter<StudentMonthCost, BaseViewHolder> {
 
+    private boolean isShowDate;
 
-    public CostAdapter(List<StudentMonthCost> data) {
+    public CostAdapter(List<StudentMonthCost> data, boolean isShowDate) {
         super(R.layout.list_item_cost, data);
+        this.isShowDate = isShowDate;
     }
 
     @Override
@@ -21,6 +23,7 @@ public class CostAdapter extends BaseQuickAdapter<StudentMonthCost, BaseViewHold
         helper.setText(R.id.tv_name, item.getCostName());
         helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
         helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getDiscountPrice()));
-        helper.setText(R.id.tv_date, item.getYear() + "-" + item.getMonth());
+        helper.setText(R.id.tv_date, "");
+        helper.setGone(R.id.tv_date, isShowDate);
     }
 }

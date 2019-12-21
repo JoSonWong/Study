@@ -81,7 +81,6 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
             etGuardian1Phone.setText(student.getGuardian1Phone());
             etGuardian2.setText(student.getGuardian2());
             etGuardian2Phone.setText(student.getGuardian2Phone());
-
             setEditMode(false);
         });
         return root;
@@ -167,7 +166,7 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         student.setGuardian1Phone(etGuardian1Phone.getText().toString());
         student.setGuardian2(etGuardian2.getText().toString());
         student.setGuardian2Phone(etGuardian2Phone.getText().toString());
-        studentViewModel.updateStudent(student);
+        studentViewModel.update(student);
         Log.d(getClass().getSimpleName(), "保持学生信息");
     }
 

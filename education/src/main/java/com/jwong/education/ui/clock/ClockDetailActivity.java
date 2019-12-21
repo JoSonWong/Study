@@ -81,16 +81,26 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_nav_menu, menu);
+        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
+        moreItem.setIcon(R.drawable.ic_delete_white_24dp);
+        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_ok:
-
+            case Menu.FIRST:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.delete_record)
+                        .setMessage(getString(R.string.delete_curriculum_x_time_x_clock_record, clockRecordDTO.getCurriculumName(),
+                                FormatUtils.convert2DateTime(clockRecordDTO.getClockTime())))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                            clockViewModel.delete(clockRecordDTO.getCurriculumId(), clockRecordDTO.getClockTime());
+                            Toast.makeText(this, R.string.delete_record_success, Toast.LENGTH_SHORT).show();
+                            finish();
+                        });
+                builder.create().show();
                 break;
             case android.R.id.home:// 点击返回图标事件
                 this.finish();
@@ -130,7 +140,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         ClockRecord clockRecord = (ClockRecord) adapter.getData().get(position);
         View viewInput = LayoutInflater.from(this).inflate(R.layout.dlg_clock_record_detail, null);
         TextView tvStudentId = viewInput.findViewById(R.id.tv_student_id);
-        tvStudentId.setText(getString(R.string.student_id_x, clockRecord.getStudentId() + ""));
+        tvStudentId.setText(getString(R.string.student_code_x, FormatUtils.studentCodeFormat(clockRecord.getStudentId())));
         TextView tvStudentName = viewInput.findViewById(R.id.tv_student_name);
         tvStudentName.setText(getString(R.string.student_name_x, clockRecord.getStudentName()));
 

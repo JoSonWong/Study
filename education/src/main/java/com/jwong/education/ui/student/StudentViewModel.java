@@ -20,8 +20,8 @@ public class StudentViewModel extends ViewModel {
         studentData = new MutableLiveData<>();
     }
 
-    public LiveData<List<Student>> getStudentList() {
-        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
+    public LiveData<List<Student>> getStudentList(int type) {
+        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchByType(type));
         return data;
     }
 
@@ -30,13 +30,13 @@ public class StudentViewModel extends ViewModel {
         return studentData;
     }
 
-    public void addStudent(Student student) {
+    public void insert(Student student) {
         StudentDbService.getInstance(StudyApplication.getDbController()).insert(student);
-        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
+        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchByType(student.getStudentType()));
     }
 
-    public void updateStudent(Student student) {
+    public void update(Student student) {
         StudentDbService.getInstance(StudyApplication.getDbController()).update(student);
-        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchAll());
+        data.postValue(StudentDbService.getInstance(StudyApplication.getDbController()).searchByType(student.getStudentType()));
     }
 }

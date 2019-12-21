@@ -1,8 +1,9 @@
 <resources>
+
     <string-array name="student_types">
-        <item>试听</item>
-        <item>在学</item>
-        <item>归档</item>
+        <item>@string/try_listen</item>
+        <item>@string/studying</item>
+        <item>@string/finished</item>
     </string-array>
 
     <string-array name="sex_types">

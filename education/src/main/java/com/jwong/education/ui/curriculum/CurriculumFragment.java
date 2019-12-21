@@ -62,7 +62,7 @@ public class CurriculumFragment extends Fragment implements BaseQuickAdapter.OnI
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Curriculum curriculum = settingViewModel.getCurriculumList().getValue().get(position);
+        Curriculum curriculum = (Curriculum) adapter.getData().get(position);
         View viewInput = LayoutInflater.from(getContext()).inflate(R.layout.dlg_input_curriculum, null);
         EditText etName = viewInput.findViewById(R.id.et_name);
         etName.setText(curriculum.getName());

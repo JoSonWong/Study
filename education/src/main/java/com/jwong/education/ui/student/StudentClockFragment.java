@@ -27,6 +27,7 @@ import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.ui.clock.ClockRecordAdapter;
 import com.jwong.education.ui.clock.ClockViewModel;
+import com.jwong.education.util.FormatUtils;
 
 public class StudentClockFragment extends Fragment implements View.OnClickListener,
         BaseQuickAdapter.OnItemClickListener {
@@ -77,7 +78,8 @@ public class StudentClockFragment extends Fragment implements View.OnClickListen
         ClockRecord clockRecord = (ClockRecord) adapter.getData().get(position);
         View viewInput = LayoutInflater.from(getContext()).inflate(R.layout.dlg_clock_record_detail, null);
         TextView tvStudentId = viewInput.findViewById(R.id.tv_student_id);
-        tvStudentId.setText(getString(R.string.student_id_x, clockRecord.getStudentId() + ""));
+        tvStudentId.setText(getString(R.string.student_code_x,
+                FormatUtils.studentCodeFormat(clockRecord.getStudentId())));
         TextView tvStudentName = viewInput.findViewById(R.id.tv_student_name);
         tvStudentName.setText(getString(R.string.student_name_x, clockRecord.getStudentName()));
         TextView tvCurriculumId = viewInput.findViewById(R.id.tv_curriculum_id);

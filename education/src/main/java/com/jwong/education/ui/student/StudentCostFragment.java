@@ -3,6 +3,7 @@ package com.jwong.education.ui.student;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import com.jwong.education.ui.report.ReportViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -67,33 +69,17 @@ public class StudentCostFragment extends Fragment implements View.OnClickListene
 
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
 
-        reportViewModel.getStudentCost(StudentActivity.studentId).observe(this, costs -> {
+        return root;
+    }
 
-            List<StudentMonthCost> monthCosts = new ArrayList<>();
-            if (costs != null) {
-                Map<String, StudentMonthCost> map = new HashMap<>();
-                for (StudentMonthCost cost : costs) {
-                    String key = cost.getYear() + "-" + cost.getMonth();
-                    StudentMonthCost exist;
-                    if ((exist = map.get(key)) != null) {
-                        exist.setDiscountPrice(exist.getDiscountPrice() + cost.getDiscountPrice());
-                        exist.setPrice(exist.getPrice() + cost.getDiscountPrice());
-                        map.put(key, exist);
-                    } else {
-                        map.put(key, cost);
-                    }
-                }
-                Iterator<Map.Entry<String, StudentMonthCost>> entries = map.entrySet().iterator();
-                while (entries.hasNext()) {
-                    Map.Entry<String, StudentMonthCost> entry = entries.next();
-                    monthCosts.add(entry.getValue());
-                }
-            }
-            CostStatisticsAdapter adapter = new CostStatisticsAdapter(monthCosts);
+    @Override
+    public void onResume() {
+        super.onResume();
+        reportViewModel.getStudentCostStatistic(StudentActivity.studentId).observe(this, costs -> {
+            CostStatisticsAdapter adapter = new CostStatisticsAdapter(costs);
             adapter.setOnItemClickListener(this);
             rvTuition.setAdapter(adapter);
         });
-        return root;
     }
 
     @Override
@@ -171,7 +157,7 @@ public class StudentCostFragment extends Fragment implements View.OnClickListene
                                     StudentMonthCost monthCost = createMonthCost(yearValue, monthValue);
                                     monthCost.setId(studentMonthCost.getId());
                                     if (monthCost != null) {
-                                        reportViewModel.insert(monthCost);
+                                        reportViewModel.insertOrReplace(monthCost);
                                     } else {
                                         Toast.makeText(getContext(), getString(R.string.student_not_clock_record,
                                                 yearValue + "-" + monthValue), Toast.LENGTH_SHORT).show();

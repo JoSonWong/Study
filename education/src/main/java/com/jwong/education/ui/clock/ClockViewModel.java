@@ -87,9 +87,14 @@ public class ClockViewModel extends ViewModel {
     }
 
     public List<ClockRecord> getStudentClockRecordList(long studentId, Date from, Date to) {
-
         return ClockDbService.getInstance(StudyApplication.getDbController())
                 .searchClockRecord(studentId, from, to);
+    }
+
+    public void delete(long curriculumId, Date clockTime) {
+        ClockDbService.getInstance(StudyApplication.getDbController()).deleteCurriculumTimeRecord(curriculumId, clockTime);
+        this.clockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchAllGroupByCurriculumAndTime(5));
     }
 
 }

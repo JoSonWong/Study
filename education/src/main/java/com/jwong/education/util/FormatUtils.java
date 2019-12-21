@@ -53,4 +53,13 @@ public class FormatUtils {
         DecimalFormat df = new DecimalFormat("#.00");
         return df.format(price);
     }
+
+    public static String studentCodeFormat(long id) {
+        return String.format("%0" + 3 + "d", id
+        );
+    }
+
+    public static double doubleFormat(double value) {
+        return Math.round(value * 100) / 100.00;
+    }
 }

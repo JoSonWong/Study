@@ -44,6 +44,8 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.haibin:calendarview:3.6.7'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.github.AlexLiuSheng:AnimSideBar:1.0.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 greendao {
     schemaVersion 4 //当前数据库版本

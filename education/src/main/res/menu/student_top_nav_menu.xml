@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.student.StudentInfoActivity">
+    <item
+        android:id="@+id/action_ok"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:orderInCategory="100"
+        android:title="@android:string/ok"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_all"
+        android:orderInCategory="100"
+        android:title="@string/all"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_studying"
+        android:orderInCategory="100"
+        android:title="@string/studying"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_try"
+        android:orderInCategory="100"
+        android:title="@string/try_listen"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_finish"
+        android:orderInCategory="100"
+        android:title="@string/finished"
+        app:showAsAction="never" />
+</menu>

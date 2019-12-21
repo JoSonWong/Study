@@ -129,12 +129,22 @@ public class ClockDbService {
      */
     public List<ClockRecord> searchClockRecord(long studentId, Date from, Date to) {
         Log.d(getClass().getSimpleName(), "查询学生：" + studentId + " 打卡范围[" + FormatUtils.convert2DateTime(from) + ","
-                + FormatUtils.convert2DateTime(to)+"]");
+                + FormatUtils.convert2DateTime(to) + "]");
         List<ClockRecord> list = clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.StudentId.eq(studentId),
                 ClockRecordDao.Properties.ClockType.eq(0), ClockRecordDao.Properties.ClockTime.ge(from),
                 ClockRecordDao.Properties.ClockTime.le(to)).build().list();
         Log.d(getClass().getSimpleName(), "查询学生打卡记录：" + (list == null ? "NULL" : list.size()));
         return list;
+    }
+
+
+    /**
+     * 删除数据
+     */
+    public void deleteCurriculumTimeRecord(long curriculumId, Date clockTime) {
+        clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.CurriculumId.eq(curriculumId),
+                ClockRecordDao.Properties.ClockTime.eq(clockTime))
+                .buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
 }

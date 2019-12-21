@@ -49,7 +49,7 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setTitle(R.string.select_curriculum);
+            actionBar.setTitle(R.string.select_student);
         }
         recyclerView = findViewById(R.id.rv_student);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -73,7 +73,7 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
             });
         } else {
             studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
-            studentViewModel.getStudentList().observe(this, students -> {
+            studentViewModel.getStudentList(-1).observe(this, students -> {
                 studentAdapter = new StudentAdapter(R.layout.list_item_student, students, true);
                 if (checkedList != null && checkedList.length > 0) {
                     studentAdapter.setCheckedList(checkedList);
@@ -110,7 +110,7 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case  Menu.FIRST:
+            case Menu.FIRST:
                 Intent data = new Intent();
                 List<Student> students = studentAdapter.getCheckedList();
                 List<StudentDTO> studentDTOS = new ArrayList<>();

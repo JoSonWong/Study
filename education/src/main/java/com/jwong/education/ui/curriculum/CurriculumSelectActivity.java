@@ -68,7 +68,7 @@ public class CurriculumSelectActivity extends AppCompatActivity implements BaseQ
             curriculumAdapter.clearChecked();
             curriculumAdapter.notifyDataSetChanged();
         }
-        Curriculum curriculum = settingViewModel.getCurriculumList().getValue().get(position);
+        Curriculum curriculum = (Curriculum) adapter.getData().get(position);
         curriculumAdapter.setCheck(curriculum.getId(), !curriculumAdapter.isCheck(curriculum.getId()));
         curriculumAdapter.notifyItemChanged(position);
     }

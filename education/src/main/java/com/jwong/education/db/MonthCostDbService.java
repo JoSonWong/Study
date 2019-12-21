@@ -106,14 +106,14 @@ public class MonthCostDbService {
     /**
      * 查询所有数据
      */
-    public List<StudentMonthCost> searchCost(long studentId, int year, int month, int costType) {
+    public StudentMonthCost searchCost(long studentId, int year, int month, int costType) {
         Log.d(getClass().getSimpleName(), "searchCost studentId：" + studentId
                 + " year:" + year + " month:" + month + " costType:" + costType);
         return studentMonthCostDao.queryBuilder().where(StudentMonthCostDao.Properties.StudentId.eq(studentId),
                 StudentMonthCostDao.Properties.CostType.eq(costType),
                 StudentMonthCostDao.Properties.Year.eq(year),
                 StudentMonthCostDao.Properties.Month.eq(month))
-                .build().list();
+                .build().unique();
     }
 
 

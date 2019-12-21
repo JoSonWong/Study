@@ -70,16 +70,21 @@ public class StudentDbService {
     /**
      * 按条件查询数据
      */
-    public List<Student> searchByWhere(String name) {
-        QueryBuilder<Student> queryMenu = studentDao.queryBuilder();
-        queryMenu.where(StudentDao.Properties.Name.eq(name));
-        return queryMenu.list();
+    public List<Student> searchByType(int type) {
+        if (type < 0) {
+            return searchAll();
+        } else {
+            QueryBuilder<Student> queryMenu = studentDao.queryBuilder();
+            queryMenu.where(StudentDao.Properties.StudentType.eq(type));
+            return queryMenu.list();
+        }
     }
+
 
     /**
      * 查询所有数据
      */
-    public List<Student> searchAll() {
+    private List<Student> searchAll() {
         return studentDao.queryBuilder().list();
     }
 
@@ -95,6 +100,6 @@ public class StudentDbService {
      */
     public Student searchById(long id) {
         QueryBuilder<Student> queryMenu = studentDao.queryBuilder();
-      return queryMenu.where(StudentDao.Properties.Id.eq(id)).unique();
+        return queryMenu.where(StudentDao.Properties.Id.eq(id)).unique();
     }
 }

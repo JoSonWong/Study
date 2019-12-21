@@ -65,6 +65,13 @@ public class ClockFragment extends Fragment implements View.OnClickListener, Bas
         rvClockHistory.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         clockViewModel.getClockRecordList(5).observe(this, clockRecords -> {
             if (clockRecords != null) {
                 ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords);
@@ -72,7 +79,6 @@ public class ClockFragment extends Fragment implements View.OnClickListener, Bas
                 rvClockHistory.setAdapter(adapter);
             }
         });
-        return root;
     }
 
     @Override

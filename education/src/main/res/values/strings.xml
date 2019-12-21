@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">远洋教育</string>
+    <string name="app_name">慕言教育</string>
     <string name="title_clock">打卡</string>
     <string name="title_student">学生</string>
     <string name="title_report">报表</string>
@@ -41,7 +41,6 @@
     <string name="path_card">补卡</string>
     <string name="clock_detail">打卡详情</string>
     <string name="select_clock_type">选择打卡类型</string>
-    <string name="student_id_x">学生id：%s</string>
     <string name="student_name_x">学生姓名：%s</string>
     <string name="curriculum_id_x">课程id：%s</string>
     <string name="curriculum_name_x">课程名称：%s</string>
@@ -73,6 +72,23 @@
     <string name="cost_price">费用</string>
     <string name="pls_input_cost">请输入费用，如：10.0</string>
     <string name="add_cost">添加费用</string>
+    <string name="update_cost">修改费用</string>
     <string name="add_cost_success">添加费用成功</string>
-
+    <string name="year_x_month_x">%d年%d月</string>
+    <string name="update_cost_success">修改费用成功</string>
+    <string name="rmb_x">¥%s</string>
+    <string name="student_code_x">学号：%s</string>
+    <string name="number">序号</string>
+    <string name="price">价格</string>
+    <string name="project">项目</string>
+    <string name="total_cost">合计费用</string>
+    <string name="select_student">选择学生</string>
+    <string name="delete_curriculum_x_time_x_clock_record">删除"%s：%s"全部打卡记录？</string>
+    <string name="delete_record_success">删除记录成功！</string>
+    <string name="try_listen">试听</string>
+    <string name="studying">在学</string>
+    <string name="finished">已归档</string>
+    <string name="all">全部</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
 </resources>

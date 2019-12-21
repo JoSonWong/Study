@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.jwong.education.R;
 
 
@@ -37,6 +38,7 @@ public class StudentActivity extends AppCompatActivity {
             actionBar.setDisplayShowCustomEnabled(true);
         }
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_student_info, R.id.navigation_student_curriculum,
                 R.id.navigation_student_clock,R.id.navigation_student_tuition).build();

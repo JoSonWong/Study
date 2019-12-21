@@ -30,7 +30,6 @@ import com.jwong.education.dto.StudentDTO;
 public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
 
     private StudentViewModel studentViewModel;
-    private Spinner spinner;
     private RecyclerView recyclerView;
 
     @Override
@@ -48,19 +47,19 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
                 LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
-        spinner = root.findViewById(R.id.spinner);
-        spinner.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.student_types)));
-        spinner.setOnItemSelectedListener(listener);
-        spinner.setSelection(1);
-        studentViewModel.getStudentList().observe(this, students -> {
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        studentViewModel.getStudentList(1).observe(this, students -> {
             StudentAdapter adapter = new StudentAdapter(R.layout.list_item_student, students, false);
             adapter.setOnItemClickListener(this);
             recyclerView.setAdapter(adapter);
         });
-        return root;
     }
-
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -80,7 +79,7 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
                         studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
                         studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
                         studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                studentViewModel.updateStudent(student);
+                studentViewModel.update(student);
             } else if (requestCode == 1200) {
                 StudentDTO studentDTO = (StudentDTO) data.getSerializableExtra("student");
                 Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
@@ -88,36 +87,44 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
                         studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
                         studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
                         studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                studentViewModel.addStudent(student);
+                studentViewModel.insert(student);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
 
-    private AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
-    };
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(getClass().getSimpleName(), "onOptionsItemSelected item:" + item.getItemId());
-        Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
-        startActivityForResult(intent, 1200);
+        switch (item.getItemId()) {
+            case R.id.action_ok:
+                Log.d(getClass().getSimpleName(), "onOptionsItemSelected 添加学生 >>> ");
+                Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
+                startActivityForResult(intent, 1200);
+                break;
+            case R.id.action_all:
+                Log.d(getClass().getSimpleName(), "onOptionsItemSelected 添加学生 >>> ");
+                studentViewModel.getStudentList(-1);
+                break;
+            case R.id.action_studying:
+                studentViewModel.getStudentList(1);
+                break;
+            case R.id.action_try:
+                studentViewModel.getStudentList(0);
+                break;
+            case R.id.action_finish:
+                studentViewModel.getStudentList(2);
+                break;
+            default:
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.top_nav_menu, menu);
+        inflater.inflate(R.menu.student_top_nav_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }
