@@ -23,11 +23,13 @@ public class ClockViewModel extends ViewModel {
 
     private MutableLiveData<List<ClockRecord>> clockRecordList;
     private MutableLiveData<List<ClockRecord>> studentClockRecordList;
+    private MutableLiveData<Map<String, Double>> dataMonth;
 
 
     public ClockViewModel() {
         this.clockRecordList = new MutableLiveData<>();
         this.studentClockRecordList = new MutableLiveData<>();
+        this.dataMonth = new MutableLiveData<>();
     }
 
     public LiveData<List<ClockRecord>> getClockRecordList(int limit) {
@@ -105,7 +107,7 @@ public class ClockViewModel extends ViewModel {
                 .searchClockRecord(from, to);
     }
 
-    public Map<String, Double> getDateCost(Date from, Date to) {
+    public LiveData<Map<String, Double>> getDateCost(Date from, Date to) {
         List<ClockRecord> list = getMonthClockRecordList(from, to);
         Map<String, Double> map = new HashMap<>();
         for (ClockRecord cost : list) {
@@ -118,6 +120,7 @@ public class ClockViewModel extends ViewModel {
                 map.put(key, cost.getCurriculumDiscountPrice());
             }
         }
-        return map;
+        dataMonth.postValue(map);
+        return dataMonth;
     }
 }

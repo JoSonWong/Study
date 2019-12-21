@@ -136,8 +136,10 @@ public class StudentCostDetailFragment extends Fragment implements BaseQuickAdap
         etName.setText(monthCost.getCostName());
         etName.setEnabled(monthCost.getCostType() != 0);
         EditText etPrice = dlgView.findViewById(R.id.et_price);
-        etPrice.setText(monthCost.getDiscountPrice() + "");
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(R.string.update_cost)
+        etPrice.setText(FormatUtils.priceFormat(monthCost.getDiscountPrice()));
+        etPrice.setEnabled(monthCost.getCostType() != 0);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.update_cost)
                 .setView(dlgView)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {

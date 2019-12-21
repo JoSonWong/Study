@@ -91,9 +91,10 @@
     <string name="all">全部</string>
     <string name="year">年</string>
     <string name="month">月</string>
-    <string name="year_x_month_x_income">%d年%d月\n总收入</string>
-    <string name="year_x_month_x_curriculum_income">%d年%d月\n课时费收入</string>
     <string name="other_month">其他月份</string>
     <string name="other_month_cost">查看其他月份费用</string>
-
+    <string name="total_income_x">总收入：¥%s</string>
+    <string name="curriculum_income_x">课时收入：¥%s</string>
+    <string name="total_income">总收入</string>
+    <string name="curriculum_income">课时收入</string>
 </resources>
