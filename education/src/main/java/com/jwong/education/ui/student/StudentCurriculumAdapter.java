@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.StudentCurriculum;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class StudentCurriculumAdapter extends BaseQuickAdapter<StudentCurriculum
 
     @Override
     protected void convert(BaseViewHolder helper, StudentCurriculum item) {
-        helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
+        helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getCurriculum().getName());
-        helper.setText(R.id.tv_price, item.getCurriculum().getPrice() + "");
-        helper.setText(R.id.tv_discount_price, item.getDiscountPrice() + "");
+        helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getCurriculum().getPrice()));
+        helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getDiscountPrice()));
     }
 }

@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +55,9 @@ public class StudentAdapter extends BaseQuickAdapter<Student, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, Student item) {
-        helper.setText(R.id.tv_number, item.getId() + "");
+        helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getName());
+        helper.setText(R.id.tv_student_code, FormatUtils.studentCodeFormat(item.getId()));
         helper.setText(R.id.tv_current_grade, item.getCurrentGrade() + "");
         helper.setImageResource(R.id.iv_select, isCheck(item.getId()) ?
                 R.drawable.ic_checked_24dp : R.drawable.ic_uncheck_24dp);

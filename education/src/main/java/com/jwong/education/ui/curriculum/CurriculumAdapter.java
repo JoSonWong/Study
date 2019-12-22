@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.Curriculum;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +55,9 @@ public class CurriculumAdapter extends BaseQuickAdapter<Curriculum, BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, Curriculum item) {
-        helper.setText(R.id.tv_number, item.getId() + "");
+        helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getName());
-        helper.setText(R.id.tv_price, item.getPrice() + "");
+        helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
         helper.setGone(R.id.iv_select, !isShowCheckBox);
         helper.setImageResource(R.id.iv_select, isCheck(item.getId()) ?
                 R.drawable.ic_checked_24dp : R.drawable.ic_uncheck_24dp);

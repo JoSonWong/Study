@@ -165,18 +165,8 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_month:
-                showMonthPicker();
-                break;
-            case R.id.action_statistic:
-
-                break;
-            case R.id.action_record:
-
-                break;
-            default:
-                break;
+        if (item.getItemId() == R.id.action_month) {
+            showMonthPicker();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -219,7 +209,7 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
         //饼状图
         pieChart.setUsePercentValues(false);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 5, 5, 5);
+        pieChart.setExtraOffsets(0, 0, 0, 0);
         pieChart.setDragDecelerationFrictionCoef(1f);
         //设置中间文件
         pieChart.setCenterText("课时统计");

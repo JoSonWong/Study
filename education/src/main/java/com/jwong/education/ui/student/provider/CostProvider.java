@@ -30,11 +30,11 @@ public class CostProvider extends BaseNodeProvider {
     public void convert(@NotNull BaseViewHolder helper, @Nullable BaseNode data) {
         if (data instanceof CostNode) {
             CostNode item = (CostNode) data;
-            helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
+            helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
             helper.setText(R.id.tv_name, item.getCostName());
             helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
-            helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getDiscountPrice()));
-            helper.setText(R.id.tv_date, "");
+            helper.setText(R.id.tv_discount_price, helper.itemView.getContext()
+                    .getString(R.string.rmb_x, FormatUtils.priceFormat(item.getDiscountPrice())));
             helper.setGone(R.id.tv_date, true);
 //        if (entity.isExpanded()) {
 //            helper.setImageResource(R.id.iv, R.mipmap.arrow_b);

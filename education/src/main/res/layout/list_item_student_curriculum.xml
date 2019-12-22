@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/selector_list_item"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_weight="1"
+        android:gravity="end"
         android:textSize="20sp" />
 
     <TextView
@@ -35,7 +37,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@android:color/holo_green_dark"
+        android:gravity="end"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp" />
 
 </LinearLayout>

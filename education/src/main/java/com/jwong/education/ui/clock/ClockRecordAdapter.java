@@ -20,10 +20,18 @@ public class ClockRecordAdapter extends BaseQuickAdapter<ClockRecord, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, ClockRecord item) {
+        helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getCurriculumName());
         helper.setText(R.id.tv_clock_type, helper.itemView.getResources()
                 .getStringArray(R.array.clock_types)[item.getClockType()]);
         helper.setGone(R.id.tv_clock_type, !this.isShowClockType);
         helper.setText(R.id.tv_date_time, FormatUtils.convert2DateTime(item.getClockTime()));
+        int color = R.color.colorPrimary;
+        if (item.getClockType() == 1) {
+            color = android.R.color.holo_orange_dark;
+        } else if (item.getClockType() == 2) {
+            color = android.R.color.holo_red_dark;
+        }
+        helper.setTextColor(R.id.tv_clock_type, helper.itemView.getContext().getResources().getColor(color));
     }
 }

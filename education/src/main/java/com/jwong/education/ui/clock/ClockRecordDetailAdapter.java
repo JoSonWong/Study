@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.List;
 
@@ -16,12 +17,12 @@ public class ClockRecordDetailAdapter extends BaseQuickAdapter<ClockRecord, Base
 
     @Override
     protected void convert(BaseViewHolder helper, ClockRecord item) {
-        helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
+        helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getStudentName());
-        helper.setText(R.id.tv_discount_price, item.getCurriculumDiscountPrice() + "");
+        helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getCurriculumDiscountPrice()));
         helper.setText(R.id.tv_clock_type, helper.itemView.getContext().getResources()
                 .getStringArray(R.array.clock_types)[item.getClockType()]);
-        int color = android.R.color.holo_green_dark;
+        int color = R.color.colorPrimary;
         if (item.getClockType() == 1) {
             color = android.R.color.holo_orange_dark;
         } else if (item.getClockType() == 2) {

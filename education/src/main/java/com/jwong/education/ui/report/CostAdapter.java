@@ -19,7 +19,7 @@ public class CostAdapter extends BaseQuickAdapter<StudentMonthCost, BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, StudentMonthCost item) {
-        helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
+        helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getCostName());
         helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
         helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getDiscountPrice()));

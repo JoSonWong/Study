@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_student_clock"
         android:icon="@drawable/ic_clock_black_24dp"
-        android:title="@string/clock_record" />
+        android:title="@string/clock" />
 
     <item
         android:id="@+id/navigation_student_tuition"

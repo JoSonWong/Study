@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +60,6 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
         tvStudent.setOnClickListener(this);
         tvCurriculum = root.findViewById(R.id.tv_curriculum);
         tvCurriculum.setOnClickListener(this);
-        root.findViewById(R.id.tv_more).setOnClickListener(this);
         rvStudent = root.findViewById(R.id.rv_student);
         rvClockHistory = root.findViewById(R.id.rv_clock_history);
         rvStudent.setLayoutManager(new GridLayoutManager(getContext(), 4));
@@ -74,7 +75,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
     @Override
     public void onResume() {
         super.onResume();
-        clockViewModel.getClockRecordList(5).observe(this, clockRecords -> {
+        clockViewModel.getClockRecordList(10).observe(this, clockRecords -> {
             if (clockRecords != null) {
                 ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords, false);
                 adapter.setOnItemClickListener(this);
@@ -106,10 +107,6 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
             case R.id.tv_student:
                 startSelectStudentActivity();
                 break;
-            case R.id.tv_more:
-                Intent intent = new Intent(getContext(), ClockHistoryActivity.class);
-                startActivity(intent);
-                break;
             default:
                 break;
         }
@@ -138,10 +135,19 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
         startActivityForResult(intent, 1200);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
+        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
+        moreItem.setIcon(R.drawable.ic_list_white_24dp);
+        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(getClass().getSimpleName(), "onOptionsItemSelected item:" + item.getItemId());
+        Intent intent = new Intent(getContext(), ClockHistoryActivity.class);
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -178,6 +184,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
                         }
                     }
                 }
+                rvStudent.setLayoutManager(new GridLayoutManager(getContext(), 4));
                 studentAdapter = new StudentClockAdapter(students);
                 rvStudent.setAdapter(studentAdapter);
                 tvStudent.setVisibility(View.VISIBLE);

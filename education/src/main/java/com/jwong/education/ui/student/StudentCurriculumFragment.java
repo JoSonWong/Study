@@ -74,11 +74,11 @@ public class StudentCurriculumFragment extends Fragment implements OnItemClickLi
         etName.setEnabled(false);
         TextView tvPrice = viewInput.findViewById(R.id.tv_price);
         tvPrice.setText(R.string.discount_price);
-        tvPrice.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        tvPrice.setTextColor(getResources().getColor(R.color.colorPrimary));
         EditText etPrice = viewInput.findViewById(R.id.et_price);
         etPrice.setText(FormatUtils.priceFormat(studentCurriculum.getDiscountPrice()));
         etPrice.setHint(R.string.pls_input_discount_price);
-        etPrice.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        etPrice.setTextColor(getResources().getColor(R.color.colorPrimary));
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.update_discount_price).setView(viewInput)
                 .setNegativeButton(android.R.string.cancel, null)

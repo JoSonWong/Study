@@ -54,7 +54,7 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_cost_detail, container, false);
+        View root = inflater.inflate(R.layout.fragment_student_cost_detail, container, false);
         studentId = StudentActivity.studentId;
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);

@@ -9,14 +9,14 @@
         android:orderInCategory="100"
         android:title="@android:string/ok"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_statistic"
-        android:orderInCategory="100"
-        android:title="@string/clock_statistic"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_record"
-        android:orderInCategory="100"
-        android:title="@string/clock_record"
-        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/action_statistic"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="@string/clock_statistic"-->
+<!--        app:showAsAction="never" />-->
+<!--    <item-->
+<!--        android:id="@+id/action_record"-->
+<!--        android:orderInCategory="100"-->
+<!--        android:title="@string/clock_record"-->
+<!--        app:showAsAction="never" />-->
 </menu>

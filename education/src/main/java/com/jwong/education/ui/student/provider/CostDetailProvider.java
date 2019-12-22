@@ -29,13 +29,14 @@ public class CostDetailProvider extends BaseNodeProvider {
     public void convert(@NotNull BaseViewHolder helper, @Nullable BaseNode data) {
         if (data instanceof CostDetailNode) {
             CostDetailNode item = (CostDetailNode) data;
-            helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
-            helper.setVisible(R.id.tv_number, false);
+//            helper.setText(R.id.tv_number, (helper.getAdapterPosition() + 1) + "");
+//            helper.setVisible(R.id.tv_number, false);
             helper.setText(R.id.tv_name, item.getCurriculumName());
             helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
             helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getDiscountPrice()));
             helper.setText(R.id.tv_count, item.getCount() + "");
-            helper.setText(R.id.tv_total, FormatUtils.priceFormat((item.getCount() * item.getDiscountPrice())));
+            helper.setText(R.id.tv_total, helper.itemView.getContext().getString(R.string.rmb_x,
+                    FormatUtils.priceFormat((item.getCount() * item.getDiscountPrice()))));
         }
     }
 }

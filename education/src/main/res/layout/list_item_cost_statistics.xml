@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/selector_list_item"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -31,8 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_weight="1"
+        android:gravity="end"
         android:text="@string/discount_price"
-        android:textColor="@android:color/holo_green_dark"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp" />
 
 

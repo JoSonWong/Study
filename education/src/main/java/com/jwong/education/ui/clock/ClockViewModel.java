@@ -24,14 +24,14 @@ public class ClockViewModel extends ViewModel {
     private MutableLiveData<List<ClockRecord>> clockRecordList;
     private MutableLiveData<List<ClockRecord>> studentClockRecordList;
     private MutableLiveData<Map<String, Double>> dataMonth;
-    private MutableLiveData<Map<String, Integer>> studentCurriculunStatistic;
+    private MutableLiveData<Map<String, Integer>> studentCurriculumStatistic;
 
 
     public ClockViewModel() {
         this.clockRecordList = new MutableLiveData<>();
         this.studentClockRecordList = new MutableLiveData<>();
         this.dataMonth = new MutableLiveData<>();
-        this.studentCurriculunStatistic = new MutableLiveData<>();
+        this.studentCurriculumStatistic = new MutableLiveData<>();
     }
 
     public LiveData<List<ClockRecord>> getClockRecordList(int limit) {
@@ -82,7 +82,7 @@ public class ClockViewModel extends ViewModel {
         Date date = new Date();
         insertClockRecord(date, curriculum.getId(), curriculum.getName(), curriculum.getPrice(), students, 0);
         this.clockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
-                .searchAllGroupByCurriculumAndTime(5));
+                .searchAllGroupByCurriculumAndTime(10));
     }
 
 
@@ -101,7 +101,7 @@ public class ClockViewModel extends ViewModel {
     public void delete(long curriculumId, Date clockTime) {
         ClockDbService.getInstance(StudyApplication.getDbController()).deleteCurriculumTimeRecord(curriculumId, clockTime);
         this.clockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
-                .searchAllGroupByCurriculumAndTime(5));
+                .searchAllGroupByCurriculumAndTime(10));
     }
 
 
@@ -142,7 +142,7 @@ public class ClockViewModel extends ViewModel {
                 map.put(key, 1);
             }
         }
-        studentCurriculunStatistic.postValue(map);
-        return studentCurriculunStatistic;
+        studentCurriculumStatistic.postValue(map);
+        return studentCurriculumStatistic;
     }
 }

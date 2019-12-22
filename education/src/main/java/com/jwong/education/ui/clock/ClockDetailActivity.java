@@ -44,7 +44,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
     private ClockViewModel clockViewModel;
     private ClockRecordDetailAdapter adapter;
     private ClockRecordDTO clockRecordDTO;
-    private TextView tvCurriculum, tvClockTime;
+    private TextView tvCurriculum, tvClockTime, tvPrice;
     private int clockType;
 
     @Override
@@ -60,6 +60,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
             actionBar.setTitle(R.string.clock_detail);
         }
         tvCurriculum = findViewById(R.id.tv_curriculum);
+        tvPrice = findViewById(R.id.tv_price);
         tvClockTime = findViewById(R.id.tv_clock_time);
         recyclerView = findViewById(R.id.rv_clock_record);
         findViewById(R.id.btn_patch_card).setOnClickListener(this);
@@ -67,6 +68,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         tvCurriculum.setText(clockRecordDTO.getCurriculumName());
+        tvPrice.setText(getString(R.string.rmb_x, FormatUtils.priceFormat(clockRecordDTO.getCurriculumPrice())));
         tvClockTime.setText(FormatUtils.convert2DateTime(clockRecordDTO.getClockTime()));
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         clockViewModel.getClockRecordDetailList(clockRecordDTO.getCurriculumId(),
