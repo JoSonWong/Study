@@ -24,12 +24,14 @@ public class ClockViewModel extends ViewModel {
     private MutableLiveData<List<ClockRecord>> clockRecordList;
     private MutableLiveData<List<ClockRecord>> studentClockRecordList;
     private MutableLiveData<Map<String, Double>> dataMonth;
+    private MutableLiveData<Map<String, Integer>> studentCurriculunStatistic;
 
 
     public ClockViewModel() {
         this.clockRecordList = new MutableLiveData<>();
         this.studentClockRecordList = new MutableLiveData<>();
         this.dataMonth = new MutableLiveData<>();
+        this.studentCurriculunStatistic = new MutableLiveData<>();
     }
 
     public LiveData<List<ClockRecord>> getClockRecordList(int limit) {
@@ -84,15 +86,16 @@ public class ClockViewModel extends ViewModel {
     }
 
 
-    public LiveData<List<ClockRecord>> getStudentClockRecordList(long studentId) {
-        this.studentClockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
-                .searchClockRecordByStudentId(studentId));
-        return studentClockRecordList;
-    }
+//    public LiveData<List<ClockRecord>> getStudentClockRecordList(long studentId) {
+//        this.studentClockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
+//                .searchClockRecordByStudentId(studentId));
+//        return studentClockRecordList;
+//    }
 
-    public List<ClockRecord> getStudentClockRecordList(long studentId, Date from, Date to) {
-        return ClockDbService.getInstance(StudyApplication.getDbController())
-                .searchClockRecord(studentId, from, to);
+    public LiveData<List<ClockRecord>> getStudentAllClockRecordList(long studentId, Date from, Date to) {
+        this.studentClockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchAllClockRecord(studentId, from, to));
+        return studentClockRecordList;
     }
 
     public void delete(long curriculumId, Date clockTime) {
@@ -122,5 +125,24 @@ public class ClockViewModel extends ViewModel {
         }
         dataMonth.postValue(map);
         return dataMonth;
+    }
+
+
+    public LiveData<Map<String, Integer>> getStudentCurriculumStatistic(long studentId, Date from, Date to) {
+        List<ClockRecord> list = ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchClockRecord(studentId, from, to);
+        Map<String, Integer> map = new HashMap<>();
+        for (ClockRecord record : list) {
+            String key = record.getCurriculumName();
+            Integer count;
+            if ((count = map.get(key)) != null) {
+                count = count + 1;
+                map.put(key, count);
+            } else {
+                map.put(key, 1);
+            }
+        }
+        studentCurriculunStatistic.postValue(map);
+        return studentCurriculunStatistic;
     }
 }

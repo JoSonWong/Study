@@ -3,7 +3,6 @@ package com.jwong.education.ui.student;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,8 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -26,19 +23,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.StudentMonthCost;
-import com.jwong.education.ui.clock.ClockViewModel;
-import com.jwong.education.ui.report.CostAdapter;
+import com.jwong.education.dto.entity.CostNode;
 import com.jwong.education.ui.report.ReportViewModel;
 import com.jwong.education.util.FormatUtils;
-import com.jwong.education.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class StudentCostDetailFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
+public class StudentCostDetailFragment extends Fragment implements OnItemClickListener {
 
     private ReportViewModel reportViewModel;
     private StudentViewModel studentViewModel;
@@ -46,6 +43,7 @@ public class StudentCostDetailFragment extends Fragment implements BaseQuickAdap
     private TextView tvStudentName, tvStudentId, tvGrade, tvYearMonth, tvTotalCost;
     private int year, month;
     private long studentId;
+    private CostTreeAdapter adapter = new CostTreeAdapter();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,41 +70,37 @@ public class StudentCostDetailFragment extends Fragment implements BaseQuickAdap
                 LinearLayoutManager.VERTICAL, false));
         rvCostDetail.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
+        rvCostDetail.setAdapter(adapter);
+
         studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         studentViewModel.getStudent(studentId).observe(this, student -> {
             tvStudentName.setText(student.getName());
-            tvStudentId.setText(getString(R.string.student_code_x,
-                    FormatUtils.studentCodeFormat(student.getId())));
+            tvStudentId.setText(getString(R.string.student_code_x, FormatUtils.studentCodeFormat(student.getId())));
             tvGrade.setText(student.getCurrentGrade());
         });
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
-        reportViewModel.getStudentCost(studentId, year, month).observe(this, costs -> {
-            Log.d(getClass().getSimpleName(), "学费回调>>>>>");
-            setCostInfo(costs);
-        });
+        reportViewModel.getStudentCost(studentId, year, month).observe(this, costs ->
+                setCostInfo(costs));
         return root;
     }
 
-    private void setCostInfo(List<StudentMonthCost> costs) {
+    private void setCostInfo(List<CostNode> nodes) {
         double totalCost = 0;
-        if (costs != null && !costs.isEmpty()) {
-            for (StudentMonthCost cost : costs) {
-                totalCost = totalCost + cost.getDiscountPrice();
+        List<BaseNode> baseNodes = new ArrayList<>();
+        if (nodes != null && !nodes.isEmpty()) {
+            for (CostNode node : nodes) {
+                totalCost += node.getDiscountPrice();
+                baseNodes.add(node);
             }
-            CostAdapter adapter = new CostAdapter(costs, false);
-            adapter.setOnItemClickListener(this);
-            rvCostDetail.setAdapter(adapter);
-        } else {
-            CostAdapter adapter = new CostAdapter(new ArrayList<>(), false);
-            adapter.setOnItemClickListener(this);
-            rvCostDetail.setAdapter(adapter);
         }
+        adapter.setNewData(baseNodes);
+        adapter.setOnItemClickListener(this);
         tvTotalCost.setText(getString(R.string.rmb_x, FormatUtils.priceFormat(totalCost)));
         tvYearMonth.setText(getString(R.string.year_x_month_x, year, month));
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.student_cost_detail_top_nav_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -130,34 +124,39 @@ public class StudentCostDetailFragment extends Fragment implements BaseQuickAdap
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        StudentMonthCost monthCost = (StudentMonthCost) adapter.getData().get(position);
-        View dlgView = LayoutInflater.from(getContext()).inflate(R.layout.dlg_input_cost, null);
-        EditText etName = dlgView.findViewById(R.id.et_name);
-        etName.setText(monthCost.getCostName());
-        etName.setEnabled(monthCost.getCostType() != 0);
-        EditText etPrice = dlgView.findViewById(R.id.et_price);
-        etPrice.setText(FormatUtils.priceFormat(monthCost.getDiscountPrice()));
-        etPrice.setEnabled(monthCost.getCostType() != 0);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.update_cost)
-                .setView(dlgView)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    if (!TextUtils.isEmpty(etName.getText()) && !TextUtils.isEmpty(etPrice.getText())) {
-                        monthCost.setCostName(etName.getText().toString());
-                        double price = Double.parseDouble(etPrice.getText().toString());
-                        if (monthCost.getCostType() != 0) {
-                            monthCost.setPrice(price);
+        if (adapter.getData().get(position) instanceof CostNode) {
+            CostNode costNode = (CostNode) adapter.getData().get(position);
+            View dlgView = LayoutInflater.from(getContext()).inflate(R.layout.dlg_input_cost, null);
+            EditText etName = dlgView.findViewById(R.id.et_name);
+            etName.setText(costNode.getCostName());
+            etName.setEnabled(costNode.getCostType() != 0);
+            EditText etPrice = dlgView.findViewById(R.id.et_price);
+            etPrice.setText(FormatUtils.priceFormat(costNode.getDiscountPrice()));
+            etPrice.setEnabled(costNode.getCostType() != 0);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.update_cost)
+                    .setView(dlgView)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                        if (!TextUtils.isEmpty(etName.getText()) && !TextUtils.isEmpty(etPrice.getText())) {
+                            StudentMonthCost monthCost = new StudentMonthCost(costNode.getCostId(), costNode.getStudentId(), costNode.getYear(),
+                                    costNode.getMonth(), costNode.getCostType(), costNode.getCostName(), costNode.getPrice(), costNode.getDiscountPrice());
+                            monthCost.setCostName(etName.getText().toString());
+                            double price = Double.parseDouble(etPrice.getText().toString());
+                            if (monthCost.getCostType() != 0) {
+                                monthCost.setPrice(price);
+                            }
+                            monthCost.setDiscountPrice(price);
+                            reportViewModel.update(monthCost);
+                            Toast.makeText(getContext(), R.string.update_cost_success, Toast.LENGTH_SHORT).show();
+                            reportViewModel.getStudentCost(studentId, this.year, this.month);
+                        } else {
+                            Toast.makeText(getContext(), TextUtils.isEmpty(etName.getText()) ? R.string.pls_input_cost_name
+                                    : R.string.pls_input_cost, Toast.LENGTH_SHORT).show();
                         }
-                        monthCost.setDiscountPrice(price);
-                        reportViewModel.update(monthCost);
-                        Toast.makeText(getContext(), R.string.update_cost_success, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), TextUtils.isEmpty(etName.getText()) ? R.string.pls_input_cost_name
-                                : R.string.pls_input_cost, Toast.LENGTH_SHORT).show();
-                    }
-                });
-        builder.create().show();
+                    });
+            builder.create().show();
+        }
     }
 
     private void showInput() {
@@ -180,6 +179,7 @@ public class StudentCostDetailFragment extends Fragment implements BaseQuickAdap
                         cost.setDiscountPrice(price);
                         reportViewModel.insert(cost);
                         Toast.makeText(getActivity(), R.string.add_cost_success, Toast.LENGTH_SHORT).show();
+                        reportViewModel.getStudentCost(studentId, this.year, this.month);
                     } else {
                         Toast.makeText(getContext(), TextUtils.isEmpty(etName.getText()) ? R.string.pls_input_cost_name
                                 : R.string.pls_input_cost, Toast.LENGTH_SHORT).show();

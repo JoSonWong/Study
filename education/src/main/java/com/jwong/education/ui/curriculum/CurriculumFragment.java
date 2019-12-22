@@ -22,10 +22,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.Curriculum;
+import com.jwong.education.util.FormatUtils;
 
-public class CurriculumFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
+public class CurriculumFragment extends Fragment implements OnItemClickListener {
 
     private CurriculumViewModel settingViewModel;
     private RecyclerView recyclerView;
@@ -48,11 +50,7 @@ public class CurriculumFragment extends Fragment implements BaseQuickAdapter.OnI
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         settingViewModel.getCurriculumList().observe(this, curriculumList -> {
-            for (Curriculum item : curriculumList) {
-                Log.d(getClass().getSimpleName(), "课程id：" + item.getId()
-                        + " 名称：" + item.getName() + " 原价：" + item.getPrice());
-            }
-            curriculumAdapter = new CurriculumAdapter(R.layout.list_item_curriculum, curriculumList, false);
+            curriculumAdapter = new CurriculumAdapter(curriculumList, false);
             curriculumAdapter.setOnItemClickListener(this);
             recyclerView.setAdapter(curriculumAdapter);
         });
@@ -67,7 +65,7 @@ public class CurriculumFragment extends Fragment implements BaseQuickAdapter.OnI
         EditText etName = viewInput.findViewById(R.id.et_name);
         etName.setText(curriculum.getName());
         EditText etPrice = viewInput.findViewById(R.id.et_price);
-        etPrice.setText(curriculum.getPrice() + "");
+        etPrice.setText(FormatUtils.priceFormat(curriculum.getPrice()));
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.update_curriculum).setView(viewInput)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
@@ -112,7 +110,7 @@ public class CurriculumFragment extends Fragment implements BaseQuickAdapter.OnI
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.top_nav_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }

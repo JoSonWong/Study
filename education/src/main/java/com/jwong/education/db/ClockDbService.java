@@ -35,7 +35,7 @@ public class ClockDbService {
     /**
      * 初始化
      *
-     * @param dbController
+     * @param dbController dbController
      */
     public ClockDbService(DbController dbController) {
         clockRecordDao = dbController.getDaoSession().getClockRecordDao();
@@ -43,8 +43,6 @@ public class ClockDbService {
 
     /**
      * 会自动判定是插入还是替换
-     *
-     * @param clockRecord
      */
     public void insertOrReplace(ClockRecord clockRecord) {
         clockRecordDao.insertOrReplace(clockRecord);
@@ -52,8 +50,6 @@ public class ClockDbService {
 
     /**
      * 插入一条记录，表里面要没有与之相同的记录
-     *
-     * @param clockRecord
      */
     public long insert(ClockRecord clockRecord) {
         return clockRecordDao.insert(clockRecord);
@@ -61,8 +57,6 @@ public class ClockDbService {
 
     /**
      * 更新数据
-     *
-     * @param clockRecord
      */
     public long update(ClockRecord clockRecord) {
         if (clockRecord != null) {
@@ -154,5 +148,19 @@ public class ClockDbService {
     public List<ClockRecord> searchClockRecord(Date from, Date to) {
         return clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.ClockType.eq(0), ClockRecordDao.Properties.ClockTime.ge(from),
                 ClockRecordDao.Properties.ClockTime.le(to)).build().list();
+    }
+
+    /**
+     * 查询所有数据
+     */
+    public List<ClockRecord> searchAllClockRecord(long studentId, Date from, Date to) {
+        Log.d(getClass().getSimpleName(), "查询学生：" + studentId + " 打卡范围[" + FormatUtils.convert2DateTime(from) + ","
+                + FormatUtils.convert2DateTime(to) + "]");
+        List<ClockRecord> list = clockRecordDao.queryBuilder().where(
+                ClockRecordDao.Properties.StudentId.eq(studentId),
+                ClockRecordDao.Properties.ClockTime.ge(from),
+                ClockRecordDao.Properties.ClockTime.le(to)).build().list();
+        Log.d(getClass().getSimpleName(), "查询学生打卡记录：" + (list == null ? "NULL" : list.size()));
+        return list;
     }
 }

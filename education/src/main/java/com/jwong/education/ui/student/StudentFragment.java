@@ -10,9 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,11 +20,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
 import com.jwong.education.dto.StudentDTO;
 
-public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItemClickListener {
+import java.io.Serializable;
+
+public class StudentFragment extends Fragment implements OnItemClickListener {
 
     private StudentViewModel studentViewModel;
     private RecyclerView recyclerView;
@@ -55,7 +55,7 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
     public void onResume() {
         super.onResume();
         studentViewModel.getStudentList(1).observe(this, students -> {
-            StudentAdapter adapter = new StudentAdapter(R.layout.list_item_student, students, false);
+            StudentAdapter adapter = new StudentAdapter(students, false);
             adapter.setOnItemClickListener(this);
             recyclerView.setAdapter(adapter);
         });
@@ -71,23 +71,29 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
             if (requestCode == 1100) {
-                StudentDTO studentDTO = (StudentDTO) data.getSerializableExtra("student");
-                Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
-                        studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
-                        studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                        studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
-                        studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                studentViewModel.update(student);
+                Serializable serializable;
+                if ((serializable = data.getSerializableExtra("student")) != null) {
+                    StudentDTO studentDTO = (StudentDTO) serializable;
+                    Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
+                            studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
+                            studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
+                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
+                            studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                    studentViewModel.update(student);
+                }
             } else if (requestCode == 1200) {
-                StudentDTO studentDTO = (StudentDTO) data.getSerializableExtra("student");
-                Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
-                        studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
-                        studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                        studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
-                        studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                studentViewModel.insert(student);
+                Serializable serializable;
+                if ((serializable = data.getSerializableExtra("student")) != null) {
+                    StudentDTO studentDTO = (StudentDTO) serializable;
+                    Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
+                            studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
+                            studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
+                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
+                            studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                    studentViewModel.insert(student);
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -123,7 +129,7 @@ public class StudentFragment extends Fragment implements BaseQuickAdapter.OnItem
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.student_top_nav_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }

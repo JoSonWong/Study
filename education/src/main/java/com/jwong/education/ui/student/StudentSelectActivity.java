@@ -3,7 +3,6 @@ package com.jwong.education.ui.student;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -15,19 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
 import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.dto.StudentDTO;
-import com.jwong.education.ui.student.StudentAdapter;
-import com.jwong.education.ui.student.StudentCurriculumViewModel;
-import com.jwong.education.ui.student.StudentViewModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentSelectActivity extends AppCompatActivity implements BaseQuickAdapter.OnItemClickListener {
+public class StudentSelectActivity extends AppCompatActivity implements OnItemClickListener {
 
     private RecyclerView recyclerView;
     private StudentViewModel studentViewModel;
@@ -62,7 +59,7 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
                     for (StudentCurriculum item : studentCurriculumList) {
                         students.add(item.getStudent());
                     }
-                    studentAdapter = new StudentAdapter(R.layout.list_item_student, students, true);
+                    studentAdapter = new StudentAdapter(students, true);
                     if (checkedList != null && checkedList.length > 0) {
                         studentAdapter.setCheckedList(checkedList);
                     }
@@ -74,7 +71,7 @@ public class StudentSelectActivity extends AppCompatActivity implements BaseQuic
         } else {
             studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
             studentViewModel.getStudentList(-1).observe(this, students -> {
-                studentAdapter = new StudentAdapter(R.layout.list_item_student, students, true);
+                studentAdapter = new StudentAdapter(students, true);
                 if (checkedList != null && checkedList.length > 0) {
                     studentAdapter.setCheckedList(checkedList);
                 }

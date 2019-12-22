@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/darker_gray"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/number"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:text="@string/project"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="2"
+        android:text="@string/price"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_discount_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="2"
+        android:text="@string/discount_price"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/price"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_total"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="2"
+        android:gravity="end"
+        android:text="@string/price"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="16sp" />
+</LinearLayout>

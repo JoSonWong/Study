@@ -92,9 +92,12 @@
     <string name="year">年</string>
     <string name="month">月</string>
     <string name="other_month">其他月份</string>
-    <string name="other_month_cost">查看其他月份费用</string>
+    <string name="other_month_cost">按月份统计费用</string>
     <string name="total_income_x">总收入：¥%s</string>
     <string name="curriculum_income_x">课时收入：¥%s</string>
     <string name="total_income">总收入</string>
     <string name="curriculum_income">课时收入</string>
+    <string name="clock_statistic">统计</string>
+    <string name="total_curriculum_x">总课时：%d</string>
+
 </resources>

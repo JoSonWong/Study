@@ -1,7 +1,7 @@
 package com.jwong.education.ui.report;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.StudentMonthCost;
 import com.jwong.education.util.FormatUtils;
@@ -24,6 +24,6 @@ public class CostAdapter extends BaseQuickAdapter<StudentMonthCost, BaseViewHold
         helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
         helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getDiscountPrice()));
         helper.setText(R.id.tv_date, "");
-        helper.setGone(R.id.tv_date, isShowDate);
+        helper.setGone(R.id.tv_date, !isShowDate);
     }
 }

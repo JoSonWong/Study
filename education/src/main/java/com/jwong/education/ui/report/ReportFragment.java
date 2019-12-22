@@ -10,17 +10,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -32,15 +29,12 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.jwong.education.R;
-import com.jwong.education.dao.ClockRecord;
-import com.jwong.education.dao.StudentMonthCost;
 import com.jwong.education.ui.clock.ClockViewModel;
 import com.jwong.education.util.FormatUtils;
 import com.jwong.education.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Map;
 
 public class ReportFragment extends Fragment {
@@ -72,11 +66,8 @@ public class ReportFragment extends Fragment {
 
         tvMonth.setText(getString(R.string.year_x_month_x, year, month));
 
-        reportViewModel.getDateCost(year, month).observe(this, costs -> {
-            drawIncome(costs, pieChart, getString(R.string.total_income),
-                    R.string.total_income_x, tvTotalIncome);
-
-        });
+        reportViewModel.getDateCost(year, month).observe(this, costs ->
+                drawIncome(costs, pieChart, getString(R.string.total_income), R.string.total_income_x, tvTotalIncome));
         clockViewModel.getDateCost(
                 Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month))
                 .observe(this, map ->
@@ -87,7 +78,7 @@ public class ReportFragment extends Fragment {
 
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
         moreItem.setIcon(R.drawable.ic_time_white_24dp);
         moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
@@ -106,7 +97,7 @@ public class ReportFragment extends Fragment {
         //饼状图
         pieChart.setUsePercentValues(false);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
+        pieChart.setExtraOffsets(5, 5, 5, 5);
 
         pieChart.setDragDecelerationFrictionCoef(1f);
         //设置中间文件
@@ -144,7 +135,7 @@ public class ReportFragment extends Fragment {
         //设置数据
         textView.setText(getString(strResId, FormatUtils.priceFormat(total)));
         setData(entries, pieChart, "");
-        pieChart.animateXY(1000, 1000);
+        pieChart.animateXY(800, 800);
         Legend l = pieChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);

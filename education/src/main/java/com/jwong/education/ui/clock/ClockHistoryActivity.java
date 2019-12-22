@@ -15,11 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dto.ClockRecordDTO;
 
-public class ClockHistoryActivity extends AppCompatActivity implements BaseQuickAdapter.OnItemClickListener {
+public class ClockHistoryActivity extends AppCompatActivity implements OnItemClickListener {
 
     private ClockViewModel clockViewModel;
     private RecyclerView rvClockHistory;
@@ -27,7 +28,7 @@ public class ClockHistoryActivity extends AppCompatActivity implements BaseQuick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_student_clock);
+        setContentView(R.layout.activity_clock_history);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
@@ -44,7 +45,7 @@ public class ClockHistoryActivity extends AppCompatActivity implements BaseQuick
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         clockViewModel.getClockRecordList(10000).observe(this, clockRecords -> {
             if (clockRecords != null) {
-                ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords);
+                ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords, false);
                 adapter.setOnItemClickListener(this);
                 rvClockHistory.setAdapter(adapter);
             }
@@ -56,7 +57,7 @@ public class ClockHistoryActivity extends AppCompatActivity implements BaseQuick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_nav_menu, menu);
+        inflater.inflate(R.menu.student_clock_top_nav_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

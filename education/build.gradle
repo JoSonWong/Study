@@ -43,9 +43,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.haibin:calendarview:3.6.7'
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.0-beta1'
     implementation 'com.github.AlexLiuSheng:AnimSideBar:1.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }
 greendao {
     schemaVersion 4 //当前数据库版本

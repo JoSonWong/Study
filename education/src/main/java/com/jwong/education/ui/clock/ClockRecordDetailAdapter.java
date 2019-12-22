@@ -1,7 +1,7 @@
 package com.jwong.education.ui.clock;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
 

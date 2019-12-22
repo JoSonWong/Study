@@ -1,16 +1,20 @@
 package com.jwong.education.ui.report;
 
 import android.util.Log;
+import android.util.LongSparseArray;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.jwong.education.StudyApplication;
 import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.StudentMonthCost;
 import com.jwong.education.db.ClockDbService;
 import com.jwong.education.db.MonthCostDbService;
+import com.jwong.education.dto.entity.CostDetailNode;
+import com.jwong.education.dto.entity.CostNode;
 import com.jwong.education.util.FormatUtils;
 import com.jwong.education.util.Utils;
 
@@ -25,10 +29,14 @@ public class ReportViewModel extends ViewModel {
     private MutableLiveData<List<StudentMonthCost>> dataStatistic;
     private MutableLiveData<Map<String, Double>> dataMonth;
 
+    private MutableLiveData<List<CostNode>> dataStudentCost;
+
+
     public ReportViewModel() {
         data = new MutableLiveData<>();
         dataStatistic = new MutableLiveData<>();
         dataMonth = new MutableLiveData<>();
+        dataStudentCost = new MutableLiveData<>();
     }
 
     public LiveData<List<StudentMonthCost>> getStudentCost(long studentId) {
@@ -57,19 +65,67 @@ public class ReportViewModel extends ViewModel {
         return computeClockCost(studentId, year, month, clockRecords);
     }
 
-    public LiveData<List<StudentMonthCost>> getStudentCost(long studentId, int year, int month) {
-        Log.d(getClass().getSimpleName(), "查询学生费用信息 studentId：" + studentId + " year：" + year + " month：" + month);
-        List<StudentMonthCost> costs = new ArrayList<>();
-        StudentMonthCost curriculumCost = getStudentMonthCurriculumCost(studentId, year, month);
-        if (curriculumCost != null) {
-            costs.add(curriculumCost);
+    public LiveData<List<CostNode>> getStudentCost(long studentId, int year, int month) {
+        List<CostNode> list = new ArrayList<>();
+        List<ClockRecord> clockRecords = ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchClockRecord(studentId, Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month));
+        if (clockRecords != null && !clockRecords.isEmpty()) {
+            StudentMonthCost curriculumCost = new StudentMonthCost();
+            curriculumCost.setId(0L);
+            curriculumCost.setStudentId(studentId);
+            curriculumCost.setYear(year);
+            curriculumCost.setMonth(month);
+            curriculumCost.setCostType(0);
+            curriculumCost.setCostName("课时费");
+            double price = 0;
+            double discountPrice = 0;
+            LongSparseArray<ClockRecord> curriculumClockMap = new LongSparseArray<>();
+            LongSparseArray<Integer> curriculumCountMap = new LongSparseArray<>();
+            for (ClockRecord record : clockRecords) {
+                Log.d(getClass().getSimpleName(), "打卡记录 id：" + record.getId()
+                        + " 课程id：" + record.getCurriculumId()
+                        + " 课程：" + record.getCurriculumName()
+                        + " 费用：" + record.getCurriculumDiscountPrice());
+                price = FormatUtils.doubleFormat(price + record.getCurriculumPrice());
+                discountPrice = FormatUtils.doubleFormat(discountPrice + record.getCurriculumDiscountPrice());
+                if (curriculumClockMap.get(record.getCurriculumId()) != null) {
+                    int count = curriculumCountMap.get(record.getCurriculumId(), 0) + 1;
+                    curriculumCountMap.put(record.getCurriculumId(), count);
+                } else {
+                    ClockRecord record1 = new ClockRecord(record.getId(), record.getClockTime(), record.getStudentId(),
+                            record.getStudentName(), record.getCurriculumId(), record.getCurriculumName(), record.getCurriculumPrice(),
+                            record.getCurriculumDiscountPrice(), record.getClockType());
+                    curriculumClockMap.put(record1.getCurriculumId(), record1);
+                    curriculumCountMap.put(record1.getCurriculumId(), 1);
+                }
+            }
+            curriculumCost.setPrice(FormatUtils.doubleFormat(price));
+            curriculumCost.setDiscountPrice(FormatUtils.doubleFormat(discountPrice));
+            List<BaseNode> thirdNodeList = new ArrayList<>();
+
+            for (int i = 0; i < curriculumClockMap.size(); i++) {
+                Long key = curriculumClockMap.keyAt(i);
+                ClockRecord record = curriculumClockMap.get(key);
+                thirdNodeList.add(new CostDetailNode(record.getCurriculumName(), curriculumCountMap.get(key), record.getCurriculumPrice(),
+                        record.getCurriculumDiscountPrice()));
+            }
+
+            CostNode entity = new CostNode(thirdNodeList, curriculumCost.getId(), curriculumCost.getStudentId(),
+                    curriculumCost.getYear(), curriculumCost.getMonth(), curriculumCost.getCostType(), curriculumCost.getCostName(),
+                    curriculumCost.getPrice(), curriculumCost.getDiscountPrice());
+            list.add(entity);
         }
+
         List<StudentMonthCost> studentMonthCosts = MonthCostDbService.getInstance(StudyApplication.getDbController()).searchCost(studentId, year, month);
         if (studentMonthCosts != null && !studentMonthCosts.isEmpty()) {
-            costs.addAll(studentMonthCosts);
+            for (StudentMonthCost cost : studentMonthCosts) {
+                CostNode entity = new CostNode(null, cost.getId(), cost.getStudentId(), cost.getYear(), cost.getMonth(),
+                        cost.getCostType(), cost.getCostName(), cost.getPrice(), cost.getDiscountPrice());
+                list.add(entity);
+            }
         }
-        data.postValue(costs);
-        return data;
+        dataStudentCost.postValue(list);
+        return dataStudentCost;
     }
 
 
@@ -117,11 +173,14 @@ public class ReportViewModel extends ViewModel {
                 cost.setCostType(0);
                 cost.setCostName("合计费用");
                 cost.setDiscountPrice(FormatUtils.doubleFormat(entry.getValue()));
-                Double price = FormatUtils.doubleFormat(mapPrice.get(key));
+                Double price = 0D;
+                if (mapPrice.get(key) != null) {
+                    price = FormatUtils.doubleFormat(mapPrice.get(key));
+                }
                 String[] yearMonth = key.split("-");
                 cost.setYear(Integer.valueOf(yearMonth[0]));
                 cost.setMonth(Integer.valueOf(yearMonth[1]));
-                cost.setPrice(FormatUtils.doubleFormat(price == null ? entry.getValue() : price));
+                cost.setPrice(FormatUtils.doubleFormat(price));
                 monthCosts.add(cost);
             }
         }
@@ -169,10 +228,10 @@ public class ReportViewModel extends ViewModel {
             if ((existDiscountPrice = map.get(key)) != null) {
                 double discountPrice = FormatUtils.doubleFormat(existDiscountPrice + cost.getDiscountPrice());
                 map.put(key, discountPrice);
-                Log.d(getClass().getSimpleName(),  key + " 费用：" + FormatUtils.doubleFormat(discountPrice));
+                Log.d(getClass().getSimpleName(), key + " 费用：" + FormatUtils.doubleFormat(discountPrice));
             } else {
                 map.put(key, FormatUtils.doubleFormat(cost.getDiscountPrice()));
-                Log.d(getClass().getSimpleName(),  key + " 费用："
+                Log.d(getClass().getSimpleName(), key + " 费用："
                         + FormatUtils.doubleFormat(cost.getDiscountPrice()));
             }
         }

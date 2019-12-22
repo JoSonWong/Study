@@ -1,7 +1,7 @@
 package com.jwong.education.ui.student;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.StudentCurriculum;
 
@@ -10,8 +10,8 @@ import java.util.List;
 public class StudentCurriculumAdapter extends BaseQuickAdapter<StudentCurriculum, BaseViewHolder> {
 
 
-    public StudentCurriculumAdapter(int layoutResId, List<StudentCurriculum> data) {
-        super(layoutResId, data);
+    public StudentCurriculumAdapter(List<StudentCurriculum> data) {
+        super(R.layout.list_item_student_curriculum, data);
     }
 
 

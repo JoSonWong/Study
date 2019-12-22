@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.Curriculum;
 import com.jwong.education.dto.CurriculumDTO;
@@ -24,7 +25,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurriculumSelectActivity extends AppCompatActivity implements BaseQuickAdapter.OnItemClickListener {
+public class CurriculumSelectActivity extends AppCompatActivity implements OnItemClickListener {
 
     private RecyclerView recyclerView;
     private CurriculumViewModel settingViewModel;
@@ -53,7 +54,7 @@ public class CurriculumSelectActivity extends AppCompatActivity implements BaseQ
         recyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         settingViewModel.getCurriculumList().observe(this, curriculumList -> {
-            curriculumAdapter = new CurriculumAdapter(R.layout.list_item_curriculum, curriculumList, true);
+            curriculumAdapter = new CurriculumAdapter(curriculumList, true);
             if (checkedList != null && checkedList.length > 0) {
                 curriculumAdapter.setCheckedList(checkedList);
             }

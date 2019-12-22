@@ -3,7 +3,7 @@ package com.jwong.education.ui.student;
 import android.util.LongSparseArray;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
 
@@ -15,8 +15,8 @@ public class StudentAdapter extends BaseQuickAdapter<Student, BaseViewHolder> {
     private boolean isShowCheckBox;
     private LongSparseArray<Boolean> select = new LongSparseArray<>();
 
-    public StudentAdapter(int layoutResId, List data, boolean isShowCheckBox) {
-        super(layoutResId, data);
+    public StudentAdapter(List<Student> data, boolean isShowCheckBox) {
+        super(R.layout.list_item_student, data);
         this.isShowCheckBox = isShowCheckBox;
     }
 
@@ -57,10 +57,8 @@ public class StudentAdapter extends BaseQuickAdapter<Student, BaseViewHolder> {
         helper.setText(R.id.tv_number, item.getId() + "");
         helper.setText(R.id.tv_name, item.getName());
         helper.setText(R.id.tv_current_grade, item.getCurrentGrade() + "");
-        helper.setGone(R.id.cb_select, isShowCheckBox);
-        helper.setChecked(R.id.cb_select, isCheck(item.getId()));
-//        helper.setOnCheckedChangeListener(R.id.cb_select, (compoundButton, isChecked) -> {
-//            setCheck(item.getId(),isChecked);
-//        });
+        helper.setImageResource(R.id.iv_select, isCheck(item.getId()) ?
+                R.drawable.ic_checked_24dp : R.drawable.ic_uncheck_24dp);
+        helper.setGone(R.id.iv_select, !isShowCheckBox);
     }
 }

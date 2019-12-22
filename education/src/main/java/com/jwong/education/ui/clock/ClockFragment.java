@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.Student;
@@ -30,10 +31,11 @@ import com.jwong.education.dto.StudentDTO;
 import com.jwong.education.ui.curriculum.CurriculumSelectActivity;
 import com.jwong.education.ui.student.StudentSelectActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClockFragment extends Fragment implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
+public class ClockFragment extends Fragment implements View.OnClickListener, OnItemClickListener {
 
     private ClockViewModel clockViewModel;
     private TextView tvCurriculum, tvStudent;
@@ -74,7 +76,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener, Bas
         super.onResume();
         clockViewModel.getClockRecordList(5).observe(this, clockRecords -> {
             if (clockRecords != null) {
-                ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords);
+                ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords, false);
                 adapter.setOnItemClickListener(this);
                 rvClockHistory.setAdapter(adapter);
             }
@@ -145,27 +147,35 @@ public class ClockFragment extends Fragment implements View.OnClickListener, Bas
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
             if (requestCode == 1100) {
-                List<CurriculumDTO> curriculumDTOS = (List<CurriculumDTO>) data.getSerializableExtra("curriculumList");
-                if (curriculumDTOS != null && !curriculumDTOS.isEmpty()) {
-                    curriculumDTO = curriculumDTOS.get(0);
-                    tvCurriculum.setText(curriculumDTO.getName());
-                    tvCurriculum.setVisibility(View.VISIBLE);
-                    clearStudent();
-                    startSelectStudentActivity();
+                Serializable serializable;
+                if ((serializable = data.getSerializableExtra("curriculumList")) != null) {
+                    @SuppressWarnings("unchecked")
+                    List<CurriculumDTO> curriculumDTOS = (List<CurriculumDTO>) serializable;
+                    if (!curriculumDTOS.isEmpty()) {
+                        curriculumDTO = curriculumDTOS.get(0);
+                        tvCurriculum.setText(curriculumDTO.getName());
+                        tvCurriculum.setVisibility(View.VISIBLE);
+                        clearStudent();
+                        startSelectStudentActivity();
+                    }
                 }
             } else if (requestCode == 1200) {
                 List<Student> students = new ArrayList<>();
-                List<StudentDTO> studentDTOS = (List<StudentDTO>) data.getSerializableExtra("students");
-                if (studentDTOS != null && !studentDTOS.isEmpty()) {
-                    for (StudentDTO studentDTO : studentDTOS) {
-                        Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
-                                studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
-                                studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                                studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
-                                studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                        students.add(student);
+                Serializable serializable;
+                if ((serializable = data.getSerializableExtra("students")) != null) {
+                    @SuppressWarnings("unchecked")
+                    List<StudentDTO> studentDTOS = (List<StudentDTO>) serializable;
+                    if (!studentDTOS.isEmpty()) {
+                        for (StudentDTO studentDTO : studentDTOS) {
+                            Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
+                                    studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
+                                    studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
+                                    studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
+                                    studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                            students.add(student);
+                        }
                     }
                 }
                 studentAdapter = new StudentClockAdapter(students);
