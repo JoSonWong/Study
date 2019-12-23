@@ -100,5 +100,8 @@
     <string name="clock_statistic">统计</string>
     <string name="total_curriculum_x">总课时：%d</string>
     <string name="latest_clock_record">最近打卡记录</string>
+    <string name="female">女</string>
+    <string name="male">男</string>
+    <string name="cost_type">收费类别</string>
 
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.student.StudentInfoActivity">
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:orderInCategory="100"
+        android:title="@android:string/ok"
+        app:showAsAction="always" />
+    <!--  <item-->
+    <!--        android:id="@+id/action_share"-->
+    <!--        android:orderInCategory="100"-->
+    <!--        android:title="分享"-->
+    <!--        app:showAsAction="never" />-->
+    <!--    <item-->
+    <!--        android:id="@+id/action_collection"-->
+    <!--        android:orderInCategory="100"-->
+    <!--        android:title="收藏"-->
+    <!--        app:showAsAction="never" />-->
+
+    <!--    <item-->
+    <!--        android:id="@+id/action_font"-->
+    <!--        android:orderInCategory="100"-->
+    <!--        android:title="字体大小"-->
+    <!--        app:showAsAction="never" />-->
+</menu>

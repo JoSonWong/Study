@@ -101,9 +101,16 @@ public class StudentFragment extends Fragment implements OnItemClickListener {
 
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.student_top_nav_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_ok:
+            case R.id.action_add:
                 Log.d(getClass().getSimpleName(), "onOptionsItemSelected 添加学生 >>> ");
                 Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
                 startActivityForResult(intent, 1200);
@@ -126,11 +133,5 @@ public class StudentFragment extends Fragment implements OnItemClickListener {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.student_top_nav_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }

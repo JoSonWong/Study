@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -84,16 +85,15 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
-        moreItem.setIcon(R.drawable.ic_delete_white_24dp);
-        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_nav_menu_delete, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case Menu.FIRST:
+            case R.id.action_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.delete_record)
                         .setMessage(getString(R.string.delete_curriculum_x_time_x_clock_record, clockRecordDTO.getCurriculumName(),
                                 FormatUtils.convert2DateTime(clockRecordDTO.getClockTime())))

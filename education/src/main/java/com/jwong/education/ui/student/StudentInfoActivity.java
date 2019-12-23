@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.ActionBar;
@@ -22,10 +23,11 @@ import com.jwong.education.util.FormatUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-public class StudentInfoActivity extends AppCompatActivity implements View.OnClickListener{
+public class StudentInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etName, etBirthday, etRecruitDate, etGuardian1, etGuardian1Phone, etGuardian2, etGuardian2Phone;
-    private Spinner spSex, spRecruitGrade, spCurrentGrade, spStudentType;
+    private Spinner spRecruitGrade, spCurrentGrade, spStudentType;
+    private RadioGroup rgSex;
     private StudentDTO student;
 
     @Override
@@ -41,7 +43,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
             actionBar.setTitle(student == null ? R.string.add_student : R.string.student_info);
         }
         etName = findViewById(R.id.et_name);
-        spSex = findViewById(R.id.sp_sex);
+        rgSex = findViewById(R.id.rg_sex);
         etBirthday = findViewById(R.id.et_birthday);
         etBirthday.setOnClickListener(this);
         etRecruitDate = findViewById(R.id.et_recruit_date);
@@ -54,17 +56,16 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         etGuardian2 = findViewById(R.id.et_guardian2);
         etGuardian2Phone = findViewById(R.id.et_guardian2_phone);
 
-        spSex.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.sex_types)));
+
         spRecruitGrade.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.grades)));
+                android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.grades)));
         spCurrentGrade.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.grades)));
+                android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.grades)));
         spStudentType.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.student_types)));
+                android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.student_types)));
         if (student != null) {
             etName.setText(student.getName());
-            spSex.setSelection(student.getSex());
+            rgSex.check(student.getSex() == 1 ? R.id.rb_female : R.id.rb_male);
             etBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
             etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
             spRecruitGrade.setSelection(student.getRecruitGradeCode());
@@ -81,7 +82,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_nav_menu, menu);
+        inflater.inflate(R.menu.top_nav_menu_ok, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -95,7 +96,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
                 }
                 student.setName(etName.getText().toString());
                 student.setAvatar("");
-                student.setSex(spSex.getSelectedItemPosition());
+                student.setSex(rgSex.getCheckedRadioButtonId() == R.id.rb_female ? 1 : 0);
                 student.setBirthday(FormatUtils.convert2Date(etBirthday.getText().toString()));
                 student.setRecruitTime(FormatUtils.convert2Date(etRecruitDate.getText().toString()));
                 student.setRecruitGradeCode(spRecruitGrade.getSelectedItemPosition());

@@ -1,19 +1,17 @@
 package com.jwong.education.ui.student;
 
-import android.app.DatePickerDialog;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,153 +20,91 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.jwong.education.R;
 import com.jwong.education.dao.Student;
+import com.jwong.education.dto.StudentDTO;
 import com.jwong.education.util.FormatUtils;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.io.Serializable;
 
-public class StudentInfoFragment extends Fragment implements View.OnClickListener {
+public class StudentInfoFragment extends Fragment {
 
-    private EditText etName, etBirthday, etRecruitDate, etGuardian1, etGuardian1Phone, etGuardian2, etGuardian2Phone;
-    private Spinner spSex, spRecruitGrade, spCurrentGrade, spStudentType;
+    private TextView tvName, tvCurrentGrade, tvStudentId, tvStudentType, tvCostType,
+            tvBirthday, tvRecruitDate, tvRecruitGrade, tvGuardian1, tvGuardian1Phone,
+            tvGuardian2, tvGuardian2Phone;
+    private ImageView ivSex;
+
     private StudentViewModel studentViewModel;
+    private Student student;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        ActionBar actionBar = getActivity().getActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setTitle(R.string.select_student);
+        }
     }
 
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        if (getArguments() != null)
 //            studentId = getArguments().getLong("studentId");
-        studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         View root = inflater.inflate(R.layout.fragment_student_info, container, false);
-        etName = root.findViewById(R.id.et_name);
-        spSex = root.findViewById(R.id.sp_sex);
-        etBirthday = root.findViewById(R.id.et_birthday);
-        etBirthday.setOnClickListener(this);
-        etRecruitDate = root.findViewById(R.id.et_recruit_date);
-        etRecruitDate.setOnClickListener(this);
-        spRecruitGrade = root.findViewById(R.id.sp_recruit_grade);
-        spCurrentGrade = root.findViewById(R.id.sp_current_grade);
-        spStudentType = root.findViewById(R.id.spinner_student_type);
-        etGuardian1 = root.findViewById(R.id.et_guardian1);
-        etGuardian1Phone = root.findViewById(R.id.et_guardian1_phone);
-        etGuardian2 = root.findViewById(R.id.et_guardian2);
-        etGuardian2Phone = root.findViewById(R.id.et_guardian2_phone);
+        tvName = root.findViewById(R.id.tv_name);
+        ivSex = root.findViewById(R.id.iv_sex);
+        tvStudentId = root.findViewById(R.id.tv_student_id);
+        tvCurrentGrade = root.findViewById(R.id.tv_grade);
+        tvStudentType = root.findViewById(R.id.tv_student_type);
+        tvCostType = root.findViewById(R.id.tv_cost_type);
+        tvBirthday = root.findViewById(R.id.tv_birthday);
+        tvRecruitDate = root.findViewById(R.id.tv_recruit);//收招日期
+        tvRecruitGrade = root.findViewById(R.id.tv_recruit_grade);
+        tvGuardian1 = root.findViewById(R.id.tv_guardian1);
+        tvGuardian1Phone = root.findViewById(R.id.tv_guardian1_phone);
+        tvGuardian2 = root.findViewById(R.id.tv_guardian2);
+        tvGuardian2Phone = root.findViewById(R.id.tv_guardian2_phone);
 
-        spSex.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.sex_types)));
-        spRecruitGrade.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.grades)));
-        spCurrentGrade.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.grades)));
-        spStudentType.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.student_types)));
-
+        studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
         studentViewModel.getStudent(StudentActivity.studentId).observe(this, student -> {
-            etName.setText(student.getName());
-            spSex.setSelection(student.getSex());
-            etBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
-            etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
-            spRecruitGrade.setSelection(student.getRecruitGradeCode());
-            spCurrentGrade.setSelection(student.getCurrentGradeCode());
-            spStudentType.setSelection(student.getStudentType());
-            etGuardian1.setText(student.getGuardian1());
-            etGuardian1Phone.setText(student.getGuardian1Phone());
-            etGuardian2.setText(student.getGuardian2());
-            etGuardian2Phone.setText(student.getGuardian2Phone());
-            setEditMode(false);
+            this.student = student;
+            tvName.setText(student.getName());
+            tvStudentId.setText(getString(R.string.student_code_x,
+                    FormatUtils.studentCodeFormat(student.getId())));
+            ivSex.setImageResource(student.getSex() == 1 ? R.drawable.ic_female : R.drawable.ic_male);
+            tvCurrentGrade.setText(student.getCurrentGrade());
+            tvBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
+            tvRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
+            tvStudentType.setText(student.getStudentTypeName());
+            //TODO 增加收费类型
+            tvCostType.setText("按课时");
+            tvBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
+            tvRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
+            tvRecruitGrade.setText(student.getRecruitGradeName());
+            tvGuardian1.setText(student.getGuardian1());
+            tvGuardian1Phone.setText(student.getGuardian1Phone());
+            tvGuardian2.setText(student.getGuardian2());
+            tvGuardian2Phone.setText(student.getGuardian2Phone());
         });
         return root;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.et_birthday:
-            case R.id.et_recruit_date:
-                showDatePicker((EditText) view);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void showDatePicker(EditText editText) {
-        Calendar calendar = Calendar.getInstance();
-        Date date = FormatUtils.convert2Date(editText.getText().toString());
-        if (date != null) {
-            calendar.setTime(date);
-        }
-        DatePickerDialog dpd = new DatePickerDialog(getActivity(),
-                DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
-                (DatePicker view, int year, int monthOfYear, int dayOfMonth) ->
-                        editText.setText(year + "-" + monthOfYear + "-" + dayOfMonth)
-                , calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        dpd.show();
-    }
-
-    private boolean isEditMode = false;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (isEditMode) {
-            saveStudent();
-            Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
-            setEditMode(false);
-        } else {
-            setEditMode(true);
-        }
+        Intent intent = new Intent(getContext(), StudentInfoActivity.class);
+        StudentDTO studentDTO = new StudentDTO(student.getId(), student.getName(), student.getAvatar(),
+                student.getSex(), student.getBirthday(), student.getRecruitTime(), student.getRecruitGradeCode(),
+                student.getRecruitGradeName(), student.getCurrentGradeCode(), student.getCurrentGrade(),
+                student.getStudentType(), student.getStudentTypeName(), student.getGuardian1(), student.getGuardian1Phone(),
+                student.getGuardian2(), student.getGuardian2Phone());
+        intent.putExtra("student", studentDTO);
+        startActivityForResult(intent, 1200);
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onPause() {
-//        saveStudent();
-        super.onPause();
-    }
-
-    private void setEditMode(boolean isEditMode) {
-        this.isEditMode = isEditMode;
-        etName.setEnabled(isEditMode);
-        spSex.setEnabled(isEditMode);
-        etBirthday.setEnabled(isEditMode);
-        etRecruitDate.setEnabled(isEditMode);
-        spRecruitGrade.setEnabled(isEditMode);
-        spCurrentGrade.setEnabled(isEditMode);
-        spStudentType.setEnabled(isEditMode);
-        etGuardian1.setEnabled(isEditMode);
-        etGuardian1Phone.setEnabled(isEditMode);
-        etGuardian2.setEnabled(isEditMode);
-        etGuardian2Phone.setEnabled(isEditMode);
-
-    }
-
-    private void saveStudent() {
-        Student student = new Student();
-        student.setId(StudentActivity.studentId);
-        student.setName(etName.getText().toString());
-        student.setAvatar("");
-        student.setSex(spSex.getSelectedItemPosition());
-        student.setBirthday(FormatUtils.convert2Date(etBirthday.getText().toString()));
-        student.setRecruitTime(FormatUtils.convert2Date(etRecruitDate.getText().toString()));
-        student.setRecruitGradeCode(spRecruitGrade.getSelectedItemPosition());
-        student.setRecruitGradeName(getResources().getStringArray(R.array.grades)[spRecruitGrade.getSelectedItemPosition()]);
-        student.setCurrentGradeCode(spCurrentGrade.getSelectedItemPosition());
-        student.setCurrentGrade(getResources().getStringArray(R.array.grades)[spCurrentGrade.getSelectedItemPosition()]);
-        student.setStudentType(spStudentType.getSelectedItemPosition());
-        student.setStudentTypeName(getResources().getStringArray(R.array.student_types)[spStudentType.getSelectedItemPosition()]);
-        student.setGuardian1(etGuardian1.getText().toString());
-        student.setGuardian1Phone(etGuardian1Phone.getText().toString());
-        student.setGuardian2(etGuardian2.getText().toString());
-        student.setGuardian2Phone(etGuardian2Phone.getText().toString());
-        studentViewModel.update(student);
-        Log.d(getClass().getSimpleName(), "保持学生信息");
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -176,5 +112,26 @@ public class StudentInfoFragment extends Fragment implements View.OnClickListene
         moreItem.setIcon(R.drawable.ic_mode_edit_white_24dp);
         moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (requestCode == 1200) {
+                Serializable serializable;
+                if ((serializable = data.getSerializableExtra("student")) != null) {
+                    StudentDTO studentDTO = (StudentDTO) serializable;
+                    Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
+                            studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
+                            studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
+                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
+                            studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                    studentViewModel.update(student);
+                    studentViewModel.getStudent(StudentActivity.studentId);
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

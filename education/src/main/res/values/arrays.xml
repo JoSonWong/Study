@@ -6,12 +6,6 @@
         <item>@string/finished</item>
     </string-array>
 
-    <string-array name="sex_types">
-        <item>未设定</item>
-        <item>男</item>
-        <item>女</item>
-    </string-array>
-
     <string-array name="grades">
         <item>一年级</item>
         <item>二年级</item>

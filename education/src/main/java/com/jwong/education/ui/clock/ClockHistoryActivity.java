@@ -64,7 +64,7 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_ok:
+            case R.id.action_month:
 
                 break;
             case android.R.id.home:// 点击返回图标事件

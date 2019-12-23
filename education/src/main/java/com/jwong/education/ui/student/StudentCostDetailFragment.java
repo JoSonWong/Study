@@ -109,7 +109,7 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_ok:
+            case R.id.action_add:
                 showInput();
                 break;
             case R.id.action_month:

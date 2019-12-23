@@ -42,14 +42,32 @@
                 android:text="@string/sex"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/sp_sex"
-                android:layout_width="0dp"
+            <RadioGroup
+                android:id="@+id/rg_sex"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:textSize="20sp" />
+                android:layout_marginTop="8dp"
+                android:checkedButton="@id/rb_male"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/male"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/female"
+                    android:textSize="20sp" />
+
+            </RadioGroup>
         </TableRow>
 
         <TableRow
@@ -209,7 +227,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="11" />
 
         </TableRow>
 
@@ -252,7 +271,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="11" />
 
         </TableRow>
 

@@ -3,6 +3,7 @@ package com.jwong.education.ui.student;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -96,18 +97,15 @@ public class StudentSelectActivity extends AppCompatActivity implements OnItemCl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.top_nav_menu, menu);
-        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
-        moreItem.setIcon(R.drawable.ic_check_white_24dp);
-        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_nav_menu_ok, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case Menu.FIRST:
+            case R.id.action_ok:
                 Intent data = new Intent();
                 List<Student> students = studentAdapter.getCheckedList();
                 List<StudentDTO> studentDTOS = new ArrayList<>();

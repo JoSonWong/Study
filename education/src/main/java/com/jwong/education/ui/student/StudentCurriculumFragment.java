@@ -128,7 +128,7 @@ public class StudentCurriculumFragment extends Fragment implements OnItemClickLi
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.top_nav_menu, menu);
+        inflater.inflate(R.menu.top_nav_menu_add, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }
