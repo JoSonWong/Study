@@ -51,7 +51,8 @@ public class FormatUtils {
 
     public static String priceFormat(double price) {
         DecimalFormat df = new DecimalFormat("#.00");
-        return df.format(price);
+        String p = df.format(price);
+        return ".00".equals(p) ? "00.00" : p;
     }
 
     public static String studentCodeFormat(long id) {

@@ -130,23 +130,40 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
             EditText etName = dlgView.findViewById(R.id.et_name);
             etName.setText(costNode.getCostName());
             etName.setEnabled(costNode.getCostType() != 0);
+
             EditText etPrice = dlgView.findViewById(R.id.et_price);
-            etPrice.setText(FormatUtils.priceFormat(costNode.getDiscountPrice()));
+            etPrice.setText(FormatUtils.priceFormat(costNode.getPrice()));
             etPrice.setEnabled(costNode.getCostType() != 0);
+
+            EditText etDiscountPrice = dlgView.findViewById(R.id.et_discount_price);
+            etDiscountPrice.setText(FormatUtils.priceFormat(costNode.getDiscountPrice()));
+            etDiscountPrice.setEnabled(costNode.getCostType() != 0);
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.update_cost)
                     .setView(dlgView)
                     .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                        if (!TextUtils.isEmpty(etName.getText()) && !TextUtils.isEmpty(etPrice.getText())) {
+                        if (!TextUtils.isEmpty(etName.getText()) && (!TextUtils.isEmpty(etPrice.getText())
+                                || !TextUtils.isEmpty(etDiscountPrice.getText()))) {
                             StudentMonthCost monthCost = new StudentMonthCost(costNode.getCostId(), costNode.getStudentId(), costNode.getYear(),
                                     costNode.getMonth(), costNode.getCostType(), costNode.getCostName(), costNode.getPrice(), costNode.getDiscountPrice());
                             monthCost.setCostName(etName.getText().toString());
-                            double price = Double.parseDouble(etPrice.getText().toString());
-                            if (monthCost.getCostType() != 0) {
+                            if (TextUtils.isEmpty(etDiscountPrice.getText())) {
+                                double price = Double.parseDouble(etPrice.getText().toString());
                                 monthCost.setPrice(price);
+                                monthCost.setDiscountPrice(price);
+                            } else if (TextUtils.isEmpty(etPrice.getText())) {
+                                double discountPrice = Double.parseDouble(etDiscountPrice.getText().toString());
+                                monthCost.setPrice(discountPrice);
+                                monthCost.setDiscountPrice(discountPrice);
+                            } else {
+                                double price = Double.parseDouble(etPrice.getText().toString());
+                                monthCost.setPrice(price);
+                                double discountPrice = Double.parseDouble(etDiscountPrice.getText().toString());
+                                monthCost.setDiscountPrice(discountPrice);
                             }
-                            monthCost.setDiscountPrice(price);
+
                             reportViewModel.update(monthCost);
                             Toast.makeText(getContext(), R.string.update_cost_success, Toast.LENGTH_SHORT).show();
                             reportViewModel.getStudentCost(studentId, this.year, this.month);
@@ -163,20 +180,34 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dlg_input_cost, null);
         EditText etName = view.findViewById(R.id.et_name);
         EditText etPrice = view.findViewById(R.id.et_price);
+        EditText etDiscountPrice = view.findViewById(R.id.et_discount_price);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(R.string.add_cost)
                 .setView(view)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    if (!TextUtils.isEmpty(etName.getText()) && !TextUtils.isEmpty(etPrice.getText())) {
+                    if (!TextUtils.isEmpty(etName.getText()) && (!TextUtils.isEmpty(etPrice.getText())
+                            || !TextUtils.isEmpty(etDiscountPrice.getText()))) {
                         StudentMonthCost cost = new StudentMonthCost();
                         cost.setStudentId(studentId);
                         cost.setYear(year);
                         cost.setMonth(month);
                         cost.setCostType(1);
                         cost.setCostName(etName.getText().toString());
-                        double price = Double.parseDouble(etPrice.getText().toString());
-                        cost.setPrice(price);
-                        cost.setDiscountPrice(price);
+                        if (TextUtils.isEmpty(etDiscountPrice.getText())) {
+                            double price = Double.parseDouble(etPrice.getText().toString());
+                            cost.setPrice(price);
+                            cost.setDiscountPrice(price);
+                        } else if (TextUtils.isEmpty(etPrice.getText())) {
+                            double discountPrice = Double.parseDouble(etDiscountPrice.getText().toString());
+                            cost.setPrice(discountPrice);
+                            cost.setDiscountPrice(discountPrice);
+                        } else {
+                            double price = Double.parseDouble(etPrice.getText().toString());
+                            cost.setPrice(price);
+                            double discountPrice = Double.parseDouble(etDiscountPrice.getText().toString());
+                            cost.setDiscountPrice(discountPrice);
+                        }
                         reportViewModel.insert(cost);
                         Toast.makeText(getActivity(), R.string.add_cost_success, Toast.LENGTH_SHORT).show();
                         reportViewModel.getStudentCost(studentId, this.year, this.month);

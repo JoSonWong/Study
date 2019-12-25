@@ -34,6 +34,10 @@ public class Student extends BaseDao {
 
     private String studentTypeName;//类型名称
 
+    private Integer costType;//收费类型：0按课程,1按学期
+
+    private String costTypeName;//收费类型名称：0按课程,1按学期
+
     private String guardian1;//监护人1姓名
 
     private String guardian1Phone;//监护人1电话
@@ -42,12 +46,13 @@ public class Student extends BaseDao {
 
     private String guardian2Phone;//监护人2电话
 
-    @Generated(hash = 1566862112)
+    @Generated(hash = 1493955956)
     public Student(Long id, String name, String avatar, Integer sex, Date birthday,
-                   Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
-                   Integer currentGradeCode, String currentGrade, Integer studentType,
-                   String studentTypeName, String guardian1, String guardian1Phone,
-                   String guardian2, String guardian2Phone) {
+            Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
+            Integer currentGradeCode, String currentGrade, Integer studentType,
+            String studentTypeName, Integer costType, String costTypeName,
+            String guardian1, String guardian1Phone, String guardian2,
+            String guardian2Phone) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
@@ -60,6 +65,8 @@ public class Student extends BaseDao {
         this.currentGrade = currentGrade;
         this.studentType = studentType;
         this.studentTypeName = studentTypeName;
+        this.costType = costType;
+        this.costTypeName = costTypeName;
         this.guardian1 = guardian1;
         this.guardian1Phone = guardian1Phone;
         this.guardian2 = guardian2;
@@ -84,6 +91,14 @@ public class Student extends BaseDao {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Integer getSex() {
@@ -158,6 +173,22 @@ public class Student extends BaseDao {
         this.studentTypeName = studentTypeName;
     }
 
+    public Integer getCostType() {
+        return this.costType;
+    }
+
+    public void setCostType(Integer costType) {
+        this.costType = costType;
+    }
+
+    public String getCostTypeName() {
+        return this.costTypeName;
+    }
+
+    public void setCostTypeName(String costTypeName) {
+        this.costTypeName = costTypeName;
+    }
+
     public String getGuardian1() {
         return this.guardian1;
     }
@@ -190,12 +221,5 @@ public class Student extends BaseDao {
         this.guardian2Phone = guardian2Phone;
     }
 
-    public String getAvatar() {
-        return this.avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
+    
 }

@@ -1,10 +1,10 @@
 package com.jwong.education.dao;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 @Entity
 public class StudentCurriculum extends BaseDao {
@@ -24,17 +24,21 @@ public class StudentCurriculum extends BaseDao {
 
     private Double discountPrice;//折后价
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 643420253)
     private transient StudentCurriculumDao myDao;
 
     @Generated(hash = 1554683346)
     public StudentCurriculum(Long id, Long studentId, Long curriculumId,
-            Double discountPrice) {
+                             Double discountPrice) {
         this.id = id;
         this.studentId = studentId;
         this.curriculumId = curriculumId;
@@ -80,7 +84,9 @@ public class StudentCurriculum extends BaseDao {
     @Generated(hash = 79695740)
     private transient Long student__resolvedKey;
 
-    /** To-one relationship, resolved on first access. */
+    /**
+     * To-one relationship, resolved on first access.
+     */
     @Generated(hash = 313494093)
     public Student getStudent() {
         Long __key = this.studentId;
@@ -99,7 +105,9 @@ public class StudentCurriculum extends BaseDao {
         return student;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 490304967)
     public void setStudent(Student student) {
         synchronized (this) {
@@ -112,7 +120,9 @@ public class StudentCurriculum extends BaseDao {
     @Generated(hash = 2017217984)
     private transient Long curriculum__resolvedKey;
 
-    /** To-one relationship, resolved on first access. */
+    /**
+     * To-one relationship, resolved on first access.
+     */
     @Generated(hash = 53848635)
     public Curriculum getCurriculum() {
         Long __key = this.curriculumId;
@@ -132,7 +142,9 @@ public class StudentCurriculum extends BaseDao {
         return curriculum;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1870035091)
     public void setCurriculum(Curriculum curriculum) {
         synchronized (this) {

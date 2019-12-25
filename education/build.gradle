@@ -49,6 +49,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }
+
 greendao {
-    schemaVersion 4 //当前数据库版本
+    schemaVersion 7 //数据库版本号
+//    daoPackage 'com.jwong.education.greendao' //设置DaoMaster.DaoSession,Dao包名
+//    targetGenDir 'src/main/java' //设置daoPackage所在的文件路径
 }

@@ -79,8 +79,8 @@ public class StudentFragment extends Fragment implements OnItemClickListener {
                     Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
                             studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
                             studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
-                            studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
+                            studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
                     studentViewModel.update(student);
                 }
             } else if (requestCode == 1200) {
@@ -90,8 +90,8 @@ public class StudentFragment extends Fragment implements OnItemClickListener {
                     Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
                             studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
                             studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
-                            studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
+                            studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
                     studentViewModel.insert(student);
                 }
             }

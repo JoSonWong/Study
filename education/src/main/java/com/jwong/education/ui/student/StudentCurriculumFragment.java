@@ -85,6 +85,8 @@ public class StudentCurriculumFragment extends Fragment implements OnItemClickLi
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     if (!TextUtils.isEmpty(etPrice.getText())) {
                         studentCurriculum.setDiscountPrice(Double.parseDouble(etPrice.getText().toString()));
+                        studentCurriculumViewModel.update(studentCurriculum);
+                        studentCurriculumViewModel.getStudentCurriculumList(StudentActivity.studentId);
                     } else {
                         Toast.makeText(getContext(), R.string.pls_input_discount_price, Toast.LENGTH_SHORT).show();
                     }

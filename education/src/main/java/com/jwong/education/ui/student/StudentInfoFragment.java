@@ -78,8 +78,7 @@ public class StudentInfoFragment extends Fragment {
             tvBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
             tvRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
             tvStudentType.setText(student.getStudentTypeName());
-            //TODO 增加收费类型
-            tvCostType.setText("按课时");
+            tvCostType.setText(student.getCostTypeName());
             tvBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
             tvRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
             tvRecruitGrade.setText(student.getRecruitGradeName());
@@ -93,13 +92,13 @@ public class StudentInfoFragment extends Fragment {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(getContext(), StudentInfoActivity.class);
         StudentDTO studentDTO = new StudentDTO(student.getId(), student.getName(), student.getAvatar(),
                 student.getSex(), student.getBirthday(), student.getRecruitTime(), student.getRecruitGradeCode(),
                 student.getRecruitGradeName(), student.getCurrentGradeCode(), student.getCurrentGrade(),
-                student.getStudentType(), student.getStudentTypeName(), student.getGuardian1(), student.getGuardian1Phone(),
-                student.getGuardian2(), student.getGuardian2Phone());
+                student.getStudentType(), student.getStudentTypeName(), student.getCostType(), student.getCostTypeName(),
+                student.getGuardian1(), student.getGuardian1Phone(), student.getGuardian2(), student.getGuardian2Phone());
         intent.putExtra("student", studentDTO);
         startActivityForResult(intent, 1200);
         return super.onOptionsItemSelected(item);
@@ -125,8 +124,8 @@ public class StudentInfoFragment extends Fragment {
                     Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
                             studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
                             studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
-                            studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
+                            studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
                     studentViewModel.update(student);
                     studentViewModel.getStudent(StudentActivity.studentId);
                 }

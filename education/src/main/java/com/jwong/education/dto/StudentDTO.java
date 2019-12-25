@@ -29,6 +29,10 @@ public class StudentDTO extends BaseDTO implements Serializable {
 
     private String studentTypeName;//类型名称
 
+    private Integer costType;//0按课时收费，1按学期收费
+
+    private String costTypeName;//0按课时收费，1按学期收费
+
     private String guardian1;//监护人1姓名
 
     private String guardian1Phone;//监护人1电话
@@ -40,7 +44,8 @@ public class StudentDTO extends BaseDTO implements Serializable {
     public StudentDTO(Long id, String name, String avatar, Integer sex, Date birthday,
                       Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
                       Integer currentGradeCode, String currentGrade, Integer studentType,
-                      String studentTypeName, String guardian1, String guardian1Phone,
+                      String studentTypeName, Integer costType, String costTypeName,
+                      String guardian1, String guardian1Phone,
                       String guardian2, String guardian2Phone) {
         this.id = id;
         this.name = name;
@@ -54,6 +59,8 @@ public class StudentDTO extends BaseDTO implements Serializable {
         this.currentGrade = currentGrade;
         this.studentType = studentType;
         this.studentTypeName = studentTypeName;
+        this.costType = costType;
+        this.costTypeName = costTypeName;
         this.guardian1 = guardian1;
         this.guardian1Phone = guardian1Phone;
         this.guardian2 = guardian2;
@@ -149,6 +156,22 @@ public class StudentDTO extends BaseDTO implements Serializable {
 
     public void setStudentTypeName(String studentTypeName) {
         this.studentTypeName = studentTypeName;
+    }
+
+    public Integer getCostType() {
+        return this.costType;
+    }
+
+    public void setCostType(Integer costType) {
+        this.costType = costType;
+    }
+
+    public String getCostTypeName() {
+        return this.costTypeName;
+    }
+
+    public void setCostTypeName(String costTypeName) {
+        this.costTypeName = costTypeName;
     }
 
     public String getGuardian1() {

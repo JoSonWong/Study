@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/pls_input_cost_name"
+        android:inputType="text"
         android:textSize="20sp" />
 
     <TextView
@@ -35,6 +36,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/pls_input_cost"
+        android:inputType="numberDecimal"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_discount_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/discount_price"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_discount_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/pls_input_discount_price"
         android:inputType="numberDecimal"
         android:textSize="20sp" />
 

@@ -34,7 +34,7 @@
     <string name="curriculum">课程</string>
     <string name="update_discount_price">修改课时优惠价</string>
     <string name="discount_price">优惠价</string>
-    <string name="pls_input_discount_price">请输入课时优惠价，如8.0</string>
+    <string name="pls_input_discount_price">请输入优惠价，如8.0</string>
     <string name="pls_select_curriculum">请先选择课程</string>
     <string name="pls_select_curriculum_and_student">请先选择课程和学生</string>
     <string name="clock_success">打卡成功</string>
@@ -103,5 +103,6 @@
     <string name="female">女</string>
     <string name="male">男</string>
     <string name="cost_type">收费类别</string>
-
+    <string name="cost_type_curriculum">按课时</string>
+    <string name="cost_type_term">按学期</string>
 </resources>

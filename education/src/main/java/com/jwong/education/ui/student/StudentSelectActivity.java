@@ -113,8 +113,8 @@ public class StudentSelectActivity extends AppCompatActivity implements OnItemCl
                     StudentDTO studentDTO = new StudentDTO(student.getId(), student.getName(), student.getAvatar(),
                             student.getSex(), student.getBirthday(), student.getRecruitTime(), student.getRecruitGradeCode(),
                             student.getRecruitGradeName(), student.getCurrentGradeCode(), student.getCurrentGrade(),
-                            student.getStudentType(), student.getStudentTypeName(), student.getGuardian1(),
-                            student.getGuardian1Phone(), student.getGuardian2(), student.getGuardian2Phone());
+                            student.getStudentType(), student.getStudentTypeName(), student.getCostType(), student.getCostTypeName(),
+                            student.getGuardian1(), student.getGuardian1Phone(), student.getGuardian2(), student.getGuardian2Phone());
                     studentDTOS.add(studentDTO);
                 }
                 data.putExtra("students", (Serializable) studentDTOS);

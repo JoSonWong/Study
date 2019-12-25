@@ -215,8 +215,8 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                                 Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
                                         studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
                                         studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                                        studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getGuardian1(),
-                                        studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                                        studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
+                                        studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
                                 students.add(student);
                             }
                         }

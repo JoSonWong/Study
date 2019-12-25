@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
@@ -26,8 +27,8 @@ import java.util.Date;
 public class StudentInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etName, etBirthday, etRecruitDate, etGuardian1, etGuardian1Phone, etGuardian2, etGuardian2Phone;
-    private Spinner spRecruitGrade, spCurrentGrade, spStudentType;
-    private RadioGroup rgSex;
+    private Spinner spRecruitGrade, spCurrentGrade;
+    private RadioGroup rgSex, rgType, rgCostType;
     private StudentDTO student;
 
     @Override
@@ -50,19 +51,18 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         etRecruitDate.setOnClickListener(this);
         spRecruitGrade = findViewById(R.id.sp_recruit_grade);
         spCurrentGrade = findViewById(R.id.sp_current_grade);
-        spStudentType = findViewById(R.id.spinner_student_type);
+        rgType = findViewById(R.id.rg_type);
+        rgCostType = findViewById(R.id.rg_cost_type);
         etGuardian1 = findViewById(R.id.et_guardian1);
         etGuardian1Phone = findViewById(R.id.et_guardian1_phone);
         etGuardian2 = findViewById(R.id.et_guardian2);
         etGuardian2Phone = findViewById(R.id.et_guardian2_phone);
 
-
         spRecruitGrade.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.grades)));
         spCurrentGrade.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.grades)));
-        spStudentType.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.student_types)));
+
         if (student != null) {
             etName.setText(student.getName());
             rgSex.check(student.getSex() == 1 ? R.id.rb_female : R.id.rb_male);
@@ -70,7 +70,9 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
             etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
             spRecruitGrade.setSelection(student.getRecruitGradeCode());
             spCurrentGrade.setSelection(student.getCurrentGradeCode());
-            spStudentType.setSelection(student.getStudentType());
+            rgType.check(student.getStudentType() == 1 ? R.id.rb_studying
+                    : (student.getStudentType() == 2 ? R.id.rb_finished : R.id.rb_try));
+            rgCostType.check(student.getCostType() == 1 ? R.id.rb_term : R.id.rb_curriculum);
             etGuardian1.setText(student.getGuardian1());
             etGuardian1Phone.setText(student.getGuardian1Phone());
             etGuardian2.setText(student.getGuardian2());
@@ -103,8 +105,12 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
                 student.setRecruitGradeName(getResources().getStringArray(R.array.grades)[spRecruitGrade.getSelectedItemPosition()]);
                 student.setCurrentGradeCode(spCurrentGrade.getSelectedItemPosition());
                 student.setCurrentGrade(getResources().getStringArray(R.array.grades)[spCurrentGrade.getSelectedItemPosition()]);
-                student.setStudentType(spStudentType.getSelectedItemPosition());
-                student.setStudentTypeName(getResources().getStringArray(R.array.student_types)[spStudentType.getSelectedItemPosition()]);
+                student.setStudentType(rgType.getCheckedRadioButtonId() == R.id.rb_studying ? 1
+                        : (rgType.getCheckedRadioButtonId() == R.id.rb_try ? 0 : 2));
+                student.setStudentTypeName(((RadioButton) findViewById(rgType.getCheckedRadioButtonId())).getText().toString());
+                student.setCostType(rgCostType.getCheckedRadioButtonId() == R.id.rb_term ? 1 : 0);
+                student.setCostTypeName(((RadioButton) findViewById(
+                        rgCostType.getCheckedRadioButtonId())).getText().toString());
                 student.setGuardian1(etGuardian1.getText().toString());
                 student.setGuardian1Phone(etGuardian1Phone.getText().toString());
                 student.setGuardian2(etGuardian2.getText().toString());

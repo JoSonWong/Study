@@ -70,8 +70,8 @@ public class ClockViewModel extends ViewModel {
             if (studentCurriculumList != null && !studentCurriculumList.isEmpty()) {
                 Double discountPrice = studentCurriculumList.get(0).getDiscountPrice();
                 Log.d(getClass().getSimpleName(), "学生：" + student.getName()
-                        + " 课程：" + curriculumName + " 课时价格：" + discountPrice);
-                clockRecord.setCurriculumDiscountPrice(discountPrice);
+                        + " 课程：" + curriculumName + " 课时价格：" + (student.getCostType() == 1 ? 0 : discountPrice));
+                clockRecord.setCurriculumDiscountPrice(student.getCostType() == 1 ? 0 : discountPrice);
                 ClockDbService.getInstance(StudyApplication.getDbController()).insert(clockRecord);
             }
         }
