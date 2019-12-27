@@ -7,7 +7,7 @@
         android:id="@+id/action_add"
         android:icon="@drawable/ic_add_white_24dp"
         android:orderInCategory="100"
-        android:title="@android:string/ok"
+        android:title="@string/add"
         app:showAsAction="always" />
     <!--  <item-->
     <!--        android:id="@+id/action_share"-->

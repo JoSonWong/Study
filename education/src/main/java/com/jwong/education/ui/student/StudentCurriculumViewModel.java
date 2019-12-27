@@ -12,6 +12,7 @@ import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.db.StudentCurriculumDbService;
 import com.jwong.education.dto.CurriculumDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentCurriculumViewModel extends ViewModel {
@@ -49,7 +50,14 @@ public class StudentCurriculumViewModel extends ViewModel {
     }
 
     public LiveData<List<StudentCurriculum>> queryCurriculumStudentList(long curriculumId) {
-        data.postValue(StudentCurriculumDbService.getInstance(StudyApplication.getDbController()).queryGroupByStudent(curriculumId));
+        List<StudentCurriculum> list = StudentCurriculumDbService.getInstance(StudyApplication.getDbController()).queryGroupByStudent(curriculumId);
+        List<StudentCurriculum> curriculumList = new ArrayList<>();
+        for (StudentCurriculum curriculum : list) {
+            if (curriculum.getStudent().getStudentType() != 2) {
+                curriculumList.add(curriculum);
+            }
+        }
+        data.postValue(curriculumList);
         return data;
     }
 

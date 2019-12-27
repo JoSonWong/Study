@@ -1,6 +1,5 @@
 package com.jwong.education.ui.student;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,15 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
-import com.jwong.education.dao.Student;
-import com.jwong.education.dto.StudentDTO;
-
-import java.io.Serializable;
+import com.jwong.education.dto.entity.StudentDetailNode;
 
 public class StudentFragment extends Fragment implements OnItemClickListener {
 
     private StudentViewModel studentViewModel;
     private RecyclerView recyclerView;
+    private StudentTreeAdapter adapter = new StudentTreeAdapter();
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +45,7 @@ public class StudentFragment extends Fragment implements OnItemClickListener {
                 LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(adapter);
 
         return root;
     }
@@ -54,82 +53,36 @@ public class StudentFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        studentViewModel.getStudentList(1).observe(this, students -> {
-            StudentAdapter adapter = new StudentAdapter(students, false);
+        studentViewModel.getStudentGroup().observe(this, baseNodes -> {
+            adapter.setNewData(baseNodes);
             adapter.setOnItemClickListener(this);
-            recyclerView.setAdapter(adapter);
         });
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        Student student = (Student) adapter.getData().get(position);
-        Intent intent = new Intent(getActivity(), StudentActivity.class);
-        intent.putExtra("studentId", student.getId());
-        startActivityForResult(intent, 1100);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (requestCode == 1100) {
-                Serializable serializable;
-                if ((serializable = data.getSerializableExtra("student")) != null) {
-                    StudentDTO studentDTO = (StudentDTO) serializable;
-                    Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
-                            studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
-                            studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
-                            studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                    studentViewModel.update(student);
-                }
-            } else if (requestCode == 1200) {
-                Serializable serializable;
-                if ((serializable = data.getSerializableExtra("student")) != null) {
-                    StudentDTO studentDTO = (StudentDTO) serializable;
-                    Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
-                            studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
-                            studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
-                            studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                    studentViewModel.insert(student);
-                }
-            }
+        if (adapter.getData().get(position) instanceof StudentDetailNode) {
+            StudentDetailNode student = (StudentDetailNode) adapter.getData().get(position);
+            Intent intent = new Intent(getActivity(), StudentActivity.class);
+            intent.putExtra("studentId", student.getId());
+            startActivity(intent);
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.student_top_nav_menu, menu);
+        inflater.inflate(R.menu.top_nav_menu_add, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                Log.d(getClass().getSimpleName(), "onOptionsItemSelected 添加学生 >>> ");
-                Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
-                startActivityForResult(intent, 1200);
-                break;
-            case R.id.action_all:
-                Log.d(getClass().getSimpleName(), "onOptionsItemSelected 添加学生 >>> ");
-                studentViewModel.getStudentList(-1);
-                break;
-            case R.id.action_studying:
-                studentViewModel.getStudentList(1);
-                break;
-            case R.id.action_try:
-                studentViewModel.getStudentList(0);
-                break;
-            case R.id.action_finish:
-                studentViewModel.getStudentList(2);
-                break;
-            default:
-                break;
+        if (item.getItemId() == R.id.action_add) {
+            Log.d(getClass().getSimpleName(), "onOptionsItemSelected 添加学生 >>> ");
+            Intent intent = new Intent(getActivity(), StudentInfoActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

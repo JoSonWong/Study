@@ -1,8 +1,8 @@
 package com.jwong.education.ui.student;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,12 +13,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.jwong.education.R;
-import com.jwong.education.dto.StudentDTO;
+import com.jwong.education.dao.Student;
 import com.jwong.education.util.FormatUtils;
 
 import java.util.Calendar;
@@ -29,19 +31,22 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
     private EditText etName, etBirthday, etRecruitDate, etGuardian1, etGuardian1Phone, etGuardian2, etGuardian2Phone;
     private Spinner spRecruitGrade, spCurrentGrade;
     private RadioGroup rgSex, rgType, rgCostType;
-    private StudentDTO student;
+    private Long studentId;
+    private StudentViewModel studentViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_info);
-        student = (StudentDTO) getIntent().getSerializableExtra("student");
+        studentId = getIntent().getLongExtra("studentId", 0);
+        studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setTitle(student == null ? R.string.add_student : R.string.student_info);
+            actionBar.setTitle(studentId <= 0 ? R.string.add_student : R.string.student_info);
         }
         etName = findViewById(R.id.et_name);
         rgSex = findViewById(R.id.rg_sex);
@@ -63,20 +68,23 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         spCurrentGrade.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.grades)));
 
-        if (student != null) {
-            etName.setText(student.getName());
-            rgSex.check(student.getSex() == 1 ? R.id.rb_female : R.id.rb_male);
-            etBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
-            etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
-            spRecruitGrade.setSelection(student.getRecruitGradeCode());
-            spCurrentGrade.setSelection(student.getCurrentGradeCode());
-            rgType.check(student.getStudentType() == 1 ? R.id.rb_studying
-                    : (student.getStudentType() == 2 ? R.id.rb_finished : R.id.rb_try));
-            rgCostType.check(student.getCostType() == 1 ? R.id.rb_term : R.id.rb_curriculum);
-            etGuardian1.setText(student.getGuardian1());
-            etGuardian1Phone.setText(student.getGuardian1Phone());
-            etGuardian2.setText(student.getGuardian2());
-            etGuardian2Phone.setText(student.getGuardian2Phone());
+
+        if (studentId > 0) {
+            studentViewModel.getStudent(studentId).observe(this, student -> {
+                etName.setText(student.getName());
+                rgSex.check(student.getSex() == 1 ? R.id.rb_female : R.id.rb_male);
+                etBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
+                etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
+                spRecruitGrade.setSelection(student.getRecruitGradeCode());
+                spCurrentGrade.setSelection(student.getCurrentGradeCode());
+                rgType.check(student.getStudentType() == 1 ? R.id.rb_studying
+                        : (student.getStudentType() == 2 ? R.id.rb_finished : R.id.rb_try));
+                rgCostType.check(student.getCostType() == 1 ? R.id.rb_term : R.id.rb_curriculum);
+                etGuardian1.setText(student.getGuardian1());
+                etGuardian1Phone.setText(student.getGuardian1Phone());
+                etGuardian2.setText(student.getGuardian2());
+                etGuardian2Phone.setText(student.getGuardian2Phone());
+            });
         }
     }
 
@@ -92,32 +100,39 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_ok:
-                Intent data = new Intent();
-                if (student == null) {
-                    student = new StudentDTO();
+                if (!TextUtils.isEmpty(etName.getText())) {
+                    Student student = new Student();
+                    student.setId(studentId);
+                    student.setName(etName.getText().toString());
+                    student.setAvatar("");
+                    student.setSex(rgSex.getCheckedRadioButtonId() == R.id.rb_female ? 1 : 0);
+                    student.setBirthday(FormatUtils.convert2Date(etBirthday.getText().toString()));
+                    student.setRecruitTime(FormatUtils.convert2Date(etRecruitDate.getText().toString()));
+                    student.setRecruitGradeCode(spRecruitGrade.getSelectedItemPosition());
+                    student.setRecruitGradeName(getResources().getStringArray(R.array.grades)[spRecruitGrade.getSelectedItemPosition()]);
+                    student.setCurrentGradeCode(spCurrentGrade.getSelectedItemPosition());
+                    student.setCurrentGrade(getResources().getStringArray(R.array.grades)[spCurrentGrade.getSelectedItemPosition()]);
+                    student.setStudentType(rgType.getCheckedRadioButtonId() == R.id.rb_studying ? 1
+                            : (rgType.getCheckedRadioButtonId() == R.id.rb_try ? 0 : 2));
+                    student.setStudentTypeName(((RadioButton) findViewById(rgType.getCheckedRadioButtonId())).getText().toString());
+                    student.setCostType(rgCostType.getCheckedRadioButtonId() == R.id.rb_term ? 1 : 0);
+                    student.setCostTypeName(((RadioButton) findViewById(
+                            rgCostType.getCheckedRadioButtonId())).getText().toString());
+                    student.setGuardian1(etGuardian1.getText().toString());
+                    student.setGuardian1Phone(etGuardian1Phone.getText().toString());
+                    student.setGuardian2(etGuardian2.getText().toString());
+                    student.setGuardian2Phone(etGuardian2Phone.getText().toString());
+                    if (student.getId() > 0) {
+                        studentViewModel.update(student);
+                        Toast.makeText(getApplicationContext(), R.string.update_success, Toast.LENGTH_SHORT).show();
+                    } else {
+                        studentViewModel.insert(student);
+                        Toast.makeText(getApplicationContext(), R.string.add_student_success, Toast.LENGTH_SHORT).show();
+                    }
+                    this.finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.pls_input_student_name, Toast.LENGTH_SHORT).show();
                 }
-                student.setName(etName.getText().toString());
-                student.setAvatar("");
-                student.setSex(rgSex.getCheckedRadioButtonId() == R.id.rb_female ? 1 : 0);
-                student.setBirthday(FormatUtils.convert2Date(etBirthday.getText().toString()));
-                student.setRecruitTime(FormatUtils.convert2Date(etRecruitDate.getText().toString()));
-                student.setRecruitGradeCode(spRecruitGrade.getSelectedItemPosition());
-                student.setRecruitGradeName(getResources().getStringArray(R.array.grades)[spRecruitGrade.getSelectedItemPosition()]);
-                student.setCurrentGradeCode(spCurrentGrade.getSelectedItemPosition());
-                student.setCurrentGrade(getResources().getStringArray(R.array.grades)[spCurrentGrade.getSelectedItemPosition()]);
-                student.setStudentType(rgType.getCheckedRadioButtonId() == R.id.rb_studying ? 1
-                        : (rgType.getCheckedRadioButtonId() == R.id.rb_try ? 0 : 2));
-                student.setStudentTypeName(((RadioButton) findViewById(rgType.getCheckedRadioButtonId())).getText().toString());
-                student.setCostType(rgCostType.getCheckedRadioButtonId() == R.id.rb_term ? 1 : 0);
-                student.setCostTypeName(((RadioButton) findViewById(
-                        rgCostType.getCheckedRadioButtonId())).getText().toString());
-                student.setGuardian1(etGuardian1.getText().toString());
-                student.setGuardian1Phone(etGuardian1Phone.getText().toString());
-                student.setGuardian2(etGuardian2.getText().toString());
-                student.setGuardian2Phone(etGuardian2Phone.getText().toString());
-                data.putExtra("student", student);
-                setResult(RESULT_OK, data);
-                this.finish();
             case android.R.id.home:// 点击返回图标事件
                 this.finish();
             default:

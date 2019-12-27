@@ -31,21 +31,12 @@ public class StudentInfoFragment extends Fragment {
             tvBirthday, tvRecruitDate, tvRecruitGrade, tvGuardian1, tvGuardian1Phone,
             tvGuardian2, tvGuardian2Phone;
     private ImageView ivSex;
-
     private StudentViewModel studentViewModel;
-    private Student student;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ActionBar actionBar = getActivity().getActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setTitle(R.string.select_student);
-        }
     }
 
     @Override
@@ -68,8 +59,14 @@ public class StudentInfoFragment extends Fragment {
         tvGuardian2Phone = root.findViewById(R.id.tv_guardian2_phone);
 
         studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         studentViewModel.getStudent(StudentActivity.studentId).observe(this, student -> {
-            this.student = student;
             tvName.setText(student.getName());
             tvStudentId.setText(getString(R.string.student_code_x,
                     FormatUtils.studentCodeFormat(student.getId())));
@@ -87,50 +84,21 @@ public class StudentInfoFragment extends Fragment {
             tvGuardian2.setText(student.getGuardian2());
             tvGuardian2Phone.setText(student.getGuardian2Phone());
         });
-        return root;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(getContext(), StudentInfoActivity.class);
-        StudentDTO studentDTO = new StudentDTO(student.getId(), student.getName(), student.getAvatar(),
-                student.getSex(), student.getBirthday(), student.getRecruitTime(), student.getRecruitGradeCode(),
-                student.getRecruitGradeName(), student.getCurrentGradeCode(), student.getCurrentGrade(),
-                student.getStudentType(), student.getStudentTypeName(), student.getCostType(), student.getCostTypeName(),
-                student.getGuardian1(), student.getGuardian1Phone(), student.getGuardian2(), student.getGuardian2Phone());
-        intent.putExtra("student", studentDTO);
-        startActivityForResult(intent, 1200);
+        intent.putExtra("studentId", StudentActivity.studentId);
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        MenuItem moreItem = menu.add(Menu.NONE, Menu.FIRST, Menu.FIRST, null);
-        moreItem.setIcon(R.drawable.ic_mode_edit_white_24dp);
-        moreItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.top_nav_menu_edit, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (requestCode == 1200) {
-                Serializable serializable;
-                if ((serializable = data.getSerializableExtra("student")) != null) {
-                    StudentDTO studentDTO = (StudentDTO) serializable;
-                    Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
-                            studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
-                            studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                            studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
-                            studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
-                    studentViewModel.update(student);
-                    studentViewModel.getStudent(StudentActivity.studentId);
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }

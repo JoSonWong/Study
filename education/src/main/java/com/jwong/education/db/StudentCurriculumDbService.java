@@ -76,9 +76,8 @@ public class StudentCurriculumDbService {
 //        QueryBuilder<StudentCurriculum> queryBuilder = studentCurriculumDao.queryBuilder();
 //        queryBuilder.and(StudentCurriculumDao.Properties.StudentId.eq(studentId),
 //                StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId));
-        Query query = studentCurriculumDao.queryBuilder().where(StudentCurriculumDao.Properties.StudentId.eq(studentId)
-                , StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId)).build();
-        return query.list();
+        return studentCurriculumDao.queryBuilder().where(StudentCurriculumDao.Properties.StudentId.eq(studentId)
+                , StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId)).build().list();
     }
 
     /**
@@ -131,10 +130,5 @@ public class StudentCurriculumDbService {
         return studentCurriculumDao.queryBuilder().where(
                 new WhereCondition.StringCondition(StudentCurriculumDao.Properties.CurriculumId.columnName + "=" + curriculumId
                         + " GROUP BY " + StudentCurriculumDao.Properties.StudentId.columnName)).list();
-//        Query query = studentCurriculumDao.queryBuilder().where(
-//                new WhereCondition.StringCondition(StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId)
-//                        + "GROUP BY STUDENT_ID"))
-//                .orderAsc(StudentCurriculumDao.Properties.Id).build();
-//        return query.list();
     }
 }

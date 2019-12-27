@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">慕言教育</string>
+    <string name="app_name">慕言</string>
     <string name="title_clock">打卡</string>
     <string name="title_student">学生</string>
     <string name="title_report">报表</string>
@@ -13,6 +13,8 @@
     <string name="curriculum_price">课时原价</string>
     <string name="pls_input_curriculum_price">请输入课程原价，如：10.0</string>
     <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
     <string name="my_student">我的学生</string>
     <string name="student_name">姓名</string>
     <string name="sex">性别</string>
@@ -105,4 +107,9 @@
     <string name="cost_type">收费类别</string>
     <string name="cost_type_curriculum">按课时</string>
     <string name="cost_type_term">按学期</string>
+    <string name="pls_input_guardian_name">请输入监护人姓名</string>
+    <string name="pls_input_guardian_phone">请输入监护人电话号码</string>
+    <string name="pls_select_date">请点击选择日期</string>
+    <string name="group_x_people">%s（%d人）</string>
+
 </resources>

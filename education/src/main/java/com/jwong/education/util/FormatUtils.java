@@ -50,14 +50,13 @@ public class FormatUtils {
     }
 
     public static String priceFormat(double price) {
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#.0");
         String p = df.format(price);
-        return ".00".equals(p) ? "00.00" : p;
+        return ".0".equals(p) ? "0.0" : p;
     }
 
     public static String studentCodeFormat(long id) {
-        return String.format("%0" + 3 + "d", id
-        );
+        return String.format("%0" + 3 + "d", id);
     }
 
     public static double doubleFormat(double value) {
