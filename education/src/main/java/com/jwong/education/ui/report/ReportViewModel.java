@@ -79,17 +79,17 @@ public class ReportViewModel extends ViewModel {
             curriculumCost.setCostName("课时费");
 
             LongSparseArray<ClockRecord> curriculumClockMap = new LongSparseArray<>();
-            LongSparseArray<Integer> curriculumCountMap = new LongSparseArray<>();
+            LongSparseArray<Float> curriculumCountMap = new LongSparseArray<>();
             for (ClockRecord record : clockRecords) {
                 if (curriculumClockMap.get(record.getCurriculumId()) != null) {
-                    int count = curriculumCountMap.get(record.getCurriculumId(), 0) + 1;
+                    float count = curriculumCountMap.get(record.getCurriculumId(), 0.0f) + record.getUnit();
                     curriculumCountMap.put(record.getCurriculumId(), count);
                 } else {
                     ClockRecord record1 = new ClockRecord(record.getId(), record.getClockTime(), record.getStudentId(),
                             record.getStudentName(), record.getCurriculumId(), record.getCurriculumName(), record.getCurriculumPrice(),
-                            record.getCurriculumDiscountPrice(), record.getClockType());
+                            record.getCurriculumDiscountPrice(), record.getClockType(), record.getUnit());
                     curriculumClockMap.put(record1.getCurriculumId(), record1);
-                    curriculumCountMap.put(record1.getCurriculumId(), 1);
+                    curriculumCountMap.put(record1.getCurriculumId(), record1.getUnit());
                 }
             }
 
@@ -99,7 +99,7 @@ public class ReportViewModel extends ViewModel {
             double discountPrice = 0;
             for (int i = 0; i < curriculumClockMap.size(); i++) {
                 Long key = curriculumClockMap.keyAt(i);
-                int count = curriculumCountMap.get(key);
+                float count = curriculumCountMap.get(key);
                 ClockRecord record = curriculumClockMap.get(key);
                 price = price + record.getCurriculumDiscountPrice() * count;
                 discountPrice = discountPrice + record.getCurriculumDiscountPrice() * count;

@@ -14,7 +14,7 @@ public class Curriculum extends BaseDao {
     @Index(unique = true)//设置唯一性
     private String name;//课程名称
 
-    private Double price;//课程价格
+    private Double price = 0.0;//课程价格
 
     @Generated(hash = 1094616265)
     public Curriculum(Long id, String name, Double price) {

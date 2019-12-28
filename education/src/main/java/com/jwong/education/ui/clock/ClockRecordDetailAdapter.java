@@ -20,6 +20,9 @@ public class ClockRecordDetailAdapter extends BaseQuickAdapter<ClockRecord, Base
         helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getStudentName());
         helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getCurriculumDiscountPrice()));
+        helper.setText(R.id.tv_count, FormatUtils.priceFormat(item.getUnit()));
+        helper.setText(R.id.tv_total, FormatUtils.priceFormat(item.getUnit()
+                * item.getCurriculumDiscountPrice()));
         helper.setText(R.id.tv_clock_type, helper.itemView.getContext().getResources()
                 .getStringArray(R.array.clock_types)[item.getClockType()]);
         int color = R.color.colorPrimary;

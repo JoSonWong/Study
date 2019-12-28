@@ -22,6 +22,7 @@ public class CostNotificationAdapter extends BaseQuickAdapter<CostNotificationIt
         helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getCostName());
         helper.setText(R.id.tv_price, item.getCostPrice());
+        helper.setText(R.id.tv_discount_price, item.getDiscountCost());
         helper.setText(R.id.tv_count, item.getCurriculumCount() > 0 ? (item.getCurriculumCount() + "") : "");
         helper.setText(R.id.tv_total, FormatUtils.priceFormat(item.getTotal()));
     }

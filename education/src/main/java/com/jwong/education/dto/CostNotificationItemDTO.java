@@ -9,14 +9,18 @@ public class CostNotificationItemDTO implements Serializable {
 
     private String costPrice;//费用标准
 
-    private int curriculumCount;//课时
+    private String discountCost;//优惠价
+
+    private float curriculumCount;//课时
 
     private double total;//合计
 
 
-    public CostNotificationItemDTO(String costName, String costPrice, int curriculumCount, double total) {
+    public CostNotificationItemDTO(String costName, String costPrice, String discountCost,
+                                   float curriculumCount, double total) {
         this.costName = costName;
         this.costPrice = costPrice;
+        this.discountCost = discountCost;
         this.curriculumCount = curriculumCount;
         this.total = total;
     }
@@ -41,7 +45,15 @@ public class CostNotificationItemDTO implements Serializable {
         this.costPrice = costPrice;
     }
 
-    public int getCurriculumCount() {
+    public String getDiscountCost() {
+        return this.discountCost;
+    }
+
+    public void setDiscountCost(String discountCost) {
+        this.discountCost = discountCost;
+    }
+
+    public float getCurriculumCount() {
         return this.curriculumCount;
     }
 

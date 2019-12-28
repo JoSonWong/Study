@@ -51,7 +51,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 7 //数据库版本号
+    schemaVersion 8 //数据库版本号
 //    daoPackage 'com.jwong.education.greendao' //设置DaoMaster.DaoSession,Dao包名
 //    targetGenDir 'src/main/java' //设置daoPackage所在的文件路径
 }

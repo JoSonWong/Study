@@ -196,7 +196,7 @@ public class SealView extends View {
 
             if (secondTextAlign == 1) {
                 //弧
-                rString = (int) (radius * 0.8 * secondTextMarginMultiple);
+                rString = (int) (radius * 0.9 * secondTextMarginMultiple);
                 rectF.set(centerX - rString, centerY - rString, centerX + rString, centerY + rString);
 
                 sweepAngle = 180 * textWidth / (3.1415f * rString);
@@ -211,7 +211,7 @@ public class SealView extends View {
                 Paint.FontMetrics fm = paint.getFontMetrics();
                 float textHeight = (int) Math.ceil(fm.descent - fm.ascent);
 
-                float textAlign = (float) (radius * 0.5 * secondTextMarginMultiple);
+                float textAlign = (float) (radius * 0.6 * secondTextMarginMultiple);
 
                 canvas.drawText(textSecond, centerX, centerY + textAlign + textHeight * 0.5f, paint);
 

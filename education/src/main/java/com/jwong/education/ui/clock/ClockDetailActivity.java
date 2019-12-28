@@ -153,10 +153,15 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         tvCurriculumName.setText(getString(R.string.curriculum_name_x, clockRecord.getCurriculumName()));
 
         TextView tvCurriculumPrice = viewInput.findViewById(R.id.tv_curriculum_price);
-        tvCurriculumPrice.setText(getString(R.string.curriculum_price_x, clockRecord.getCurriculumPrice() + ""));
+        tvCurriculumPrice.setText(getString(R.string.curriculum_price_x,
+                FormatUtils.priceFormat(clockRecord.getCurriculumPrice())));
 
-        EditText etDiscountPrice = viewInput.findViewById(R.id.et_discount_price);
-        etDiscountPrice.setText(FormatUtils.priceFormat(clockRecord.getCurriculumDiscountPrice()));
+        TextView tvCurriculumDiscountPrice = viewInput.findViewById(R.id.tv_discount_price);
+        tvCurriculumDiscountPrice.setText(getString(R.string.curriculum_discount_price_x,
+                FormatUtils.priceFormat(clockRecord.getCurriculumDiscountPrice())));
+
+        EditText etCount = viewInput.findViewById(R.id.et_curriculum_count);
+        etCount.setText(FormatUtils.priceFormat(clockRecord.getUnit()));
 
         RadioGroup radioGroup = viewInput.findViewById(R.id.rg_clock_type);
         radioGroup.check(clockRecord.getClockType() == 1 ? R.id.rb_adjustment
@@ -170,7 +175,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                             clockRecordDTO.getClockTime());
                 })
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    if (!TextUtils.isEmpty(etDiscountPrice.getText())) {
+                    if (!TextUtils.isEmpty(etCount.getText())) {
                         int id = radioGroup.getCheckedRadioButtonId();
                         int clockType = 0;
                         if (id == R.id.rb_adjustment) {
@@ -179,7 +184,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                             clockType = 2;
                         }
                         clockRecord.setClockType(clockType);
-                        clockRecord.setCurriculumDiscountPrice(Double.parseDouble(etDiscountPrice.getText().toString()));
+                        clockRecord.setUnit(Float.parseFloat(etCount.getText().toString()));
                         long logId = clockViewModel.update(clockRecord);
                         Toast.makeText(this, logId > 0 ? R.string.update_success : R.string.update_fail
                                 , Toast.LENGTH_SHORT).show();
@@ -188,7 +193,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                                     clockRecordDTO.getClockTime());
                         }
                     } else {
-                        Toast.makeText(this, R.string.pls_input_discount_price, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.pls_input_clock_count, Toast.LENGTH_SHORT).show();
                     }
                 });
         builder.create().show();
@@ -224,7 +229,8 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                 }
                 if (!students.isEmpty()) {
                     clockViewModel.insertClockRecord(clockRecordDTO.getClockTime(), clockRecordDTO.getCurriculumId(),
-                            clockRecordDTO.getCurriculumName(), clockRecordDTO.getCurriculumPrice(), students, clockType);
+                            clockRecordDTO.getCurriculumName(), clockRecordDTO.getCurriculumPrice(), students,
+                            clockType, clockRecordDTO.getUnit());
                     clockViewModel.getClockRecordDetailList(clockRecordDTO.getCurriculumId(), clockRecordDTO.getClockTime());
                 }
             }

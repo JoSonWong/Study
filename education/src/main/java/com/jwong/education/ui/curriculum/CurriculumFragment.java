@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,9 @@ public class CurriculumFragment extends Fragment implements OnItemClickListener 
             curriculumAdapter = new CurriculumAdapter(curriculumList, false);
             curriculumAdapter.setOnItemClickListener(this);
             recyclerView.setAdapter(curriculumAdapter);
+            View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.list_empty_view, null);
+            ((TextView) emptyView.findViewById(R.id.tv_empty)).setText(R.string.no_curriculum_tip);
+            curriculumAdapter.setEmptyView(emptyView);
         });
         return root;
     }

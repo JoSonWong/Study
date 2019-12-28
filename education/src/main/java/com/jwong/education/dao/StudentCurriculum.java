@@ -22,7 +22,7 @@ public class StudentCurriculum extends BaseDao {
     @ToOne(joinProperty = "curriculumId")
     private Curriculum curriculum;
 
-    private Double discountPrice;//折后价
+    private Double discountPrice = 0.0;//折后价
 
     /**
      * Used to resolve relations

@@ -20,8 +20,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/company_pay_notification"
             android:textColor="@android:color/black"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textSize="26sp" />
 
         <View
             android:layout_width="match_parent"
@@ -146,17 +145,39 @@
         android:layout_height="wrap_content"
         android:layout_below="@android:id/content" />
 
-    <com.jwong.education.widget.SealView
-        android:id="@+id/seal"
+    <RelativeLayout
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_below="@+id/rv_cost"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="-80dp"
-        android:layout_marginEnd="60dp"
-        app:seal_radius="200dp"
-        app:seal_rotate="0"
-        app:seal_textFirst="@string/company"
-        app:seal_textSecond="2019年12月28日"
-        app:seal_textSize="30sp" />
+        android:layout_marginEnd="60dp">
+
+        <com.jwong.education.widget.SealView
+            android:id="@+id/seal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:seal_radius="200dp"
+            app:seal_rotate="0"
+            app:seal_textFirst="@string/company"
+            app:seal_textSecond="@string/company_en"
+            app:seal_textSize="30sp" />
+
+        <View
+            android:id="@+id/center"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/tv_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/center"
+            android:layout_centerHorizontal="true"
+            android:text="2019年12月28日"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
 </RelativeLayout>

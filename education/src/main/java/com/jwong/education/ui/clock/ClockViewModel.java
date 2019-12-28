@@ -24,7 +24,7 @@ public class ClockViewModel extends ViewModel {
     private MutableLiveData<List<ClockRecord>> clockRecordList;
     private MutableLiveData<List<ClockRecord>> studentClockRecordList;
     private MutableLiveData<Map<String, Double>> dataMonth;
-    private MutableLiveData<Map<String, Integer>> studentCurriculumStatistic;
+    private MutableLiveData<Map<String, Float>> studentCurriculumStatistic;
 
 
     public ClockViewModel() {
@@ -55,7 +55,7 @@ public class ClockViewModel extends ViewModel {
     }
 
     public void insertClockRecord(Date date, long curriculumId, String curriculumName, double curriculumPrice,
-                                  List<Student> students, Integer clockType) {
+                                  List<Student> students, Integer clockType, float unit) {
         for (Student student : students) {
             ClockRecord clockRecord = new ClockRecord();
             clockRecord.setClockTime(date);
@@ -65,6 +65,7 @@ public class ClockViewModel extends ViewModel {
             clockRecord.setStudentId(student.getId());
             clockRecord.setStudentName(student.getName());
             clockRecord.setClockType(clockType);
+            clockRecord.setUnit(unit);
             List<StudentCurriculum> studentCurriculumList = StudentCurriculumDbService.getInstance(
                     StudyApplication.getDbController()).query(student.getId(), curriculumId);
             if (studentCurriculumList != null && !studentCurriculumList.isEmpty()) {
@@ -78,9 +79,9 @@ public class ClockViewModel extends ViewModel {
     }
 
 
-    public void insertClockRecord(CurriculumDTO curriculum, List<Student> students) {
+    public void insertClockRecord(CurriculumDTO curriculum, List<Student> students, float unit) {
         Date date = new Date();
-        insertClockRecord(date, curriculum.getId(), curriculum.getName(), curriculum.getPrice(), students, 0);
+        insertClockRecord(date, curriculum.getId(), curriculum.getName(), curriculum.getPrice(), students, 0, unit);
         this.clockRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
                 .searchAllGroupByCurriculumAndTime(10));
     }
@@ -128,18 +129,18 @@ public class ClockViewModel extends ViewModel {
     }
 
 
-    public LiveData<Map<String, Integer>> getStudentCurriculumStatistic(long studentId, Date from, Date to) {
+    public LiveData<Map<String, Float>> getStudentCurriculumStatistic(long studentId, Date from, Date to) {
         List<ClockRecord> list = ClockDbService.getInstance(StudyApplication.getDbController())
                 .searchClockRecord(studentId, from, to);
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Float> map = new HashMap<>();
         for (ClockRecord record : list) {
             String key = record.getCurriculumName();
-            Integer count;
+            Float count;
             if ((count = map.get(key)) != null) {
-                count = count + 1;
+                count = count + record.getUnit();
                 map.put(key, count);
             } else {
-                map.put(key, 1);
+                map.put(key, record.getUnit());
             }
         }
         studentCurriculumStatistic.postValue(map);

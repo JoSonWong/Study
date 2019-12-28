@@ -4,6 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -16,27 +17,27 @@ public class Student extends BaseDao {
 
     private String avatar;//头像
 
-    private Integer sex;//性别，0未知，1男，2女
+    private Integer sex = 0;//性别0男，1女
 
     private Date birthday;//生日
 
-    private Date recruitTime;//招收时间
+    private Date recruitTime = Calendar.getInstance().getTime();//招收时间
 
-    private Integer recruitGradeCode;//招收年级代号
+    private Integer recruitGradeCode = 0;//招收年级代号
 
-    private String recruitGradeName;//招收年级
+    private String recruitGradeName = "一年级";//招收年级
 
-    private Integer currentGradeCode;//当前年级代号
+    private Integer currentGradeCode = 0;//当前年级代号
 
-    private String currentGrade;//当前年级
+    private String currentGrade = "一年级";//当前年级
 
-    private Integer studentType;//0试听，1在学，2毕业
+    private Integer studentType = 1;//0试听，1在学，2毕业
 
-    private String studentTypeName;//类型名称
+    private String studentTypeName = "在学";//类型名称
 
-    private Integer costType;//收费类型：0按课程,1按学期
+    private Integer costType = 0;//收费类型：0按课程,1按学期
 
-    private String costTypeName;//收费类型名称：0按课程,1按学期
+    private String costTypeName = "按课程";//收费类型名称：0按课程,1按学期
 
     private String guardian1;//监护人1姓名
 
@@ -48,11 +49,11 @@ public class Student extends BaseDao {
 
     @Generated(hash = 1493955956)
     public Student(Long id, String name, String avatar, Integer sex, Date birthday,
-            Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
-            Integer currentGradeCode, String currentGrade, Integer studentType,
-            String studentTypeName, Integer costType, String costTypeName,
-            String guardian1, String guardian1Phone, String guardian2,
-            String guardian2Phone) {
+                   Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
+                   Integer currentGradeCode, String currentGrade, Integer studentType,
+                   String studentTypeName, Integer costType, String costTypeName,
+                   String guardian1, String guardian1Phone, String guardian2,
+                   String guardian2Phone) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
@@ -221,5 +222,5 @@ public class Student extends BaseDao {
         this.guardian2Phone = guardian2Phone;
     }
 
-    
+
 }

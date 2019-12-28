@@ -4,6 +4,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.util.Date;
+
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
@@ -28,10 +29,13 @@ public class ClockRecord extends BaseDao {
 
     private Integer clockType;//0正常，1调课，2请假
 
-    @Generated(hash = 237762877)
+    private Float unit = 1.0F;//单位；默认1课时
+
+
+    @Generated(hash = 264603217)
     public ClockRecord(Long id, Date clockTime, Long studentId, String studentName,
             Long curriculumId, String curriculumName, Double curriculumPrice,
-            Double curriculumDiscountPrice, Integer clockType) {
+            Double curriculumDiscountPrice, Integer clockType, Float unit) {
         this.id = id;
         this.clockTime = clockTime;
         this.studentId = studentId;
@@ -41,6 +45,7 @@ public class ClockRecord extends BaseDao {
         this.curriculumPrice = curriculumPrice;
         this.curriculumDiscountPrice = curriculumDiscountPrice;
         this.clockType = clockType;
+        this.unit = unit;
     }
 
     @Generated(hash = 675671732)
@@ -117,6 +122,14 @@ public class ClockRecord extends BaseDao {
 
     public void setClockType(Integer clockType) {
         this.clockType = clockType;
+    }
+
+    public Float getUnit() {
+        return this.unit;
+    }
+
+    public void setUnit(Float unit) {
+        this.unit = unit;
     }
 
 

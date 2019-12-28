@@ -130,15 +130,16 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
                     if (baseNode instanceof CostNode) {
                         CostNode costNode = (CostNode) baseNode;
                         if (costNode.getChildNode() == null || costNode.getChildNode().isEmpty()) {
-                            costList.add(new CostNotificationItemDTO(costNode.getCostName(), costNode.getDiscountPrice() + "",
-                                    0, costNode.getDiscountPrice()));
+                            costList.add(new CostNotificationItemDTO(costNode.getCostName(), costNode.getPrice() + "",
+                                    costNode.getDiscountPrice() + "", 0, costNode.getDiscountPrice()));
                         }
                     } else if (baseNode instanceof CostDetailNode) {
                         CostDetailNode costDetailNode = (CostDetailNode) baseNode;
                         if (costDetailNode.getDiscountPrice() > 0 && costDetailNode.getCount() > 0) {
                             hasCurriculumCost = true;
-                            costList.add(new CostNotificationItemDTO(costDetailNode.getCurriculumName(), costDetailNode.getDiscountPrice() + "",
-                                    costDetailNode.getCount(), costDetailNode.getCount() * costDetailNode.getDiscountPrice()));
+                            costList.add(new CostNotificationItemDTO(costDetailNode.getCurriculumName(), costDetailNode.getPrice() + "",
+                                    costDetailNode.getDiscountPrice() + "", costDetailNode.getCount(),
+                                    costDetailNode.getCount() * costDetailNode.getDiscountPrice()));
                         }
                     }
                 }

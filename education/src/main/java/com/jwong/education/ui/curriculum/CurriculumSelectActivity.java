@@ -3,10 +3,12 @@ package com.jwong.education.ui.curriculum;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +61,9 @@ public class CurriculumSelectActivity extends AppCompatActivity implements OnIte
             }
             curriculumAdapter.setOnItemClickListener(this);
             recyclerView.setAdapter(curriculumAdapter);
+            View emptyView = LayoutInflater.from(this).inflate(R.layout.list_empty_view, null);
+            ((TextView) emptyView.findViewById(R.id.tv_empty)).setText(R.string.clock_no_curriculum_tip);
+            curriculumAdapter.setEmptyView(emptyView);
         });
     }
 

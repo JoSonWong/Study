@@ -24,7 +24,7 @@ import com.jwong.education.dto.CostNotificationDTO;
 import com.jwong.education.dto.CostNotificationItemDTO;
 import com.jwong.education.util.FormatUtils;
 
-public class StudentCostNotificationActivity extends AppCompatActivity implements OnItemClickListener {
+public class StudentCostNotificationActivity extends AppCompatActivity implements OnItemClickListener, View.OnClickListener {
 
     private CostNotificationDTO costNotificationDTO;
     private TextView tvTitle, tvStudentName, tvStudentName2, tvGrade, tvCostName;
@@ -59,6 +59,7 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
         rvCost.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvCost.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
+        tvCostName.setOnClickListener(this);
         setData();
     }
 
@@ -115,5 +116,14 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
             }
         }
         tvAllTotal.setText(getString(R.string.rmb_x, FormatUtils.priceFormat(total)));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_cost_name:
+
+                break;
+        }
     }
 }

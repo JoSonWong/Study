@@ -16,17 +16,17 @@ public class StudentMonthCost extends BaseDao {
 
     private Integer month;//月
 
-    private Integer costType;//费用类型;0课时费，1其他费用
+    private Integer costType = 0;//费用类型;0课时费，1其他费用
 
-    private String costName;//费用名称；0课时费，1其他费用
+    private String costName = "课时费";//费用名称；0课时费，1其他费用
 
-    private Double price;//价格
+    private Double price = 0.0;//价格
 
-    private Double discountPrice;//折后价
+    private Double discountPrice = 0.0;//折后价
 
     @Generated(hash = 1512104853)
     public StudentMonthCost(Long id, Long studentId, Integer year, Integer month,
-            Integer costType, String costName, Double price, Double discountPrice) {
+                            Integer costType, String costName, Double price, Double discountPrice) {
         this.id = id;
         this.studentId = studentId;
         this.year = year;

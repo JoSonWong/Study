@@ -7,11 +7,11 @@ import java.util.List;
 public class CostDetailNode extends BaseNode {
 
     private String curriculumName;
-    private int count;
+    private float count;
     private double price;
     private double discountPrice;
 
-    public CostDetailNode(String curriculumName, int count, double price, double discountPrice) {
+    public CostDetailNode(String curriculumName, float count, double price, double discountPrice) {
         this.curriculumName = curriculumName;
         this.count = count;
         this.price = price;
@@ -22,7 +22,7 @@ public class CostDetailNode extends BaseNode {
         return curriculumName;
     }
 
-    public int getCount() {
+    public float getCount() {
         return count;
     }
 

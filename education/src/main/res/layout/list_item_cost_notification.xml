@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/lightYellow"
     android:gravity="center_vertical"
     android:minHeight="40dp"
     android:orientation="horizontal">
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="序号"
+        android:text="@string/no"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -47,7 +48,22 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:gravity="center"
-        android:text="收费标准(元/课时)"
+        android:text="@string/cost_list_title_price"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tv_discount_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="@string/cost_list_title_discount_price"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 

@@ -2,10 +2,12 @@ package com.jwong.education.ui.clock;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,6 +50,10 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
                 ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords, false);
                 adapter.setOnItemClickListener(this);
                 rvClockHistory.setAdapter(adapter);
+
+                View emptyView = LayoutInflater.from(this).inflate(R.layout.list_empty_view, null);
+                ((TextView) emptyView.findViewById(R.id.tv_empty)).setText(R.string.no_click_record_tip);
+                adapter.setEmptyView(emptyView);
             }
         });
 
@@ -83,7 +89,8 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
         Intent intent = new Intent(this, ClockDetailActivity.class);
         ClockRecordDTO recordDTO = new ClockRecordDTO(clockRecord.getId(), clockRecord.getClockTime(), clockRecord.getStudentId(),
                 clockRecord.getStudentName(), clockRecord.getCurriculumId(), clockRecord.getCurriculumName(),
-                clockRecord.getCurriculumPrice(), clockRecord.getCurriculumDiscountPrice(), clockRecord.getClockType());
+                clockRecord.getCurriculumPrice(), clockRecord.getCurriculumDiscountPrice(), clockRecord.getClockType(),
+                clockRecord.getUnit());
         intent.putExtra("clockRecord", recordDTO);
         startActivity(intent);
     }

@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,6 +47,10 @@ public class StudentFragment extends Fragment implements OnItemClickListener {
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
+
+        View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.list_empty_view, null);
+        ((TextView) emptyView.findViewById(R.id.tv_empty)).setText(R.string.no_student_tip);
+        adapter.setEmptyView(emptyView);
 
         return root;
     }

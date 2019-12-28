@@ -100,7 +100,7 @@
     <string name="total_income">总收入</string>
     <string name="curriculum_income">课时收入</string>
     <string name="clock_statistic">统计</string>
-    <string name="total_curriculum_x">总课时：%d</string>
+    <string name="total_curriculum_x">总课时：%s</string>
     <string name="latest_clock_record">最近打卡记录</string>
     <string name="female">女</string>
     <string name="male">男</string>
@@ -117,6 +117,7 @@
     <string name="cost_notification">学费通知单</string>
     <string name="all_total_cost">总计费用</string>
     <string name="company">慕言英语</string>
+    <string name="company_en">MORE THAN ENGLISH</string>
     <string name="company_pay_notification">%s课时费通知单</string>
     <string name="dear">尊敬的</string>
     <string name="parent">家长：</string>
@@ -125,4 +126,20 @@
     <string name="classmate">同学（</string>
     <string name="brackets_right">）</string>
     <string name="payment_reminder">的课时费，请您核对确认并在收到通知后尽快交清费用，感谢您的配合！</string>
+    <string name="empty_tip">暂无数据</string>
+    <string name="no_curriculum_tip">暂无课程，请点击右上角 + 添加课程</string>
+    <string name="no_student_tip">暂无学生，请点击右上角 + 添加学生</string>
+    <string name="student_no_curriculum_tip">暂无课程，请点击右上角 + 选择课程</string>
+    <string name="clock_no_curriculum_tip">暂无课程，请在首页->课程页面添加课程</string>
+    <string name="clock_no_student_tip">该暂无学生选择该课程，请在学生信息->课程为学生选择课程</string>
+    <string name="no_click_record_tip">暂无打卡记录</string>
+    <string name="pls_input">请输入</string>
+    <string name="warm_tip">温馨提示</string>
+    <string name="pls_input_clock_count">请输入本次打卡课时，如1.0</string>
+    <string name="curriculum_count_m">课时：</string>
+    <string name="no">序号</string>
+    <string name="cost_list_title_price">原价\n(元/课时)</string>
+    <string name="cost_list_title_discount_price">优惠价\n(元/课时)</string>
+    <string name="x_year_x_month_x_day">%d"-"%d"-"%d</string>
+
 </resources>

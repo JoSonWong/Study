@@ -61,6 +61,9 @@ public class StudentCurriculumFragment extends Fragment implements OnItemClickLi
                     curriculumAdapter = new StudentCurriculumAdapter(studentCurriculumList);
                     curriculumAdapter.setOnItemClickListener(this);
                     rvStudentCurriculum.setAdapter(curriculumAdapter);
+                    View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.list_empty_view, null);
+                    ((TextView) emptyView.findViewById(R.id.tv_empty)).setText(R.string.student_no_curriculum_tip);
+                    curriculumAdapter.setEmptyView(emptyView);
                 });
         return root;
     }

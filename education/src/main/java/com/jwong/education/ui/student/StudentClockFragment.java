@@ -110,8 +110,11 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
         TextView tvCurriculumPrice = viewInput.findViewById(R.id.tv_curriculum_price);
         tvCurriculumPrice.setText(getString(R.string.curriculum_price_x,
                 FormatUtils.priceFormat(clockRecord.getCurriculumPrice())));
-        EditText etDiscountPrice = viewInput.findViewById(R.id.et_discount_price);
-        etDiscountPrice.setText(FormatUtils.priceFormat(clockRecord.getCurriculumDiscountPrice()));
+        TextView tvCurriculumDiscountPrice = viewInput.findViewById(R.id.tv_discount_price);
+        tvCurriculumDiscountPrice.setText(getString(R.string.curriculum_discount_price_x,
+                FormatUtils.priceFormat(clockRecord.getCurriculumDiscountPrice())));
+        EditText etCount = viewInput.findViewById(R.id.et_curriculum_count);
+        etCount.setText(FormatUtils.priceFormat(clockRecord.getUnit()));
         RadioGroup radioGroup = viewInput.findViewById(R.id.rg_clock_type);
         radioGroup.check(clockRecord.getClockType() == 1 ? R.id.rb_adjustment
                 : (clockRecord.getClockType() == 2 ? R.id.rb_leave : R.id.rb_normal));
@@ -129,7 +132,7 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
                             Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month));
                 })
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    if (!TextUtils.isEmpty(etDiscountPrice.getText())) {
+                    if (!TextUtils.isEmpty(etCount.getText())) {
                         int id = radioGroup.getCheckedRadioButtonId();
                         int clockType = 0;
                         if (id == R.id.rb_adjustment) {
@@ -138,7 +141,7 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
                             clockType = 2;
                         }
                         clockRecord.setClockType(clockType);
-                        clockRecord.setCurriculumDiscountPrice(Double.parseDouble(etDiscountPrice.getText().toString()));
+                        clockRecord.setUnit(Float.parseFloat(etCount.getText().toString()));
                         long logId = clockViewModel.update(clockRecord);
                         Toast.makeText(getContext(), logId > 0 ? R.string.update_success : R.string.update_fail
                                 , Toast.LENGTH_SHORT).show();
@@ -151,7 +154,7 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
                                     Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month));
                         }
                     } else {
-                        Toast.makeText(getContext(), R.string.pls_input_discount_price, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.pls_input_clock_count, Toast.LENGTH_SHORT).show();
                     }
                 });
         builder.create().show();
@@ -205,7 +208,7 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
     }
 
 
-    private void drawCurriculumStatistic(Map<String, Integer> mapCurriculum) {
+    private void drawCurriculumStatistic(Map<String, Float> mapCurriculum) {
         //饼状图
         pieChart.setUsePercentValues(false);
         pieChart.getDescription().setEnabled(false);
@@ -229,14 +232,14 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
         //变化监听
 //            pieChart.setOnChartValueSelectedListener(thi);
         //模拟数据
-        int total = 0;
+        float total = 0;
         ArrayList<PieEntry> entries = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : mapCurriculum.entrySet()) {
+        for (Map.Entry<String, Float> entry : mapCurriculum.entrySet()) {
             total = total + entry.getValue();
             entries.add(new PieEntry(entry.getValue(), entry.getKey()));
         }
         //设置数据
-        tvTotal.setText(getString(R.string.total_curriculum_x, total));
+        tvTotal.setText(getString(R.string.total_curriculum_x, FormatUtils.priceFormat(total)));
         setData(entries, pieChart, "");
         pieChart.animateXY(800, 800);
         Legend l = pieChart.getLegend();

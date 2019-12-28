@@ -2,10 +2,12 @@ package com.jwong.education.ui.student;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,18 +57,20 @@ public class StudentSelectActivity extends AppCompatActivity implements OnItemCl
         if (curriculumId > 0) {
             studentCurriculumViewModel = ViewModelProviders.of(this).get(StudentCurriculumViewModel.class);
             studentCurriculumViewModel.queryCurriculumStudentList(curriculumId).observe(this, studentCurriculumList -> {
-                if (studentCurriculumList != null && !studentCurriculumList.isEmpty()) {
-                    List<Student> students = new ArrayList<>();
-                    for (StudentCurriculum item : studentCurriculumList) {
-                        students.add(item.getStudent());
-                    }
-                    studentAdapter = new StudentAdapter(students, true);
-                    if (checkedList != null && checkedList.length > 0) {
-                        studentAdapter.setCheckedList(checkedList);
-                    }
-                    studentAdapter.setOnItemClickListener(this);
-                    recyclerView.setAdapter(studentAdapter);
+                List<Student> students = new ArrayList<>();
+                for (StudentCurriculum item : studentCurriculumList) {
+                    students.add(item.getStudent());
                 }
+                studentAdapter = new StudentAdapter(students, true);
+                if (checkedList != null && checkedList.length > 0) {
+                    studentAdapter.setCheckedList(checkedList);
+                }
+                studentAdapter.setOnItemClickListener(this);
+                recyclerView.setAdapter(studentAdapter);
+
+                View emptyView = LayoutInflater.from(this).inflate(R.layout.list_empty_view, null);
+                ((TextView) emptyView.findViewById(R.id.tv_empty)).setText(R.string.clock_no_student_tip);
+                studentAdapter.setEmptyView(emptyView);
 
             });
         } else {
@@ -78,6 +82,10 @@ public class StudentSelectActivity extends AppCompatActivity implements OnItemCl
                 }
                 studentAdapter.setOnItemClickListener(this);
                 recyclerView.setAdapter(studentAdapter);
+
+                View emptyView = LayoutInflater.from(this).inflate(R.layout.list_empty_view, null);
+                ((TextView) emptyView.findViewById(R.id.tv_empty)).setText(R.string.clock_no_student_tip);
+                studentAdapter.setEmptyView(emptyView);
             });
         }
 

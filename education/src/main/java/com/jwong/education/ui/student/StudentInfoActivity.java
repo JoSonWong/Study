@@ -46,7 +46,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setTitle(studentId <= 0 ? R.string.add_student : R.string.student_info);
+            actionBar.setTitle(studentId == null || studentId <= 0 ? R.string.add_student : R.string.student_info);
         }
         etName = findViewById(R.id.et_name);
         rgSex = findViewById(R.id.rg_sex);
@@ -69,7 +69,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
                 android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.grades)));
 
 
-        if (studentId > 0) {
+        if (studentId != null && studentId > 0) {
             studentViewModel.getStudent(studentId).observe(this, student -> {
                 etName.setText(student.getName());
                 rgSex.check(student.getSex() == 1 ? R.id.rb_female : R.id.rb_male);
@@ -102,7 +102,9 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
             case R.id.action_ok:
                 if (!TextUtils.isEmpty(etName.getText())) {
                     Student student = new Student();
-                    student.setId(studentId);
+                    if (studentId != null && studentId > 0) {
+                        student.setId(studentId);
+                    }
                     student.setName(etName.getText().toString());
                     student.setAvatar("");
                     student.setSex(rgSex.getCheckedRadioButtonId() == R.id.rb_female ? 1 : 0);
@@ -122,7 +124,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
                     student.setGuardian1Phone(etGuardian1Phone.getText().toString());
                     student.setGuardian2(etGuardian2.getText().toString());
                     student.setGuardian2Phone(etGuardian2Phone.getText().toString());
-                    if (student.getId() > 0) {
+                    if (student.getId() != null && student.getId() > 0) {
                         studentViewModel.update(student);
                         Toast.makeText(getApplicationContext(), R.string.update_success, Toast.LENGTH_SHORT).show();
                     } else {
@@ -159,7 +161,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         DatePickerDialog dpd = new DatePickerDialog(this,
                 DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
                 (DatePicker view, int year, int monthOfYear, int dayOfMonth) ->
-                        editText.setText(year + "-" + monthOfYear + "-" + dayOfMonth)
+                        editText.setText(getString(R.string.x_year_x_month_x_day, year, monthOfYear, dayOfMonth))
                 , calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         dpd.show();
     }

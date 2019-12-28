@@ -23,10 +23,12 @@ public class ClockRecordDTO extends BaseDTO implements Serializable {
 
     private Integer clockType;
 
+    private Float unit;
+
 
     public ClockRecordDTO(Long id, Date clockTime, Long studentId, String studentName,
                           Long curriculumId, String curriculumName, Double curriculumPrice,
-                          Double curriculumDiscountPrice, Integer clockType) {
+                          Double curriculumDiscountPrice, Integer clockType, Float unit) {
         this.id = id;
         this.clockTime = clockTime;
         this.studentId = studentId;
@@ -36,6 +38,7 @@ public class ClockRecordDTO extends BaseDTO implements Serializable {
         this.curriculumPrice = curriculumPrice;
         this.curriculumDiscountPrice = curriculumDiscountPrice;
         this.clockType = clockType;
+        this.unit = unit;
     }
 
     public ClockRecordDTO() {
@@ -111,6 +114,14 @@ public class ClockRecordDTO extends BaseDTO implements Serializable {
 
     public void setClockType(Integer clockType) {
         this.clockType = clockType;
+    }
+
+    public Float getUnit() {
+        return this.unit;
+    }
+
+    public void setUnit(Float unit) {
+        this.unit = unit;
     }
 
 }

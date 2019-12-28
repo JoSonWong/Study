@@ -2,17 +2,19 @@ package com.jwong.education.dao;
 
 import org.greenrobot.greendao.annotation.Entity;
 
+import java.util.Calendar;
 import java.util.Date;
+
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class BaseDao {
 
-    String remarks;
+    String remarks = "";
 
-    Date createdAt;
+    Date createdAt = Calendar.getInstance().getTime();
 
-    Date updatedAt;
+    Date updatedAt = Calendar.getInstance().getTime();
 
     Date deletedAt;
 
