@@ -111,5 +111,18 @@
     <string name="pls_input_guardian_phone">请输入监护人电话号码</string>
     <string name="pls_select_date">请点击选择日期</string>
     <string name="group_x_people">%s（%d人）</string>
-
+    <string name="copyright">%s 版权所有</string>
+    <string name="curriculum_count">课时</string>
+    <string name="send_cost_list">发送学费单</string>
+    <string name="cost_notification">学费通知单</string>
+    <string name="all_total_cost">总计费用</string>
+    <string name="company">慕言英语</string>
+    <string name="company_pay_notification">%s课时费通知单</string>
+    <string name="dear">尊敬的</string>
+    <string name="parent">家长：</string>
+    <string name="thanks_for_support">感谢您对我们教学工作的信任与支持！</string>
+    <string name="below_is">以下是</string>
+    <string name="classmate">同学（</string>
+    <string name="brackets_right">）</string>
+    <string name="payment_reminder">的课时费，请您核对确认并在收到通知后尽快交清费用，感谢您的配合！</string>
 </resources>

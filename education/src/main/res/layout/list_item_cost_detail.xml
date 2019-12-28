@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingStart="40dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:background="@android:color/darker_gray"
+        android:background="#90dddddd"
         android:descendantFocusability="blocksDescendants"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -20,7 +20,7 @@
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:text="@string/project"
             android:textSize="18sp" />
 
@@ -51,8 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/price"
+            android:gravity="end"
+            android:text="@string/curriculum_count"
             android:textSize="18sp" />
 
         <TextView
@@ -60,9 +60,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:gravity="end"
-            android:text="@string/price"
+            android:text="@string/total_cost"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
     </LinearLayout>

@@ -77,17 +77,10 @@ public class ReportViewModel extends ViewModel {
             curriculumCost.setMonth(month);
             curriculumCost.setCostType(0);
             curriculumCost.setCostName("课时费");
-            double price = 0;
-            double discountPrice = 0;
+
             LongSparseArray<ClockRecord> curriculumClockMap = new LongSparseArray<>();
             LongSparseArray<Integer> curriculumCountMap = new LongSparseArray<>();
             for (ClockRecord record : clockRecords) {
-                Log.d(getClass().getSimpleName(), "打卡记录 id：" + record.getId()
-                        + " 课程id：" + record.getCurriculumId()
-                        + " 课程：" + record.getCurriculumName()
-                        + " 费用：" + record.getCurriculumDiscountPrice());
-                price = FormatUtils.doubleFormat(price + record.getCurriculumPrice());
-                discountPrice = FormatUtils.doubleFormat(discountPrice + record.getCurriculumDiscountPrice());
                 if (curriculumClockMap.get(record.getCurriculumId()) != null) {
                     int count = curriculumCountMap.get(record.getCurriculumId(), 0) + 1;
                     curriculumCountMap.put(record.getCurriculumId(), count);
@@ -99,16 +92,23 @@ public class ReportViewModel extends ViewModel {
                     curriculumCountMap.put(record1.getCurriculumId(), 1);
                 }
             }
-            curriculumCost.setPrice(FormatUtils.doubleFormat(price));
-            curriculumCost.setDiscountPrice(FormatUtils.doubleFormat(discountPrice));
+
             List<BaseNode> thirdNodeList = new ArrayList<>();
 
+            double price = 0;
+            double discountPrice = 0;
             for (int i = 0; i < curriculumClockMap.size(); i++) {
                 Long key = curriculumClockMap.keyAt(i);
+                int count = curriculumCountMap.get(key);
                 ClockRecord record = curriculumClockMap.get(key);
-                thirdNodeList.add(new CostDetailNode(record.getCurriculumName(), curriculumCountMap.get(key), record.getCurriculumPrice(),
+                price = price + record.getCurriculumDiscountPrice() * count;
+                discountPrice = discountPrice + record.getCurriculumDiscountPrice() * count;
+                thirdNodeList.add(new CostDetailNode(record.getCurriculumName(), count, record.getCurriculumPrice(),
                         record.getCurriculumDiscountPrice()));
             }
+
+            curriculumCost.setPrice(FormatUtils.doubleFormat(price));
+            curriculumCost.setDiscountPrice(FormatUtils.doubleFormat(discountPrice));
 
             CostNode entity = new CostNode(thirdNodeList, curriculumCost.getId(), curriculumCost.getStudentId(),
                     curriculumCost.getYear(), curriculumCost.getMonth(), curriculumCost.getCostType(), curriculumCost.getCostName(),

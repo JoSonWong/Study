@@ -1,5 +1,9 @@
 package com.jwong.education.util;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,5 +31,17 @@ public class Utils {
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         return calendar.getTime();
+    }
+
+    public static String getVesionName(Context context) {
+        PackageManager manager = context.getPackageManager();
+        String name = null;
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            name = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 }

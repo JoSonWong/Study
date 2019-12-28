@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="ThemeFullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+
+    <declare-styleable name="SealView">
+        <attr name="seal_radius" format="dimension"/>
+        <attr name="seal_color" format="color" />
+        <attr name="seal_textSize" format="dimension" />
+        <attr name="seal_textFirst" format="reference|string"/>
+        <attr name="seal_textSecond" format="reference|string" />
+        <attr name="seal_rotate" format="integer"/>
+    </declare-styleable>
 </resources>

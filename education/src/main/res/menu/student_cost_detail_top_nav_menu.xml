@@ -8,12 +8,20 @@
         android:icon="@drawable/ic_add_white_24dp"
         android:orderInCategory="100"
         android:title="@string/add"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_month"
         android:icon="@drawable/ic_time_white_24dp"
         android:orderInCategory="100"
         android:title="@string/other_month"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/send_cost_list"
+        app:showAsAction="ifRoom" />
+
 
 </menu>

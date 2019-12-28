@@ -15,7 +15,26 @@ public class StudentClockAdapter extends BaseQuickAdapter<Student, BaseViewHolde
     }
 
     @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
+    @Override
     protected void convert(BaseViewHolder helper, Student item) {
-        helper.setText(R.id.tv_name, item.getName());
+        if (item.getId() > 0) {
+            helper.setGone(R.id.iv_add, true);
+            helper.setGone(R.id.tv_name, false);
+            helper.setGone(R.id.iv_remove, false);
+            helper.setText(R.id.tv_name, item.getName());
+            helper.findView(R.id.iv_remove).setOnClickListener(view -> {
+                getData().remove(item);
+                notifyDataSetChanged();
+            });
+        } else {
+            helper.setGone(R.id.iv_add, false);
+            helper.setGone(R.id.tv_name, true);
+            helper.setGone(R.id.iv_remove, true);
+            helper.setText(R.id.tv_name, "");
+        }
     }
 }

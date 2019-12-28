@@ -1,12 +1,9 @@
 package com.jwong.education.dto.entity;
 
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.entity.node.BaseExpandNode;
 import com.chad.library.adapter.base.entity.node.BaseNode;
-
 
 import java.util.List;
 

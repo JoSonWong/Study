@@ -5,22 +5,35 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_title_curriculum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/curriculum"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/tv_curriculum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/selector_clock"
+        android:background="@drawable/selector_clock_curriculum"
         android:gravity="center"
-        android:textColor="@android:color/white"
+        android:paddingStart="30dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="12dp"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp"
+        android:textStyle="bold"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_student"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp"
         android:text="@string/title_student"
         android:textSize="16sp"
         android:visibility="gone" />
@@ -29,7 +42,6 @@
         android:id="@+id/rv_student"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:visibility="gone" />
 
@@ -55,7 +67,7 @@
         android:id="@+id/tv_clock_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="@color/colorPressed"
         android:paddingStart="20dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"

@@ -31,6 +31,7 @@ import com.jwong.education.dto.ClockRecordDTO;
 import com.jwong.education.dto.CurriculumDTO;
 import com.jwong.education.dto.StudentDTO;
 import com.jwong.education.ui.curriculum.CurriculumSelectActivity;
+import com.jwong.education.ui.student.StudentActivity;
 import com.jwong.education.ui.student.StudentSelectActivity;
 
 import java.io.Serializable;
@@ -40,7 +41,7 @@ import java.util.List;
 public class ClockFragment extends Fragment implements View.OnClickListener, OnItemClickListener {
 
     private ClockViewModel clockViewModel;
-    private TextView tvCurriculum, tvStudent;
+    private TextView tvTitleCurriculum, tvCurriculum, tvStudent;
     private RecyclerView rvStudent, rvClockHistory;
     private CurriculumDTO curriculumDTO;
     private StudentClockAdapter studentAdapter;
@@ -58,6 +59,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
         root.findViewById(R.id.btn_clock).setOnClickListener(this);
         tvStudent = root.findViewById(R.id.tv_student);
         tvStudent.setOnClickListener(this);
+        tvTitleCurriculum = root.findViewById(R.id.tv_title_curriculum);
         tvCurriculum = root.findViewById(R.id.tv_curriculum);
         tvCurriculum.setOnClickListener(this);
         rvStudent = root.findViewById(R.id.rv_student);
@@ -163,6 +165,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
                         curriculumDTO = curriculumDTOS.get(0);
                         tvCurriculum.setText(curriculumDTO.getName());
                         tvCurriculum.setVisibility(View.VISIBLE);
+tvTitleCurriculum.setVisibility(View.VISIBLE);
                         clearStudent();
                         startSelectStudentActivity();
                     }
@@ -184,8 +187,13 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
                         }
                     }
                 }
+                Student studentAdd = new Student();
+                studentAdd.setId(0l);
+                studentAdd.setName("");
+                students.add(studentAdd);
                 rvStudent.setLayoutManager(new GridLayoutManager(getContext(), 4));
                 studentAdapter = new StudentClockAdapter(students);
+                studentAdapter.setOnItemClickListener(listenerStudent);
                 rvStudent.setAdapter(studentAdapter);
                 tvStudent.setVisibility(View.VISIBLE);
                 rvStudent.setVisibility(View.VISIBLE);
@@ -198,6 +206,7 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
         tvCurriculum.setText("");
         curriculumDTO = null;
         tvCurriculum.setVisibility(View.GONE);
+        tvTitleCurriculum.setVisibility(View.GONE);
     }
 
     private void clearStudent() {
@@ -219,4 +228,17 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
         intent.putExtra("clockRecord", recordDTO);
         startActivity(intent);
     }
+
+    private OnItemClickListener listenerStudent = (adapter, view, position) -> {
+        if (adapter.getData().get(position) instanceof Student) {
+            Student student = (Student) adapter.getData().get(position);
+            if (student.getId() > 0) {
+                Intent intent = new Intent(getActivity(), StudentActivity.class);
+                intent.putExtra("studentId", student.getId());
+                startActivity(intent);
+            } else {//add
+                startSelectStudentActivity();
+            }
+        }
+    };
 }
