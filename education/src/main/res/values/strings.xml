@@ -152,5 +152,8 @@
     <string name="pls_input_seal_name_cn">请输入印章中文名</string>
     <string name="seal_name_en">印章英文名</string>
     <string name="pls_input_seal_name_en">请输入印章英文名</string>
+    <string name="discount_price_x">优惠价:%s</string>
+    <string name="curriculum_count_x">课时:%s</string>
+    <string name="cost_x">费用:%s</string>
 
 </resources>

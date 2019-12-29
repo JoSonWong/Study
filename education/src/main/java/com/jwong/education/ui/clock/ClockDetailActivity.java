@@ -2,6 +2,7 @@ package com.jwong.education.ui.clock;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -36,6 +38,8 @@ import com.jwong.education.util.FormatUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ClockDetailActivity extends AppCompatActivity implements View.OnClickListener,
@@ -63,6 +67,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         tvCurriculum = findViewById(R.id.tv_curriculum);
         tvPrice = findViewById(R.id.tv_price);
         tvClockTime = findViewById(R.id.tv_clock_time);
+        tvClockTime.setOnClickListener(this);
         recyclerView = findViewById(R.id.rv_clock_record);
         findViewById(R.id.btn_patch_card).setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -123,9 +128,27 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                 startSelectStudentActivity(which);
                 dialog.dismiss();
             });
-
             AlertDialog dialog = builder.create();
             dialog.show();
+        } else if (view.getId() == R.id.tv_clock_time) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(clockRecordDTO.getClockTime());
+            DatePickerDialog dpd = new DatePickerDialog(this,
+                    DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
+                    (DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) -> {
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        clockRecordDTO.setClockTime(calendar.getTime());
+                        for (ClockRecord record : adapter.getData()) {
+                            record.setClockTime(clockRecordDTO.getClockTime());
+                            clockViewModel.update(record);
+                        }
+                        tvClockTime.setText(FormatUtils.convert2DateTime(clockRecordDTO.getClockTime()));
+                        Toast.makeText(getApplicationContext(), R.string.update_success, Toast.LENGTH_SHORT).show();
+                    }
+                    , calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            dpd.show();
         }
     }
 
@@ -242,6 +265,4 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
 }

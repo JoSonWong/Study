@@ -19,10 +19,12 @@ public class ClockRecordDetailAdapter extends BaseQuickAdapter<ClockRecord, Base
     protected void convert(BaseViewHolder helper, ClockRecord item) {
         helper.setText(R.id.tv_number, (helper.getLayoutPosition() + 1) + "");
         helper.setText(R.id.tv_name, item.getStudentName());
-        helper.setText(R.id.tv_discount_price, FormatUtils.priceFormat(item.getCurriculumDiscountPrice()));
-        helper.setText(R.id.tv_count, FormatUtils.priceFormat(item.getUnit()));
-        helper.setText(R.id.tv_total, FormatUtils.priceFormat(item.getUnit()
-                * item.getCurriculumDiscountPrice()));
+        helper.setText(R.id.tv_discount_price, helper.itemView.getContext()
+                .getString(R.string.discount_price_x, FormatUtils.priceFormat(item.getCurriculumDiscountPrice())));
+        helper.setText(R.id.tv_count, helper.itemView.getContext()
+                .getString(R.string.curriculum_count_x, FormatUtils.priceFormat(item.getUnit())));
+        helper.setText(R.id.tv_total, helper.itemView.getContext().getString(R.string.cost_x,
+                FormatUtils.priceFormat(item.getUnit() * item.getCurriculumDiscountPrice())));
         helper.setText(R.id.tv_clock_type, helper.itemView.getContext().getResources()
                 .getStringArray(R.array.clock_types)[item.getClockType()]);
         int color = R.color.colorPrimary;
