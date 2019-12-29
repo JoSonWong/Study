@@ -14,6 +14,10 @@ public class PrefUtils {
 
     private final static String PREF_KEY_NOTIFICATION_TITLE = "pref_key_notification_title";
 
+    private final static String PREF_KEY_SEAL_NAME_CN = "pref_key_seal_name_cn";
+
+    private final static String PREF_KEY_SEAL_NAME_EN = "pref_key_seal_name_en";
+
 
     public static void setPrefKeyNotificationTitle(Context context, String title) {
         put(context, PREF_KEY_NOTIFICATION_TITLE, title);
@@ -24,6 +28,25 @@ public class PrefUtils {
         return object == null ? defaultValue : object.toString();
     }
 
+
+    public static void setSealNameCn(Context context, String sealNameCn) {
+        put(context, PREF_KEY_SEAL_NAME_CN, sealNameCn);
+    }
+
+    public static String getSealNameCn(Context context, String defaultValue) {
+        Object object = get(context, PREF_KEY_SEAL_NAME_CN, defaultValue);
+        return object == null ? defaultValue : object.toString();
+    }
+
+
+    public static void setSealNameEn(Context context, String sealNameCn) {
+        put(context, PREF_KEY_SEAL_NAME_EN, sealNameCn);
+    }
+
+    public static String getSealNameEn(Context context, String defaultValue) {
+        Object object = get(context, PREF_KEY_SEAL_NAME_EN, defaultValue);
+        return object == null ? defaultValue : object.toString();
+    }
 
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法

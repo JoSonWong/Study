@@ -33,7 +33,6 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
     private RecyclerView rvClockHistory;
     private int year, month;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,17 +68,17 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.student_clock_top_nav_menu, menu);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.student_clock_top_nav_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_month:
+//            case R.id.action_month:
 //                showMonthPicker();
-                break;
+//                break;
             case android.R.id.home:// 点击返回图标事件
                 this.finish();
                 break;

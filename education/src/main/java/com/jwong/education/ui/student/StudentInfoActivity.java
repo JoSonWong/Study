@@ -161,7 +161,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         DatePickerDialog dpd = new DatePickerDialog(this,
                 DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
                 (DatePicker view, int year, int monthOfYear, int dayOfMonth) ->
-                        editText.setText(getString(R.string.x_year_x_month_x_day, year, monthOfYear, dayOfMonth))
+                        editText.setText(getString(R.string.x_year_x_month_x_day, year, monthOfYear + 1, dayOfMonth))
                 , calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         dpd.show();
     }

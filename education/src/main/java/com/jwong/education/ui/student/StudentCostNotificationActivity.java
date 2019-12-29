@@ -2,21 +2,15 @@ package com.jwong.education.ui.student;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Application;
-import android.app.Dialog;
+import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,20 +40,19 @@ import com.jwong.education.dto.CostNotificationItemDTO;
 import com.jwong.education.util.FormatUtils;
 import com.jwong.education.util.PrefUtils;
 import com.jwong.education.util.ScreenShotUtils;
+import com.jwong.education.widget.SealView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 
 public class StudentCostNotificationActivity extends AppCompatActivity implements OnItemClickListener, View.OnClickListener {
 
     private CostNotificationDTO costNotificationDTO;
-    private TextView tvTitle, tvStudentName, tvStudentName2, tvGrade, tvCostName;
+    private TextView tvTitle, tvStudentName, tvStudentName2, tvGrade, tvCostName, tvDate;
     private RecyclerView rvCost;
     private View footerView;
     private TextView tvAllTotal;
+    private SealView sealView;
     private final static int REQUEST_WRITE = 1300;
 
 
@@ -95,6 +89,11 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
         rvCost.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvCost.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
+        sealView = findViewById(R.id.seal);
+        sealView.setOnClickListener(this);
+        tvDate = findViewById(R.id.tv_date);
+        tvDate.setText(FormatUtils.convert2Date(Calendar.getInstance().getTime()));
+        tvDate.setOnClickListener(this);
         setData();
     }
 
@@ -176,6 +175,9 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
     private void setData() {
         tvTitle.setText(PrefUtils.getPrefKeyNotificationTitle(getApplicationContext(),
                 getString(R.string.company_pay_notification, getString(R.string.company))));
+        sealView.setTextFirst(PrefUtils.getSealNameCn(getApplicationContext(), getString(R.string.company)));
+        sealView.setTextSecond(PrefUtils.getSealNameEn(getApplicationContext(), getString(R.string.company_en)));
+
         tvStudentName.setText(Html.fromHtml("<u>&nbsp;&nbsp;" + costNotificationDTO.getStudentName() + "&nbsp;&nbsp;</u>"));
         tvStudentName2.setText(Html.fromHtml("<u>&nbsp;&nbsp;" + costNotificationDTO.getStudentName() + "&nbsp;&nbsp;</u>"));
         tvGrade.setText(Html.fromHtml("<u>&nbsp;&nbsp;" + costNotificationDTO.getGrade() + "&nbsp;&nbsp;</u>"));
@@ -288,23 +290,45 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
                         });
                 builder.create().show();
                 break;
+            case R.id.tv_date:
+                Calendar calendar = Calendar.getInstance();
+                if (!TextUtils.isEmpty(tvDate.getText())) {
+                    Date date = FormatUtils.convert2Date(tvDate.getText().toString());
+                    if (date != null) {
+                        calendar.setTime(date);
+                    }
+                }
+                DatePickerDialog dpd = new DatePickerDialog(this,
+                        DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
+                        (DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) -> {
+                            tvDate.setText(getString(R.string.x_year_x_month_x_day, year, monthOfYear + 1, dayOfMonth));
+                        }
+                        , calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                dpd.show();
+                break;
+            case R.id.seal:
+                viewInput = LayoutInflater.from(this).inflate(R.layout.dlg_seal_name_setting, null);
+                etName = viewInput.findViewById(R.id.et_name);
+                etName.setText(PrefUtils.getSealNameCn(getApplicationContext(), getString(R.string.company)));
+                EditText etNameEn = viewInput.findViewById(R.id.et_name_en);
+                etNameEn.setText(PrefUtils.getSealNameEn(getApplicationContext(), getString(R.string.company_en)));
+                builder = new AlertDialog.Builder(this)
+                        .setTitle(R.string.warm_tip)
+                        .setView(viewInput)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                            PrefUtils.setSealNameCn(getApplicationContext(), etName.getText().toString());
+                            PrefUtils.setSealNameEn(getApplicationContext(), etNameEn.getText().toString());
+                            sealView.setTextFirst(PrefUtils.getSealNameCn(getApplicationContext(), getString(R.string.company)));
+                            sealView.setTextSecond(PrefUtils.getSealNameEn(getApplicationContext(), getString(R.string.company_en)));
+                        });
+                builder.create().show();
+                break;
+            default:
+                break;
         }
     }
 
-    public String insertImageW(ContentResolver cr, String imagePath, String name, String description)
-            throws FileNotFoundException {
-        // Check if file exists with a FileInputStream
-        FileInputStream stream = new FileInputStream(imagePath);
-        try {
-            return insertImageT(cr, name, description);
-        } finally {
-            try {
-                stream.close();
-            } catch (IOException e) {
-                Log.e(getClass().getSimpleName(), "插入相册异常", e);
-            }
-        }
-    }
 
     public String insertImageT(ContentResolver cr, String title, String description) {
         ContentValues values = new ContentValues();
@@ -318,7 +342,7 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
             Uri uri = Uri.parse(CONTENT_AUTHORITY_SLASH + "external" + "/images/media");
             url = cr.insert(uri, values);
         } catch (Exception e) {
-            Log.e("heheh", "Failed to insert image", e);
+            Log.e("insertImageT", "Failed to insert image", e);
         }
         if (url != null) {
             stringUrl = url.toString();

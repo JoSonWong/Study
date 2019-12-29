@@ -148,4 +148,9 @@
     <string name="grade">年级</string>
     <string name="pls_input_grade">请输入年级</string>
     <string name="save_to_image">生成图片</string>
+    <string name="seal_name_cn">印章中文名</string>
+    <string name="pls_input_seal_name_cn">请输入印章中文名</string>
+    <string name="seal_name_en">印章英文名</string>
+    <string name="pls_input_seal_name_en">请输入印章英文名</string>
+
 </resources>
