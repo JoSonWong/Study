@@ -19,7 +19,7 @@
         android:gravity="center"
         android:text="@string/all_total_cost"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 
     <View
@@ -35,7 +35,7 @@
         android:gravity="center"
         android:text="@string/total_cost"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <View
         android:layout_width="1dp"

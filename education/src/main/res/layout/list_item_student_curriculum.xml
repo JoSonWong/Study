@@ -18,7 +18,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/no"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -28,7 +28,7 @@
         android:layout_weight="1.5"
         android:gravity="center"
         android:text="@string/curriculum"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_price"
@@ -38,7 +38,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/price"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_discount_price"
@@ -49,6 +49,6 @@
         android:gravity="center"
         android:text="@string/discount_price"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 </LinearLayout>

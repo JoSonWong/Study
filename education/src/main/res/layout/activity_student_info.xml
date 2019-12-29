@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/student_name"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_name"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sex"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <RadioGroup
                 android:id="@+id/rg_sex"
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:text="@string/male"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <RadioButton
                     android:id="@+id/rb_female"
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/student_type"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <RadioGroup
                 android:id="@+id/rg_type"
@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cost_type"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <RadioGroup
                 android:id="@+id/rg_cost_type"
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/birthday"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_birthday"
@@ -185,7 +185,7 @@
                 android:hint="@string/pls_select_date"
                 android:inputType="date"
                 android:textIsSelectable="false"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
@@ -198,7 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recruit_date"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_recruit_date"
@@ -213,7 +213,7 @@
                 android:inputType="date"
                 android:textColorHint="@android:color/darker_gray"
                 android:textIsSelectable="false"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
@@ -226,7 +226,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recruit_grade"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/sp_recruit_grade"
@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </TableRow>
 
@@ -248,7 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/current_grade"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/sp_current_grade"
@@ -256,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </TableRow>
 
@@ -271,7 +271,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/guardian1"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_guardian1"
@@ -294,7 +294,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_guardian1_phone"
@@ -318,7 +318,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/guardian2"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_guardian2"
@@ -341,7 +341,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/et_guardian2_phone"

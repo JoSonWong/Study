@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/project"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/et_name"
@@ -21,6 +21,6 @@
         android:layout_marginTop="8dp"
         android:hint="@string/pls_input"
         android:inputType="text"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 </LinearLayout>

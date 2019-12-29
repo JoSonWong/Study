@@ -33,7 +33,7 @@ public class Utils {
         return calendar.getTime();
     }
 
-    public static String getVesionName(Context context) {
+    public static String getVersionName(Context context) {
         PackageManager manager = context.getPackageManager();
         String name = null;
         try {

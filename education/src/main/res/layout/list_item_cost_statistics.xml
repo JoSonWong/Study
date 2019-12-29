@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/number"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_marginStart="20dp"
         android:layout_weight="1"
         android:text="@string/price"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_discount_price"
@@ -35,7 +35,7 @@
         android:gravity="end"
         android:text="@string/discount_price"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 
 </LinearLayout>

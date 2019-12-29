@@ -1,5 +1,6 @@
 package com.jwong.education.ui.clock;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,11 +23,16 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dto.ClockRecordDTO;
+import com.jwong.education.util.Utils;
+
+import java.util.Calendar;
 
 public class ClockHistoryActivity extends AppCompatActivity implements OnItemClickListener {
 
     private ClockViewModel clockViewModel;
     private RecyclerView rvClockHistory;
+    private int year, month;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +78,7 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_month:
-
+//                showMonthPicker();
                 break;
             case android.R.id.home:// 点击返回图标事件
                 this.finish();
@@ -93,5 +100,32 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
                 clockRecord.getUnit());
         intent.putExtra("clockRecord", recordDTO);
         startActivity(intent);
+    }
+
+    private void showMonthPicker() {
+        View dlgView = LayoutInflater.from(this).inflate(R.layout.dlg_day_picker, null);
+        NumberPicker npYear = dlgView.findViewById(R.id.picker_year);
+        NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
+        Calendar cal = Calendar.getInstance();
+        npMonth.setMinValue(1);
+        npMonth.setMaxValue(12);
+        npMonth.setValue(cal.get(Calendar.MONTH) + 1);
+        npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        npMonth.setWrapSelectorWheel(false);
+        int year = cal.get(Calendar.YEAR);
+        npYear.setMinValue(2019);
+        npYear.setMaxValue(2099);
+        npYear.setValue(year);
+        npYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        npYear.setWrapSelectorWheel(false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(R.string.other_month_cost)
+                .setView(dlgView)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    this.year = npYear.getValue();
+                    this.month = npMonth.getValue();
+                });
+        builder.create().show();
     }
 }

@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tv_curriculum"
-        android:layout_marginStart="20sp"
+        android:layout_marginStart="18sp"
         android:layout_toEndOf="@+id/tv_curriculum"
         android:text="@string/rmb_x"
         android:textSize="22sp" />

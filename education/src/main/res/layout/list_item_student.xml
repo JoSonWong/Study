@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_weight="4"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_student_code"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_weight="3"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_current_grade"
@@ -38,7 +38,7 @@
         android:layout_marginStart="20dp"
         android:layout_weight="3"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_select"

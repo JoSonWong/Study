@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        ((TextView) findViewById(R.id.tv_version)).setText(Utils.getVesionName(getApplicationContext()));
+        ((TextView) findViewById(R.id.tv_version)).setText(Utils.getVersionName(getApplicationContext()));
 
         ((TextView) findViewById(R.id.tv_copyright))
                 .setText(getString(R.string.copyright, getString(R.string.company)));

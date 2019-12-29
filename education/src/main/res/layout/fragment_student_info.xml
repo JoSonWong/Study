@@ -45,6 +45,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/tv_name"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_male" />
 
             <TextView
@@ -82,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/student_type"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_student_type"
@@ -90,8 +91,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="试听"
-                    android:textSize="20sp" />
+                    android:text="@string/studying"
+                    android:textSize="18sp" />
 
             </TableRow>
 
@@ -104,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cost_type"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_cost_type"
@@ -112,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </TableRow>
 
@@ -125,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/birthday"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_birthday"
@@ -133,8 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="2019-12-23"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow
@@ -146,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/recruit_date"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_recruit"
@@ -154,8 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="2019-12-23"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow
@@ -167,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/recruit_grade"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_recruit_grade"
@@ -175,8 +174,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="五年级"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </TableRow>
 
@@ -190,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/guardian1"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_guardian1"
@@ -198,8 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="赵明明"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </TableRow>
 
@@ -212,7 +209,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_guardian1_phone"
@@ -220,9 +217,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:autoLink="phone"
-                    android:text="13800138000"
                     android:textColorLink="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </TableRow>
 
@@ -235,15 +231,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/guardian2"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_guardian2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="刘萌萌"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </TableRow>
 
@@ -256,7 +251,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_guardian2_phone"
@@ -265,9 +260,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:autoLink="phone"
-                    android:text="13900139000"
                     android:textColorLink="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </TableRow>
         </TableLayout>
     </LinearLayout>

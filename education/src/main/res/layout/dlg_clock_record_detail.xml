@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/student_code_x"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_student_name"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/student_name_x"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_curriculum_id"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/curriculum_id_x"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:visibility="gone" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/curriculum_name_x"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_curriculum_price"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/curriculum_price_x"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_discount_price"
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/curriculum_discount_price_x"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/curriculum_count_m"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/et_curriculum_count"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/pls_input_clock_count"
             android:inputType="numberDecimal"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <RadioGroup
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="@string/clock_type_normal"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/rb_adjustment"
@@ -101,14 +101,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="@string/clock_type_adjustment"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/rb_leave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/clock_type_leave"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
     </RadioGroup>
 
 

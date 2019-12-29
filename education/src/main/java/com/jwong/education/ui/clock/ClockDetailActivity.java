@@ -94,9 +94,9 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.delete_record)
-                        .setMessage(getString(R.string.delete_curriculum_x_time_x_clock_record, clockRecordDTO.getCurriculumName(),
-                                FormatUtils.convert2DateTime(clockRecordDTO.getClockTime())))
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle(R.string.delete_record)
+                        .setMessage(R.string.delete_all_this_clock_record)
                         .setNegativeButton(android.R.string.cancel, null)
                         .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                             clockViewModel.delete(clockRecordDTO.getCurriculumId(), clockRecordDTO.getClockTime());
@@ -135,6 +135,11 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(this, StudentSelectActivity.class);
         intent.putExtra("is_multiple", true);
         intent.putExtra("curriculumId", clockRecordDTO.getCurriculumId());
+        long[] exceptIdList = new long[adapter.getData().size()];
+        for (int i = 0; i < adapter.getData().size(); i++) {
+            exceptIdList[i] = adapter.getData().get(i).getStudentId();
+        }
+        intent.putExtra("except_id_list", exceptIdList);
         startActivityForResult(intent, 1200);
     }
 

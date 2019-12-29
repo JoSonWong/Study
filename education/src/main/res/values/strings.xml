@@ -85,7 +85,7 @@
     <string name="project">项目</string>
     <string name="total_cost">合计费用</string>
     <string name="select_student">选择学生</string>
-    <string name="delete_curriculum_x_time_x_clock_record">删除"%s：%s"全部打卡记录？</string>
+    <string name="delete_all_this_clock_record">您确定删除本次所有打卡记录吗？</string>
     <string name="delete_record_success">删除记录成功！</string>
     <string name="try_listen">试听</string>
     <string name="studying">在学</string>
@@ -141,5 +141,11 @@
     <string name="cost_list_title_price">原价\n(元/课时)</string>
     <string name="cost_list_title_discount_price">优惠价\n(元/课时)</string>
     <string name="x_year_x_month_x_day">%d"-"%d"-"%d</string>
-
+    <string name="notification_title">通知单标题</string>
+    <string name="pls_input_cost_title">请输入标题</string>
+    <string name="pls_input_cost_project">请输入费用名称</string>
+    <string name="title">标题</string>
+    <string name="grade">年级</string>
+    <string name="pls_input_grade">请输入年级</string>
+    <string name="save_to_image">生成图片</string>
 </resources>

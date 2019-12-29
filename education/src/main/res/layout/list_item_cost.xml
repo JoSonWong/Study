@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.8"
         android:text="@string/number"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -26,7 +26,7 @@
         android:layout_marginStart="20dp"
         android:layout_weight="3"
         android:text="@string/project"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_price"
@@ -36,7 +36,7 @@
         android:layout_weight="3.5"
         android:gravity="end"
         android:text="@string/price"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_discount_price"
@@ -47,7 +47,7 @@
         android:gravity="end"
         android:text="@string/discount_price"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -57,5 +57,5 @@
         android:layout_weight="4"
         android:gravity="end"
         android:text="@string/month"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 </LinearLayout>

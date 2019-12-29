@@ -101,7 +101,7 @@ public class ReportViewModel extends ViewModel {
                 Long key = curriculumClockMap.keyAt(i);
                 float count = curriculumCountMap.get(key);
                 ClockRecord record = curriculumClockMap.get(key);
-                price = price + record.getCurriculumDiscountPrice() * count;
+                price = price + record.getCurriculumPrice() * count;
                 discountPrice = discountPrice + record.getCurriculumDiscountPrice() * count;
                 thirdNodeList.add(new CostDetailNode(record.getCurriculumName(), count, record.getCurriculumPrice(),
                         record.getCurriculumDiscountPrice()));
@@ -175,7 +175,7 @@ public class ReportViewModel extends ViewModel {
                 cost.setDiscountPrice(FormatUtils.doubleFormat(entry.getValue()));
                 Double price = 0D;
                 if (mapPrice.get(key) != null) {
-                    price = FormatUtils.doubleFormat(mapPrice.get(key));
+                    price = FormatUtils.doubleFormat(mapPrice.get(key) != null ? mapPrice.get(key) : 0);
                 }
                 String[] yearMonth = key.split("-");
                 cost.setYear(Integer.valueOf(yearMonth[0]));

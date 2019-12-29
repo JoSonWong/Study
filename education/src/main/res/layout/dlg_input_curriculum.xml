@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/curriculum_name"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/et_name"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/pls_input_curriculum_name"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_price"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/curriculum_price"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/et_price"
@@ -36,6 +36,6 @@
         android:layout_marginTop="8dp"
         android:hint="@string/pls_input_curriculum_price"
         android:inputType="numberDecimal"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
 </LinearLayout>

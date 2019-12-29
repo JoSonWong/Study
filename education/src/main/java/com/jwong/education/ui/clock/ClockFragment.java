@@ -104,7 +104,9 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
                     TextView tvName = viewInput.findViewById(R.id.tv_name);
                     tvName.setText(R.string.pls_input_clock_count);
                     EditText etName = viewInput.findViewById(R.id.et_name);
-                    etName.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+//                    etName.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    etName.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL
+                            | InputType.TYPE_NUMBER_FLAG_SIGNED);
                     etName.setText("1.0");
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                             .setTitle(R.string.warm_tip)
@@ -122,8 +124,6 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
                                 }
                             });
                     builder.create().show();
-
-
                 } else {
                     if (curriculumDTO == null) {
                         startSelectCurriculumActivity();

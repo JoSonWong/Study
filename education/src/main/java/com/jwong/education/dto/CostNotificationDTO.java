@@ -18,7 +18,8 @@ public class CostNotificationDTO implements Serializable {
     private boolean hasCurriculumCost;
 
 
-    public CostNotificationDTO(Long studentId, String studentName, String grade, String costName, List<CostNotificationItemDTO> costList) {
+    public CostNotificationDTO(Long studentId, String studentName, String grade, String costName,
+                               List<CostNotificationItemDTO> costList) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.grade = grade;
