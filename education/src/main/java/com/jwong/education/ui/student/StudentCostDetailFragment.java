@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.jwong.education.R;
 import com.jwong.education.dao.StudentMonthCost;
@@ -58,14 +57,12 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_student_cost_detail, container, false);
         studentId = StudentActivity.studentId;
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
-        root.findViewById(R.id.tv_date).setVisibility(View.GONE);
         tvTotalCost = root.findViewById(R.id.tv_cost);
         tvStudentName = root.findViewById(R.id.tv_name);
         tvStudentId = root.findViewById(R.id.tv_student_id);

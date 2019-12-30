@@ -6,16 +6,16 @@
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingStart="12dp"
+    android:paddingStart="10dp"
     android:paddingTop="20dp"
     android:paddingEnd="20dp"
-    android:paddingBottom="8dp">
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/tv_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
+        android:layout_weight="1.2"
         android:text="@string/number"
         android:textSize="18sp" />
 
@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_weight="3.5"
+        android:layout_weight="3"
         android:gravity="end"
         android:text="@string/price"
         android:textSize="18sp" />
@@ -49,13 +49,4 @@
         android:textColor="@color/colorPrimary"
         android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_weight="4"
-        android:gravity="end"
-        android:text="@string/month"
-        android:textSize="18sp" />
 </LinearLayout>

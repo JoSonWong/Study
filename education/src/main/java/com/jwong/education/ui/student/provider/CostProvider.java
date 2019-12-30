@@ -35,7 +35,6 @@ public class CostProvider extends BaseNodeProvider {
             helper.setText(R.id.tv_price, FormatUtils.priceFormat(item.getPrice()));
             helper.setText(R.id.tv_discount_price, helper.itemView.getContext()
                     .getString(R.string.rmb_x, FormatUtils.priceFormat(item.getDiscountPrice())));
-            helper.setGone(R.id.tv_date, true);
 //        if (entity.isExpanded()) {
 //            helper.setImageResource(R.id.iv, R.mipmap.arrow_b);
 //        } else {
