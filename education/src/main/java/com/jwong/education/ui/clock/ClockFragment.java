@@ -75,7 +75,6 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
         rvClockHistory.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL));
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
-
         return root;
     }
 
@@ -207,7 +206,8 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
                     List<StudentDTO> studentDTOS = (List<StudentDTO>) serializable;
                     if (!studentDTOS.isEmpty()) {
                         for (StudentDTO studentDTO : studentDTOS) {
-                            Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
+                            Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(),
+                                    studentDTO.getPhone(), studentDTO.getSex(),
                                     studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
                                     studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
                                     studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),

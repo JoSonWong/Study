@@ -245,7 +245,8 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                     if (!studentDTOS.isEmpty()) {
                         for (StudentDTO studentDTO : studentDTOS) {
                             if (sparseLongArray.get(studentDTO.getId(), null) == null) {
-                                Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(), studentDTO.getSex(),
+                                Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(),
+                                        studentDTO.getPhone(), studentDTO.getSex(),
                                         studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
                                         studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
                                         studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),

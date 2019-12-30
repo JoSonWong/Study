@@ -131,7 +131,7 @@ public class StudentSelectActivity extends AppCompatActivity implements OnItemCl
                 List<Student> students = studentAdapter.getCheckedList();
                 List<StudentDTO> studentDTOS = new ArrayList<>();
                 for (Student student : students) {
-                    StudentDTO studentDTO = new StudentDTO(student.getId(), student.getName(), student.getAvatar(),
+                    StudentDTO studentDTO = new StudentDTO(student.getId(), student.getName(), student.getAvatar(), student.getPhone(),
                             student.getSex(), student.getBirthday(), student.getRecruitTime(), student.getRecruitGradeCode(),
                             student.getRecruitGradeName(), student.getCurrentGradeCode(), student.getCurrentGrade(),
                             student.getStudentType(), student.getStudentTypeName(), student.getCostType(), student.getCostTypeName(),

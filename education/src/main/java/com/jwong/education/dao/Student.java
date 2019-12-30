@@ -17,6 +17,8 @@ public class Student extends BaseDao {
 
     private String avatar;//头像
 
+    private String phone;//学生电话
+
     private Integer sex = 0;//性别0男，1女
 
     private Date birthday;//生日
@@ -47,16 +49,17 @@ public class Student extends BaseDao {
 
     private String guardian2Phone;//监护人2电话
 
-    @Generated(hash = 1493955956)
-    public Student(Long id, String name, String avatar, Integer sex, Date birthday,
-                   Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
-                   Integer currentGradeCode, String currentGrade, Integer studentType,
-                   String studentTypeName, Integer costType, String costTypeName,
-                   String guardian1, String guardian1Phone, String guardian2,
-                   String guardian2Phone) {
+    @Generated(hash = 1681604380)
+    public Student(Long id, String name, String avatar, String phone, Integer sex,
+            Date birthday, Date recruitTime, Integer recruitGradeCode,
+            String recruitGradeName, Integer currentGradeCode, String currentGrade,
+            Integer studentType, String studentTypeName, Integer costType,
+            String costTypeName, String guardian1, String guardian1Phone, String guardian2,
+            String guardian2Phone) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
+        this.phone = phone;
         this.sex = sex;
         this.birthday = birthday;
         this.recruitTime = recruitTime;
@@ -220,6 +223,14 @@ public class Student extends BaseDao {
 
     public void setGuardian2Phone(String guardian2Phone) {
         this.guardian2Phone = guardian2Phone;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
 

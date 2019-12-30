@@ -28,7 +28,7 @@ import java.util.Date;
 
 public class StudentInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText etName, etBirthday, etRecruitDate, etGuardian1, etGuardian1Phone, etGuardian2, etGuardian2Phone;
+    private EditText etName, etPhone, etBirthday, etRecruitDate, etGuardian1, etGuardian1Phone, etGuardian2, etGuardian2Phone;
     private Spinner spRecruitGrade, spCurrentGrade;
     private RadioGroup rgSex, rgType, rgCostType;
     private Long studentId;
@@ -49,6 +49,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
             actionBar.setTitle(studentId == null || studentId <= 0 ? R.string.add_student : R.string.student_info);
         }
         etName = findViewById(R.id.et_name);
+        etPhone = findViewById(R.id.et_phone);
         rgSex = findViewById(R.id.rg_sex);
         etBirthday = findViewById(R.id.et_birthday);
         etBirthday.setOnClickListener(this);
@@ -72,6 +73,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
         if (studentId != null && studentId > 0) {
             studentViewModel.getStudent(studentId).observe(this, student -> {
                 etName.setText(student.getName());
+                etPhone.setText(student.getPhone());
                 rgSex.check(student.getSex() == 1 ? R.id.rb_female : R.id.rb_male);
                 etBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
                 etRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
@@ -107,6 +109,7 @@ public class StudentInfoActivity extends AppCompatActivity implements View.OnCli
                     }
                     student.setName(etName.getText().toString());
                     student.setAvatar("");
+                    student.setPhone(etPhone.getText().toString());
                     student.setSex(rgSex.getCheckedRadioButtonId() == R.id.rb_female ? 1 : 0);
                     student.setBirthday(FormatUtils.convert2Date(etBirthday.getText().toString()));
                     student.setRecruitTime(FormatUtils.convert2Date(etRecruitDate.getText().toString()));

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -42,6 +43,7 @@ import com.jwong.education.util.PrefUtils;
 import com.jwong.education.util.ScreenShotUtils;
 import com.jwong.education.widget.SealView;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -164,8 +166,7 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
             Toast.makeText(getApplicationContext(), "通知单已保存到：" + path, Toast.LENGTH_LONG).show();
 //            Uri uri = Uri.fromFile(new File(path));
 //            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-            ContentResolver cr = getContentResolver();
-            insertImageT(cr, getString(R.string.company),
+            insertImageT(path, getString(R.string.company),
                     costNotificationDTO.getStudentName() + tvTitle.getText().toString());
         } else {
             Toast.makeText(getApplicationContext(), "保存通知单失败了！", Toast.LENGTH_LONG).show();
@@ -300,9 +301,8 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
                 }
                 DatePickerDialog dpd = new DatePickerDialog(this,
                         DatePickerDialog.THEME_DEVICE_DEFAULT_LIGHT,
-                        (DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) -> {
-                            tvDate.setText(getString(R.string.x_year_x_month_x_day, year, monthOfYear + 1, dayOfMonth));
-                        }
+                        (DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) ->
+                                tvDate.setText(getString(R.string.x_year_x_month_x_day, year, monthOfYear + 1, dayOfMonth))
                         , calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 dpd.show();
                 break;
@@ -330,23 +330,16 @@ public class StudentCostNotificationActivity extends AppCompatActivity implement
     }
 
 
-    public String insertImageT(ContentResolver cr, String title, String description) {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, title);
-        values.put(MediaStore.Images.Media.DESCRIPTION, description);
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        Uri url = null;
-        String stringUrl = null; /* value to be returned */
+    public String insertImageT(String imagePath, String title, String description) {
         try {
-            String CONTENT_AUTHORITY_SLASH = "content://" + "media" + "/";
-            Uri uri = Uri.parse(CONTENT_AUTHORITY_SLASH + "external" + "/images/media");
-            url = cr.insert(uri, values);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), imagePath,
+                    new File(imagePath).getName(), description);
+            Log.d(getClass().getSimpleName(), "插入相册:" + path);
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + imagePath)));//path_export是你导出的文件路径
+            return path;
         } catch (Exception e) {
-            Log.e("insertImageT", "Failed to insert image", e);
+            Log.e(getClass().getSimpleName(), "插入相册出错了", e);
         }
-        if (url != null) {
-            stringUrl = url.toString();
-        }
-        return stringUrl;
+        return "";
     }
 }

@@ -11,6 +11,8 @@ public class StudentDTO extends BaseDTO implements Serializable {
 
     private String avatar;//头像
 
+    private String phone;//电话
+
     private Integer sex;//性别，0未知，1男，2女
 
     private Date birthday;//生日
@@ -41,7 +43,7 @@ public class StudentDTO extends BaseDTO implements Serializable {
 
     private String guardian2Phone;//监护人2电话
 
-    public StudentDTO(Long id, String name, String avatar, Integer sex, Date birthday,
+    public StudentDTO(Long id, String name, String avatar, String phone, Integer sex, Date birthday,
                       Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
                       Integer currentGradeCode, String currentGrade, Integer studentType,
                       String studentTypeName, Integer costType, String costTypeName,
@@ -50,6 +52,7 @@ public class StudentDTO extends BaseDTO implements Serializable {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
+        this.phone = phone;
         this.sex = sex;
         this.birthday = birthday;
         this.recruitTime = recruitTime;
@@ -212,6 +215,14 @@ public class StudentDTO extends BaseDTO implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
 }

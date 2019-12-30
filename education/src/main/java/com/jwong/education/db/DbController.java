@@ -6,13 +6,14 @@ import android.database.sqlite.SQLiteDatabase;
 import com.jwong.education.dao.DaoMaster;
 import com.jwong.education.dao.DaoSession;
 
+
 public class DbController {
 
     private final static String DB_NAME = "study.db";
     /**
      * Helper
      */
-    private DaoMaster.DevOpenHelper mHelper;//获取Helper对象
+    private MySQLiteOpenHelper mHelper;//获取Helper对象
 
     /**
      * DaoMaster
@@ -46,12 +47,10 @@ public class DbController {
 
     /**
      * 初始化
-     *
-     * @param context
      */
     public DbController(Context context) {
         this.context = context;
-        mHelper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
+        mHelper = new MySQLiteOpenHelper(context, DB_NAME, null);
         mDaoMaster = new DaoMaster(getWritableDatabase());
         mDaoSession = mDaoMaster.newSession();
     }
@@ -65,20 +64,19 @@ public class DbController {
      */
     private SQLiteDatabase getReadableDatabase() {
         if (mHelper == null) {
-            mHelper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
+            mHelper = new MySQLiteOpenHelper(context, DB_NAME, null);
         }
         return mHelper.getReadableDatabase();
     }
 
     /**
      * 获取可写数据库
-     *
-     * @return
      */
     private SQLiteDatabase getWritableDatabase() {
         if (mHelper == null) {
-            mHelper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
+            mHelper = new MySQLiteOpenHelper(context, DB_NAME, null);
         }
         return mHelper.getWritableDatabase();
     }
+
 }

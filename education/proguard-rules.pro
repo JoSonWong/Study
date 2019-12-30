@@ -22,3 +22,20 @@
 -keepclasseswithmembers class * {
     public <init>(android.content.Context);
 }
+
+#green dao
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties {*;}
+
+# If you do not use SQLCipher:
+-dontwarn net.sqlcipher.database.**
+# If you do not use RxJava:
+-dontwarn rx.**
+
+#green dao upgrade helper
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+    public static void dropTable(org.greenrobot.greendao.database.Database, boolean);
+    public static void createTable(org.greenrobot.greendao.database.Database, boolean);
+}

@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 public class StudentInfoFragment extends Fragment {
 
-    private TextView tvName, tvCurrentGrade, tvStudentId, tvStudentType, tvCostType,
+    private TextView tvName, tvPhone, tvCurrentGrade, tvStudentId, tvStudentType, tvCostType,
             tvBirthday, tvRecruitDate, tvRecruitGrade, tvGuardian1, tvGuardian1Phone,
             tvGuardian2, tvGuardian2Phone;
     private ImageView ivSex;
@@ -45,6 +45,7 @@ public class StudentInfoFragment extends Fragment {
 //            studentId = getArguments().getLong("studentId");
         View root = inflater.inflate(R.layout.fragment_student_info, container, false);
         tvName = root.findViewById(R.id.tv_name);
+        tvPhone = root.findViewById(R.id.tv_phone);
         ivSex = root.findViewById(R.id.iv_sex);
         tvStudentId = root.findViewById(R.id.tv_student_id);
         tvCurrentGrade = root.findViewById(R.id.tv_grade);
@@ -68,6 +69,7 @@ public class StudentInfoFragment extends Fragment {
         super.onResume();
         studentViewModel.getStudent(StudentActivity.studentId).observe(this, student -> {
             tvName.setText(student.getName());
+            tvPhone.setText(student.getPhone());
             tvStudentId.setText(getString(R.string.student_code_x,
                     FormatUtils.studentCodeFormat(student.getId())));
             ivSex.setImageResource(student.getSex() == 1 ? R.drawable.ic_female : R.drawable.ic_male);

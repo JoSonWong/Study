@@ -35,7 +35,7 @@
                 android:layout_toEndOf="@+id/tv_name"
                 android:text="@string/student_code_x"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
             <ImageView
                 android:id="@+id/iv_sex"
@@ -73,6 +73,28 @@
             android:orientation="vertical"
             android:padding="12dp">
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:autoLink="phone"
+                    android:textColorLink="@color/colorPrimaryDark"
+                    android:textSize="18sp" />
+
+            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -178,6 +200,11 @@
 
             </TableRow>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/darker_gray" />
 
             <TableRow
                 android:layout_width="match_parent"
