@@ -33,8 +33,6 @@ public class StudentCurriculumDbService {
 
     /**
      * 初始化
-     *
-     * @param dbController
      */
     public StudentCurriculumDbService(DbController dbController) {
         studentCurriculumDao = dbController.getDaoSession().getStudentCurriculumDao();
@@ -42,8 +40,6 @@ public class StudentCurriculumDbService {
 
     /**
      * 会自动判定是插入还是替换
-     *
-     * @param studentCurriculum
      */
     public void insertOrReplace(StudentCurriculum studentCurriculum) {
         studentCurriculumDao.insertOrReplace(studentCurriculum);
@@ -51,8 +47,6 @@ public class StudentCurriculumDbService {
 
     /**
      * 插入一条记录，表里面要没有与之相同的记录
-     *
-     * @param studentCurriculum
      */
     public long insert(StudentCurriculum studentCurriculum) {
         Log.d(getClass().getSimpleName(), "添加学生课程，学生id：" + studentCurriculum.getStudentId()
@@ -82,8 +76,6 @@ public class StudentCurriculumDbService {
 
     /**
      * 更新数据
-     *
-     * @param studentCurriculum
      */
     public long update(StudentCurriculum studentCurriculum) {
         if (studentCurriculum != null) {
@@ -130,5 +122,12 @@ public class StudentCurriculumDbService {
         return studentCurriculumDao.queryBuilder().where(
                 new WhereCondition.StringCondition(StudentCurriculumDao.Properties.CurriculumId.columnName + "=" + curriculumId
                         + " GROUP BY " + StudentCurriculumDao.Properties.StudentId.columnName)).list();
+    }
+
+    /**
+     * 删除课程
+     */
+    public void deleteByCurriculumId(long curriculumId) {
+        studentCurriculumDao.queryBuilder().where(StudentCurriculumDao.Properties.CurriculumId.eq(curriculumId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 }

@@ -49,7 +49,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
     private ClockViewModel clockViewModel;
     private ClockRecordDetailAdapter adapter;
     private ClockRecordDTO clockRecordDTO;
-    private TextView tvCurriculum, tvClockTime, tvPrice;
+    private TextView tvCurriculum, tvClockTime, tvPrice, tvTotalCount, tvTotalCost;
     private int clockType;
 
     @Override
@@ -68,13 +68,16 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
         tvPrice = findViewById(R.id.tv_price);
         tvClockTime = findViewById(R.id.tv_clock_time);
         tvClockTime.setOnClickListener(this);
+        tvTotalCount = findViewById(R.id.tv_count);
+        tvTotalCost = findViewById(R.id.tv_total);
         recyclerView = findViewById(R.id.rv_clock_record);
         findViewById(R.id.btn_patch_card).setOnClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         tvCurriculum.setText(clockRecordDTO.getCurriculumName());
-        tvPrice.setText(getString(R.string.rmb_x, FormatUtils.priceFormat(clockRecordDTO.getCurriculumPrice())));
+        tvPrice.setText(getString(R.string.rmb_x,
+                FormatUtils.priceFormat(clockRecordDTO.getCurriculumPrice())));
         tvClockTime.setText(FormatUtils.convert2DateTime(clockRecordDTO.getClockTime()));
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         clockViewModel.getClockRecordDetailList(clockRecordDTO.getCurriculumId(),
@@ -82,9 +85,18 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
             adapter = new ClockRecordDetailAdapter(clockRecords);
             adapter.setOnItemClickListener(this);
             recyclerView.setAdapter(adapter);
+
+            float totalCount = 0;
+            double totalCost = 0.0;
+            for (ClockRecord record : clockRecords) {
+                if (record.getClockType() == 0) {
+                    totalCount = totalCount + record.getUnit();
+                    totalCost = totalCost + record.getCurriculumDiscountPrice() * record.getUnit();
+                }
+            }
+            tvTotalCount.setText(getString(R.string.total_curriculum_count_x, FormatUtils.priceFormat(totalCount)));
+            tvTotalCost.setText(getString(R.string.total_curriculum_cost_x, FormatUtils.priceFormat(totalCost)));
         });
-
-
     }
 
 
@@ -250,7 +262,7 @@ public class ClockDetailActivity extends AppCompatActivity implements View.OnCli
                                         studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
                                         studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
                                         studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
-                                        studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
+                                        studentDTO.getRemarks(), studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
                                 students.add(student);
                             }
                         }

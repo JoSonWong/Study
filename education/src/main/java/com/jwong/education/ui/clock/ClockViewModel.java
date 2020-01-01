@@ -13,6 +13,7 @@ import com.jwong.education.dao.StudentCurriculum;
 import com.jwong.education.db.ClockDbService;
 import com.jwong.education.db.StudentCurriculumDbService;
 import com.jwong.education.dto.CurriculumDTO;
+import com.jwong.education.util.FormatUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -23,15 +24,17 @@ public class ClockViewModel extends ViewModel {
 
     private MutableLiveData<List<ClockRecord>> clockRecordList;
     private MutableLiveData<List<ClockRecord>> studentClockRecordList;
-    private MutableLiveData<Map<String, Double>> dataMonth;
+    private MutableLiveData<Map<String, Double>> mothCosts;
     private MutableLiveData<Map<String, Float>> studentCurriculumStatistic;
+    private MutableLiveData<List<ClockRecord>> monthRecordList;
 
 
     public ClockViewModel() {
         this.clockRecordList = new MutableLiveData<>();
         this.studentClockRecordList = new MutableLiveData<>();
-        this.dataMonth = new MutableLiveData<>();
+        this.mothCosts = new MutableLiveData<>();
         this.studentCurriculumStatistic = new MutableLiveData<>();
+        this.monthRecordList = new MutableLiveData<>();
     }
 
     public LiveData<List<ClockRecord>> getClockRecordList(int limit) {
@@ -106,26 +109,22 @@ public class ClockViewModel extends ViewModel {
     }
 
 
-    public List<ClockRecord> getMonthClockRecordList(Date from, Date to) {
-        return ClockDbService.getInstance(StudyApplication.getDbController())
-                .searchClockRecord(from, to);
-    }
-
     public LiveData<Map<String, Double>> getDateCost(Date from, Date to) {
-        List<ClockRecord> list = getMonthClockRecordList(from, to);
+        List<ClockRecord> list = ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchClockRecord(from, to);
         Map<String, Double> map = new HashMap<>();
         for (ClockRecord cost : list) {
             String key = cost.getCurriculumName();
             Double existDiscountPrice;
             if ((existDiscountPrice = map.get(key)) != null) {
-                double discountPrice = existDiscountPrice + cost.getCurriculumDiscountPrice();
+                double discountPrice = existDiscountPrice + cost.getCurriculumDiscountPrice() * cost.getUnit();
                 map.put(key, discountPrice);
             } else {
-                map.put(key, cost.getCurriculumDiscountPrice());
+                map.put(key, cost.getCurriculumDiscountPrice() * cost.getUnit());
             }
         }
-        dataMonth.postValue(map);
-        return dataMonth;
+        mothCosts.postValue(map);
+        return mothCosts;
     }
 
 
@@ -145,5 +144,13 @@ public class ClockViewModel extends ViewModel {
         }
         studentCurriculumStatistic.postValue(map);
         return studentCurriculumStatistic;
+    }
+
+    public LiveData<List<ClockRecord>> getMonthClockRecordList(Date from, Date to) {
+        Log.d(getClass().getSimpleName(), "getMonthClockRecordList from:" + FormatUtils.convert2DateTime(from) +
+                " to:" + FormatUtils.convert2DateTime(to));
+        this.monthRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
+                .searchClockRecord(from, to));
+        return this.monthRecordList;
     }
 }

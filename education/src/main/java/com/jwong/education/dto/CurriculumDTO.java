@@ -3,7 +3,7 @@ package com.jwong.education.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class CurriculumDTO extends BaseDTO implements Serializable {
+public class CurriculumDTO implements Serializable {
 
     private Long id;//课程id，自增
 

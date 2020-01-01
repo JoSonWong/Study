@@ -38,6 +38,7 @@ import com.jwong.education.util.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class StudentCostDetailFragment extends Fragment implements OnItemClickListener {
@@ -47,7 +48,6 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
     private RecyclerView rvCostDetail;
     private TextView tvStudentName, tvStudentId, tvGrade, tvYearMonth, tvTotalCost;
     private int year, month;
-    private long studentId;
     private CostTreeAdapter adapter = new CostTreeAdapter();
 
     @Override
@@ -59,10 +59,6 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_student_cost_detail, container, false);
-        studentId = StudentActivity.studentId;
-        Calendar calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH) + 1;
         tvTotalCost = root.findViewById(R.id.tv_cost);
         tvStudentName = root.findViewById(R.id.tv_name);
         tvStudentId = root.findViewById(R.id.tv_student_id);
@@ -75,17 +71,27 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
                 DividerItemDecoration.VERTICAL));
         rvCostDetail.setAdapter(adapter);
 
+        Calendar calendar = Calendar.getInstance();
+        setMonth(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1);
+
         studentViewModel = ViewModelProviders.of(this).get(StudentViewModel.class);
-        studentViewModel.getStudent(studentId).observe(this, student -> {
+        studentViewModel.getStudent(StudentActivity.studentId).observe(this, student -> {
             tvStudentName.setText(student.getName());
             tvStudentId.setText(getString(R.string.student_code_x, FormatUtils.studentCodeFormat(student.getId())));
             tvGrade.setText(student.getCurrentGrade());
         });
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
-        reportViewModel.getStudentCost(studentId, year, month).observe(this, costs ->
-                setCostInfo(costs));
+        reportViewModel.getStudentCost(StudentActivity.studentId, this.year, this.month)
+                .observe(this, costs -> setCostInfo(costs));
         return root;
     }
+
+    private void setMonth(int year, int month) {
+        this.year = year;
+        this.month = month;
+        tvYearMonth.setText(getString(R.string.year_x_month_x, this.year, this.month));
+    }
+
 
     private void setCostInfo(List<CostNode> nodes) {
         double totalCost = 0;
@@ -99,7 +105,6 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
         adapter.setNewData(baseNodes);
         adapter.setOnItemClickListener(this);
         tvTotalCost.setText(getString(R.string.rmb_x, FormatUtils.priceFormat(totalCost)));
-        tvYearMonth.setText(getString(R.string.year_x_month_x, year, month));
     }
 
     @Override
@@ -192,10 +197,9 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
                                 double discountPrice = Double.parseDouble(etDiscountPrice.getText().toString());
                                 monthCost.setDiscountPrice(discountPrice);
                             }
-
                             reportViewModel.update(monthCost);
                             Toast.makeText(getContext(), R.string.update_cost_success, Toast.LENGTH_SHORT).show();
-                            reportViewModel.getStudentCost(studentId, this.year, this.month);
+                            reportViewModel.getStudentCost(StudentActivity.studentId, this.year, this.month);
                         } else {
                             Toast.makeText(getContext(), TextUtils.isEmpty(etName.getText()) ? R.string.pls_input_cost_name
                                     : R.string.pls_input_cost, Toast.LENGTH_SHORT).show();
@@ -221,9 +225,9 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
                     if (!TextUtils.isEmpty(etName.getText()) && (!TextUtils.isEmpty(etPrice.getText())
                             || !TextUtils.isEmpty(etDiscountPrice.getText()))) {
                         StudentMonthCost cost = new StudentMonthCost();
-                        cost.setStudentId(studentId);
-                        cost.setYear(year);
-                        cost.setMonth(month);
+                        cost.setStudentId(StudentActivity.studentId);
+                        cost.setYear(this.year);
+                        cost.setMonth(this.month);
                         cost.setCostType(1);
                         cost.setCostName(etName.getText().toString());
                         if (TextUtils.isEmpty(etDiscountPrice.getText())) {
@@ -242,7 +246,7 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
                         }
                         reportViewModel.insert(cost);
                         Toast.makeText(getActivity(), R.string.add_cost_success, Toast.LENGTH_SHORT).show();
-                        reportViewModel.getStudentCost(studentId, this.year, this.month);
+                        reportViewModel.getStudentCost(StudentActivity.studentId, this.year, this.month);
                     } else {
                         Toast.makeText(getContext(), TextUtils.isEmpty(etName.getText()) ? R.string.pls_input_cost_name
                                 : R.string.pls_input_cost, Toast.LENGTH_SHORT).show();
@@ -255,27 +259,32 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
     private void showMonthPicker() {
         View dlgView = LayoutInflater.from(getContext()).inflate(R.layout.dlg_day_picker, null);
         NumberPicker npYear = dlgView.findViewById(R.id.picker_year);
-        NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
-        Calendar cal = Calendar.getInstance();
-        npMonth.setMinValue(1);
-        npMonth.setMaxValue(12);
-        npMonth.setValue(cal.get(Calendar.MONTH) + 1);
-        npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        npMonth.setWrapSelectorWheel(false);
-        int year = cal.get(Calendar.YEAR);
         npYear.setMinValue(2019);
         npYear.setMaxValue(2099);
-        npYear.setValue(year);
         npYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         npYear.setWrapSelectorWheel(false);
+
+        NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
+        npMonth.setMinValue(1);
+        npMonth.setMaxValue(12);
+        npMonth.setWrapSelectorWheel(false);
+        npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+        Calendar cal = Calendar.getInstance();
+        Date textMonth = FormatUtils.convert2Month(getString(R.string.year_x_month_x, this.year, this.month));
+        if (textMonth != null) {
+            cal.setTime(textMonth);
+        }
+        npYear.setValue(cal.get(Calendar.YEAR));
+        npMonth.setValue(cal.get(Calendar.MONTH) + 1);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.other_month_cost)
                 .setView(dlgView)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    this.year = npYear.getValue();
-                    this.month = npMonth.getValue();
-                    reportViewModel.getStudentCost(studentId, this.year, this.month);
+                    setMonth(npYear.getValue(), npMonth.getValue());
+                    reportViewModel.getStudentCost(StudentActivity.studentId, this.year, this.month);
                 });
         builder.create().show();
     }

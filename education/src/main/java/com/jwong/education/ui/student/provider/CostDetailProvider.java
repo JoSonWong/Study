@@ -30,7 +30,7 @@ public class CostDetailProvider extends BaseNodeProvider {
         if (data instanceof CostDetailNode) {
             CostDetailNode item = (CostDetailNode) data;
             helper.setText(R.id.tv_name, item.getCurriculumName());
-            helper.setText(R.id.tv_price, helper.itemView.getContext().getString(R.string.curriculum_price_x,
+            helper.setText(R.id.tv_price, helper.itemView.getContext().getString(R.string.original_price_x,
                     FormatUtils.priceFormat(item.getPrice())));
             helper.setText(R.id.tv_discount_price, helper.itemView.getContext().getString(R.string.discount_price_x,
                     FormatUtils.priceFormat(item.getDiscountPrice())));

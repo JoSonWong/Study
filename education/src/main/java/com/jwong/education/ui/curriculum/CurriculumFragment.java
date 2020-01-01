@@ -71,6 +71,8 @@ public class CurriculumFragment extends Fragment implements OnItemClickListener 
         EditText etPrice = viewInput.findViewById(R.id.et_price);
         etPrice.setText(FormatUtils.priceFormat(curriculum.getPrice()));
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.update_curriculum).setView(viewInput)
+                .setNeutralButton(R.string.delete_curriculum, (dialogInterface, i) ->
+                    deleteCurriculumTip(curriculum))
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     if (!TextUtils.isEmpty(etName.getText()) && !TextUtils.isEmpty(etPrice.getText())) {
@@ -86,6 +88,18 @@ public class CurriculumFragment extends Fragment implements OnItemClickListener 
         builder.create().show();
     }
 
+    private void deleteCurriculumTip(Curriculum curriculum) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setIcon(R.drawable.ic_warning_red_24dp)
+                .setTitle(R.string.delete_curriculum)
+                .setMessage(getString(R.string.delete_curriculum_tip, curriculum.getName()))
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
+                    settingViewModel.delete(curriculum.getId());
+                    Toast.makeText(getContext(), R.string.delete_success, Toast.LENGTH_SHORT).show();
+                });
+        builder.create().show();
+    }
 
     private void showInput() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dlg_input_curriculum, null);

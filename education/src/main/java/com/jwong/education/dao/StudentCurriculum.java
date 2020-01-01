@@ -7,7 +7,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToOne;
 
 @Entity
-public class StudentCurriculum extends BaseDao {
+public class StudentCurriculum {
 
     @Id(autoincrement = true)
     private Long id;//课程id，自增

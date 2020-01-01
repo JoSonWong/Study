@@ -200,8 +200,9 @@ public class ReportViewModel extends ViewModel {
             double price = 0;
             double discountPrice = 0;
             for (ClockRecord record : clockRecords) {
-                price = FormatUtils.doubleFormat(price + record.getCurriculumPrice());
-                discountPrice = FormatUtils.doubleFormat(discountPrice + record.getCurriculumDiscountPrice());
+                price = FormatUtils.doubleFormat(price + record.getCurriculumPrice() * record.getUnit());
+                discountPrice = FormatUtils.doubleFormat(discountPrice
+                        + record.getCurriculumDiscountPrice() * record.getUnit());
             }
             curriculumCost.setPrice(FormatUtils.doubleFormat(price));
             curriculumCost.setDiscountPrice(FormatUtils.doubleFormat(discountPrice));

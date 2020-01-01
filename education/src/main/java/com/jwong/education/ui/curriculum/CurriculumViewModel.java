@@ -6,7 +6,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.jwong.education.StudyApplication;
 import com.jwong.education.dao.Curriculum;
+import com.jwong.education.dao.StudentCurriculum;
+import com.jwong.education.db.ClockDbService;
 import com.jwong.education.db.CurriculumDbService;
+import com.jwong.education.db.StudentCurriculumDbService;
 
 import java.util.Date;
 import java.util.List;
@@ -40,9 +43,6 @@ public class CurriculumViewModel extends ViewModel {
             Curriculum curriculum = new Curriculum();
             curriculum.setName(name);
             curriculum.setPrice(price);
-            curriculum.setCreatedAt(new Date());
-            curriculum.setUpdatedAt(new Date());
-            curriculum.setDeletedAt(null);
             if (CurriculumDbService.getInstance(StudyApplication.getDbController()).insert(curriculum) > 0) {
                 curriculumList.postValue(CurriculumDbService.getInstance(StudyApplication.getDbController()).searchAll());
                 return "添加成功！";
@@ -50,5 +50,14 @@ public class CurriculumViewModel extends ViewModel {
                 return "添加失败！";
             }
         }
+    }
+
+    //删除课程
+    public void delete(Long id) {
+        StudentCurriculumDbService.getInstance(StudyApplication.getDbController()).deleteByCurriculumId(id);
+        ClockDbService.getInstance(StudyApplication.getDbController()).deleteByCurriculumId(id);
+        CurriculumDbService.getInstance(StudyApplication.getDbController()).delete(id);
+
+        curriculumList.postValue(CurriculumDbService.getInstance(StudyApplication.getDbController()).searchAll());
     }
 }

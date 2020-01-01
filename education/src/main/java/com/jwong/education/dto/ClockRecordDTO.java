@@ -3,7 +3,7 @@ package com.jwong.education.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ClockRecordDTO extends BaseDTO implements Serializable {
+public class ClockRecordDTO implements Serializable {
 
     private Long id;//记录id
 

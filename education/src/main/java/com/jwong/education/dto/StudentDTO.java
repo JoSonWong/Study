@@ -3,7 +3,7 @@ package com.jwong.education.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class StudentDTO extends BaseDTO implements Serializable {
+public class StudentDTO implements Serializable {
 
     private Long id;//学生Id
 
@@ -31,6 +31,8 @@ public class StudentDTO extends BaseDTO implements Serializable {
 
     private String studentTypeName;//类型名称
 
+    private String remarks;//备注信息
+
     private Integer costType;//0按课时收费，1按学期收费
 
     private String costTypeName;//0按课时收费，1按学期收费
@@ -46,7 +48,7 @@ public class StudentDTO extends BaseDTO implements Serializable {
     public StudentDTO(Long id, String name, String avatar, String phone, Integer sex, Date birthday,
                       Date recruitTime, Integer recruitGradeCode, String recruitGradeName,
                       Integer currentGradeCode, String currentGrade, Integer studentType,
-                      String studentTypeName, Integer costType, String costTypeName,
+                      String studentTypeName, Integer costType, String costTypeName, String remarks,
                       String guardian1, String guardian1Phone,
                       String guardian2, String guardian2Phone) {
         this.id = id;
@@ -64,6 +66,7 @@ public class StudentDTO extends BaseDTO implements Serializable {
         this.studentTypeName = studentTypeName;
         this.costType = costType;
         this.costTypeName = costTypeName;
+        this.remarks = remarks;
         this.guardian1 = guardian1;
         this.guardian1Phone = guardian1Phone;
         this.guardian2 = guardian2;
@@ -171,6 +174,14 @@ public class StudentDTO extends BaseDTO implements Serializable {
 
     public String getCostTypeName() {
         return this.costTypeName;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getRemarks() {
+        return remarks;
     }
 
     public void setCostTypeName(String costTypeName) {

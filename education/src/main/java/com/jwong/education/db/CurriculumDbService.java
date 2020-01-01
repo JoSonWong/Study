@@ -2,8 +2,6 @@ package com.jwong.education.db;
 
 import com.jwong.education.dao.Curriculum;
 import com.jwong.education.dao.CurriculumDao;
-import com.jwong.education.dao.Student;
-import com.jwong.education.dao.StudentDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -31,8 +29,6 @@ public class CurriculumDbService {
 
     /**
      * 初始化
-     *
-     * @param dbController
      */
     public CurriculumDbService(DbController dbController) {
         curriculumDao = dbController.getDaoSession().getCurriculumDao();
@@ -40,8 +36,6 @@ public class CurriculumDbService {
 
     /**
      * 会自动判定是插入还是替换
-     *
-     * @param curriculum
      */
     public void insertOrReplace(Curriculum curriculum) {
         curriculumDao.insertOrReplace(curriculum);
@@ -49,8 +43,6 @@ public class CurriculumDbService {
 
     /**
      * 插入一条记录，表里面要没有与之相同的记录
-     *
-     * @param curriculum
      */
     public long insert(Curriculum curriculum) {
         return curriculumDao.insert(curriculum);
@@ -58,8 +50,6 @@ public class CurriculumDbService {
 
     /**
      * 更新数据
-     *
-     * @param curriculum
      */
     public long update(Curriculum curriculum) {
         if (curriculum != null) {
@@ -75,22 +65,20 @@ public class CurriculumDbService {
     public List<Curriculum> searchByWhere(String name) {
         QueryBuilder<Curriculum> queryMenu = curriculumDao.queryBuilder();
         queryMenu.where(CurriculumDao.Properties.Name.eq(name));
-        List<Curriculum> list = queryMenu.list();
-        return list;
+        return queryMenu.list();
     }
 
     /**
      * 查询所有数据
      */
     public List<Curriculum> searchAll() {
-        List<Curriculum> curriculumList = curriculumDao.queryBuilder().list();
-        return curriculumList;
+        return curriculumDao.queryBuilder().list();
     }
 
     /**
      * 删除数据
      */
-    public void delete(String wherecluse) {
-        curriculumDao.queryBuilder().where(StudentDao.Properties.Name.eq(wherecluse)).buildDelete().executeDeleteWithoutDetachingEntities();
+    public void delete(Long id) {
+        curriculumDao.queryBuilder().where(CurriculumDao.Properties.Id.eq(id)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 }

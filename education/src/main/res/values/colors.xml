@@ -7,5 +7,6 @@
     <color name="darkGray">@android:color/darker_gray</color>
     <color name="lightYellow">#FFF7E2</color>
     <color name="listItemPressed">#50dddddd</color>
+    <color name="studentCurriculumCost">#90dddddd</color>
 
 </resources>

@@ -3,10 +3,7 @@ package com.jwong.education.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
-import com.jwong.education.dao.BaseDaoDao;
-import com.jwong.education.dao.ClockRecord;
 import com.jwong.education.dao.ClockRecordDao;
 import com.jwong.education.dao.CurriculumDao;
 import com.jwong.education.dao.DaoMaster;
@@ -33,7 +30,7 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
                     public void onDropAllTables(Database db, boolean ifExists) {
                         DaoMaster.dropAllTables(db, ifExists);
                     }
-                }, BaseDaoDao.class, ClockRecordDao.class, CurriculumDao.class, StudentDao.class,
+                }, ClockRecordDao.class, CurriculumDao.class, StudentDao.class,
                 StudentCurriculumDao.class, StudentMonthCostDao.class);
     }
 }

@@ -163,4 +163,13 @@ public class ClockDbService {
         Log.d(getClass().getSimpleName(), "查询学生打卡记录：" + (list == null ? "NULL" : list.size()));
         return list;
     }
+
+    /**
+     * 删除课程打卡记录
+     */
+    public void deleteByCurriculumId(long curriculumId) {
+        clockRecordDao.queryBuilder().where(ClockRecordDao.Properties.CurriculumId.eq(curriculumId))
+                .buildDelete().executeDeleteWithoutDetachingEntities();
+    }
+
 }

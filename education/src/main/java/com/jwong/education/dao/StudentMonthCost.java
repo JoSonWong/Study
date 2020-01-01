@@ -5,7 +5,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class StudentMonthCost extends BaseDao {
+public class StudentMonthCost {
 
     @Id(autoincrement = true)
     private Long id;//id

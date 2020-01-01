@@ -42,6 +42,7 @@ import com.jwong.education.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class StudentClockFragment extends Fragment implements OnItemClickListener {
@@ -72,9 +73,7 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
                 DividerItemDecoration.VERTICAL));
 
         Calendar cal = Calendar.getInstance();
-        this.year = cal.get(Calendar.YEAR);
-        this.month = cal.get(Calendar.MONTH) + 1;
-        tvMonth.setText(getString(R.string.year_x_month_x, year, month));
+        setMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1);
 
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         clockViewModel.getStudentAllClockRecordList(StudentActivity.studentId,
@@ -88,11 +87,16 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
                     }
                 });
         clockViewModel.getStudentCurriculumStatistic(StudentActivity.studentId,
-                Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month))
+                Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(this.year, this.month))
                 .observe(this, map -> drawCurriculumStatistic(map));
         return root;
     }
 
+    private void setMonth(int year, int month) {
+        this.year = year;
+        this.month = month;
+        tvMonth.setText(getString(R.string.year_x_month_x, year, month));
+    }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -177,32 +181,35 @@ public class StudentClockFragment extends Fragment implements OnItemClickListene
     private void showMonthPicker() {
         View dlgView = LayoutInflater.from(getContext()).inflate(R.layout.dlg_day_picker, null);
         NumberPicker npYear = dlgView.findViewById(R.id.picker_year);
-        NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
-        Calendar cal = Calendar.getInstance();
-        npMonth.setMinValue(1);
-        npMonth.setMaxValue(12);
-        npMonth.setValue(cal.get(Calendar.MONTH) + 1);
-        npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        npMonth.setWrapSelectorWheel(false);
-        int year = cal.get(Calendar.YEAR);
         npYear.setMinValue(2019);
         npYear.setMaxValue(2099);
-        npYear.setValue(year);
         npYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         npYear.setWrapSelectorWheel(false);
+
+        NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
+        npMonth.setMinValue(1);
+        npMonth.setMaxValue(12);
+        npMonth.setWrapSelectorWheel(false);
+        npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+        Calendar cal = Calendar.getInstance();
+        Date textMonth = FormatUtils.convert2Month(getString(R.string.year_x_month_x, this.year, this.month));
+        if (textMonth != null) {
+            cal.setTime(textMonth);
+        }
+        npYear.setValue(cal.get(Calendar.YEAR));
+        npMonth.setValue(cal.get(Calendar.MONTH) + 1);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.other_month_cost)
                 .setView(dlgView)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    this.year = npYear.getValue();
-                    this.month = npMonth.getValue();
-                    tvMonth.setText(getString(R.string.year_x_month_x, year, month));
+                    setMonth(npYear.getValue(), npMonth.getValue());
                     clockViewModel.getStudentAllClockRecordList(StudentActivity.studentId,
                             Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(this.year, this.month));
-
                     clockViewModel.getStudentCurriculumStatistic(StudentActivity.studentId,
-                            Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month));
+                            Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(this.year, this.month));
                 });
         builder.create().show();
     }

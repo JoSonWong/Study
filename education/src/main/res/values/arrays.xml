@@ -7,6 +7,10 @@
     </string-array>
 
     <string-array name="grades">
+        <item>小班</item>
+        <item>中班</item>
+        <item>大班</item>
+        <item>前期班</item>
         <item>一年级</item>
         <item>二年级</item>
         <item>三年级</item>
@@ -19,6 +23,7 @@
         <item>高一</item>
         <item>高二</item>
         <item>高三</item>
+        <item>成人班</item>
     </string-array>
 
     <string-array name="clock_types">

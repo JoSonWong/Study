@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -35,6 +36,7 @@ import com.jwong.education.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class ReportFragment extends Fragment {
@@ -61,19 +63,21 @@ public class ReportFragment extends Fragment {
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
         clockViewModel = ViewModelProviders.of(this).get(ClockViewModel.class);
         Calendar cal = Calendar.getInstance();
-        this.year = cal.get(Calendar.YEAR);
-        this.month = cal.get(Calendar.MONTH) + 1;
-
-        tvMonth.setText(getString(R.string.year_x_month_x, year, month));
-
-        reportViewModel.getDateCost(year, month).observe(this, costs ->
+        setMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1);
+        reportViewModel.getDateCost(this.year, this.month).observe(this, costs ->
                 drawIncome(costs, pieChart, getString(R.string.total_income), R.string.total_income_x, tvTotalIncome));
         clockViewModel.getDateCost(
-                Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(year, month))
+                Utils.getYearMonthFirstDate(this.year, this.month), Utils.getYearMonthLastDate(this.year, this.month))
                 .observe(this, map ->
                         drawIncome(map, pieChartCurriculum, getString(R.string.curriculum_income),
                                 R.string.curriculum_income_x, tvCurriculumIncome));
         return root;
+    }
+
+    private void setMonth(int year, int month) {
+        this.year = year;
+        this.month = month;
+        tvMonth.setText(getString(R.string.year_x_month_x, year, month));
     }
 
 
@@ -102,7 +106,7 @@ public class ReportFragment extends Fragment {
         pieChart.setDragDecelerationFrictionCoef(1f);
         //设置中间文件
         pieChart.setCenterText(title);
-        pieChart.setCenterTextSize(24);
+        pieChart.setCenterTextSize(20);
         pieChart.setCenterTextColor(Color.BLACK);
 
         pieChart.setDrawHoleEnabled(true);
@@ -147,7 +151,7 @@ public class ReportFragment extends Fragment {
 
         // 输入标签样式
         pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setEntryLabelTextSize(20f);
+        pieChart.setEntryLabelTextSize(12f);
         //设置数据
     }
 
@@ -173,7 +177,7 @@ public class ReportFragment extends Fragment {
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(20f);
+        data.setValueTextSize(14f);
         data.setValueTextColor(Color.BLACK);
 
         pieChart.setData(data);
@@ -198,30 +202,34 @@ public class ReportFragment extends Fragment {
     private void showMonthPicker() {
         View dlgView = LayoutInflater.from(getContext()).inflate(R.layout.dlg_day_picker, null);
         NumberPicker npYear = dlgView.findViewById(R.id.picker_year);
-        NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
-        Calendar cal = Calendar.getInstance();
-        npMonth.setMinValue(1);
-        npMonth.setMaxValue(12);
-        npMonth.setValue(cal.get(Calendar.MONTH) + 1);
-        npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        npMonth.setWrapSelectorWheel(false);
-        int year = cal.get(Calendar.YEAR);
         npYear.setMinValue(2019);
         npYear.setMaxValue(2099);
-        npYear.setValue(year);
         npYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         npYear.setWrapSelectorWheel(false);
+
+        NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
+        npMonth.setMinValue(1);
+        npMonth.setMaxValue(12);
+        npMonth.setWrapSelectorWheel(false);
+        npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+        Calendar cal = Calendar.getInstance();
+        Date textMonth = FormatUtils.convert2Month(getString(R.string.year_x_month_x, this.year, this.month));
+        if (textMonth != null) {
+            cal.setTime(textMonth);
+        }
+        npYear.setValue(cal.get(Calendar.YEAR));
+        npMonth.setValue(cal.get(Calendar.MONTH) + 1);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.other_month_cost)
                 .setView(dlgView)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
-                    this.year = npYear.getValue();
-                    this.month = npMonth.getValue();
-                    tvMonth.setText(getString(R.string.year_x_month_x, year, month));
+                    setMonth(npYear.getValue(), npMonth.getValue());
                     reportViewModel.getDateCost(this.year, this.month);
                     clockViewModel.getDateCost(
-                            Utils.getYearMonthFirstDate(year, month), Utils.getYearMonthLastDate(this.year, this.month));
+                            Utils.getYearMonthFirstDate(this.year, this.month), Utils.getYearMonthLastDate(this.year, this.month));
                 });
         builder.create().show();
     }

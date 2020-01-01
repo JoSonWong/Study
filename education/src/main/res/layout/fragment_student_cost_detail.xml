@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="@string/total_cost"
+            android:text="@string/all_total_cost"
             android:textSize="16sp" />
 
         <TextView

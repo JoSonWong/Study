@@ -28,7 +28,7 @@ import java.io.Serializable;
 public class StudentInfoFragment extends Fragment {
 
     private TextView tvName, tvPhone, tvCurrentGrade, tvStudentId, tvStudentType, tvCostType,
-            tvBirthday, tvRecruitDate, tvRecruitGrade, tvGuardian1, tvGuardian1Phone,
+            tvBirthday, tvRecruitDate, tvRecruitGrade, tvRemarks, tvGuardian1, tvGuardian1Phone,
             tvGuardian2, tvGuardian2Phone;
     private ImageView ivSex;
     private StudentViewModel studentViewModel;
@@ -54,6 +54,7 @@ public class StudentInfoFragment extends Fragment {
         tvBirthday = root.findViewById(R.id.tv_birthday);
         tvRecruitDate = root.findViewById(R.id.tv_recruit);//收招日期
         tvRecruitGrade = root.findViewById(R.id.tv_recruit_grade);
+        tvRemarks = root.findViewById(R.id.tv_remarks);
         tvGuardian1 = root.findViewById(R.id.tv_guardian1);
         tvGuardian1Phone = root.findViewById(R.id.tv_guardian1_phone);
         tvGuardian2 = root.findViewById(R.id.tv_guardian2);
@@ -81,6 +82,7 @@ public class StudentInfoFragment extends Fragment {
             tvBirthday.setText(FormatUtils.convert2Date(student.getBirthday()));
             tvRecruitDate.setText(FormatUtils.convert2Date(student.getRecruitTime()));
             tvRecruitGrade.setText(student.getRecruitGradeName());
+            tvRemarks.setText(student.getRemarks());
             tvGuardian1.setText(student.getGuardian1());
             tvGuardian1Phone.setText(student.getGuardian1Phone());
             tvGuardian2.setText(student.getGuardian2());

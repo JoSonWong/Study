@@ -9,10 +9,30 @@ android {
         applicationId "com.jwong.education"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 7
-        versionName "V1.0.2"
+        versionCode 8
+        versionName "V1.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    //签名
+    signingConfigs {
+        debug {
+            storeFile file("jwong.key")
+            storePassword "Jorson33.android"
+            keyAlias "key"
+            keyPassword "Jorson33.android"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        relealse {
+            storeFile file("jwong.key")
+            storePassword "Jorson33.android"
+            keyAlias "key"
+            keyPassword "Jorson33.android"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
     }
 
     buildTypes {
@@ -51,7 +71,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 9 //数据库版本号
+    schemaVersion 11 //数据库版本号
 //    daoPackage 'com.jwong.education.greendao' //设置DaoMaster.DaoSession,Dao包名
 //    targetGenDir 'src/main/java' //设置daoPackage所在的文件路径
 }

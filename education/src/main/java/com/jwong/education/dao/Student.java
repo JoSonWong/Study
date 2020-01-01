@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-public class Student extends BaseDao {
+public class Student {
 
     @Id(autoincrement = true)
     private Long id;//学生Id
@@ -25,11 +25,11 @@ public class Student extends BaseDao {
 
     private Date recruitTime = Calendar.getInstance().getTime();//招收时间
 
-    private Integer recruitGradeCode = 0;//招收年级代号
+    private Integer recruitGradeCode = 4;//招收年级代号
 
     private String recruitGradeName = "一年级";//招收年级
 
-    private Integer currentGradeCode = 0;//当前年级代号
+    private Integer currentGradeCode = 4;//当前年级代号
 
     private String currentGrade = "一年级";//当前年级
 
@@ -41,6 +41,8 @@ public class Student extends BaseDao {
 
     private String costTypeName = "按课程";//收费类型名称：0按课程,1按学期
 
+    private String remarks;//备注
+
     private String guardian1;//监护人1姓名
 
     private String guardian1Phone;//监护人1电话
@@ -49,13 +51,13 @@ public class Student extends BaseDao {
 
     private String guardian2Phone;//监护人2电话
 
-    @Generated(hash = 1681604380)
+    @Generated(hash = 2101355643)
     public Student(Long id, String name, String avatar, String phone, Integer sex,
             Date birthday, Date recruitTime, Integer recruitGradeCode,
             String recruitGradeName, Integer currentGradeCode, String currentGrade,
             Integer studentType, String studentTypeName, Integer costType,
-            String costTypeName, String guardian1, String guardian1Phone, String guardian2,
-            String guardian2Phone) {
+            String costTypeName, String remarks, String guardian1,
+            String guardian1Phone, String guardian2, String guardian2Phone) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
@@ -71,6 +73,7 @@ public class Student extends BaseDao {
         this.studentTypeName = studentTypeName;
         this.costType = costType;
         this.costTypeName = costTypeName;
+        this.remarks = remarks;
         this.guardian1 = guardian1;
         this.guardian1Phone = guardian1Phone;
         this.guardian2 = guardian2;
@@ -103,6 +106,14 @@ public class Student extends BaseDao {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Integer getSex() {
@@ -193,6 +204,14 @@ public class Student extends BaseDao {
         this.costTypeName = costTypeName;
     }
 
+    public String getRemarks() {
+        return this.remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
     public String getGuardian1() {
         return this.guardian1;
     }
@@ -224,14 +243,6 @@ public class Student extends BaseDao {
     public void setGuardian2Phone(String guardian2Phone) {
         this.guardian2Phone = guardian2Phone;
     }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
+    
 
 }

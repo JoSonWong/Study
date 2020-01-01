@@ -8,7 +8,7 @@ import java.util.Date;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class ClockRecord extends BaseDao {
+public class ClockRecord {
 
     @Id(autoincrement = true)
     private Long id;//记录id
@@ -34,8 +34,8 @@ public class ClockRecord extends BaseDao {
 
     @Generated(hash = 264603217)
     public ClockRecord(Long id, Date clockTime, Long studentId, String studentName,
-            Long curriculumId, String curriculumName, Double curriculumPrice,
-            Double curriculumDiscountPrice, Integer clockType, Float unit) {
+                       Long curriculumId, String curriculumName, Double curriculumPrice,
+                       Double curriculumDiscountPrice, Integer clockType, Float unit) {
         this.id = id;
         this.clockTime = clockTime;
         this.studentId = studentId;

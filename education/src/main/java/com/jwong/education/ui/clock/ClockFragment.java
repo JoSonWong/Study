@@ -207,10 +207,10 @@ public class ClockFragment extends Fragment implements View.OnClickListener, OnI
                     if (!studentDTOS.isEmpty()) {
                         for (StudentDTO studentDTO : studentDTOS) {
                             Student student = new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAvatar(),
-                                    studentDTO.getPhone(), studentDTO.getSex(),
-                                    studentDTO.getBirthday(), studentDTO.getRecruitTime(), studentDTO.getRecruitGradeCode(),
-                                    studentDTO.getRecruitGradeName(), studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(),
-                                    studentDTO.getStudentType(), studentDTO.getStudentTypeName(), studentDTO.getCostType(), studentDTO.getCostTypeName(),
+                                    studentDTO.getPhone(), studentDTO.getSex(), studentDTO.getBirthday(), studentDTO.getRecruitTime(),
+                                    studentDTO.getRecruitGradeCode(), studentDTO.getRecruitGradeName(),
+                                    studentDTO.getCurrentGradeCode(), studentDTO.getCurrentGrade(), studentDTO.getStudentType(), studentDTO.getStudentTypeName(),
+                                    studentDTO.getCostType(), studentDTO.getCostTypeName(), studentDTO.getRemarks(),
                                     studentDTO.getGuardian1(), studentDTO.getGuardian1Phone(), studentDTO.getGuardian2(), studentDTO.getGuardian2Phone());
                             students.add(student);
                         }

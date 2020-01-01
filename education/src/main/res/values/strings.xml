@@ -152,9 +152,19 @@
     <string name="pls_input_seal_name_cn">请输入印章中文名</string>
     <string name="seal_name_en">印章英文名</string>
     <string name="pls_input_seal_name_en">请输入印章英文名</string>
-    <string name="discount_price_x">优惠价:%s</string>
-    <string name="curriculum_count_x">课时:%s</string>
-    <string name="cost_x">费用:%s</string>
+    <string name="discount_price_x">优惠价：%s</string>
+    <string name="curriculum_count_x">课时：%s</string>
+    <string name="cost_x">费用：%s</string>
     <string name="pls_input_phone">请输入电话号码</string>
+    <string name="remarks">备注</string>
+    <string name="pls_input_remarks">请填写备注信息</string>
+    <string name="delete_curriculum">删除课程</string>
+    <string name="delete_curriculum_tip">删除课程%s！\n删除后该课程将从学生所选课程中移除，并且该课程的所有打卡记录及其打卡产生的课时费用将被删除！\n您确定删除该课程吗？</string>
+    <string name="delete_success">删除成功！</string>
+    <string name="clock_detail_month_x">打卡详情（%s）</string>
+    <string name="report_month_x">报表（%s）</string>
+    <string name="total_curriculum_count_x">合计课时：%s</string>
+    <string name="total_curriculum_cost_x">合计课时费：%s</string>
+    <string name="original_price_x">原价：%s</string>
 
 </resources>
