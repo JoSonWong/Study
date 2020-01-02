@@ -146,11 +146,11 @@ public class ClockViewModel extends ViewModel {
         return studentCurriculumStatistic;
     }
 
-    public LiveData<List<ClockRecord>> getMonthClockRecordList(Date from, Date to) {
+    public LiveData<List<ClockRecord>> getMonthClockRecordListGroupByClockTime(Date from, Date to) {
         Log.d(getClass().getSimpleName(), "getMonthClockRecordList from:" + FormatUtils.convert2DateTime(from) +
                 " to:" + FormatUtils.convert2DateTime(to));
         this.monthRecordList.postValue(ClockDbService.getInstance(StudyApplication.getDbController())
-                .searchClockRecord(from, to));
+                .searchClockRecordGroupByClockTime(from, to));
         return this.monthRecordList;
     }
 }

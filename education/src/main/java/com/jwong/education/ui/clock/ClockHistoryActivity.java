@@ -56,7 +56,7 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
         Calendar cal = Calendar.getInstance();
         setMonth(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1);
 
-        clockViewModel.getMonthClockRecordList(Utils.getYearMonthFirstDate(this.year, this.month), Utils.getYearMonthLastDate(this.year, this.month))
+        clockViewModel.getMonthClockRecordListGroupByClockTime(Utils.getYearMonthFirstDate(this.year, this.month), Utils.getYearMonthLastDate(this.year, this.month))
                 .observe(this, clockRecords -> {
                     if (clockRecords != null) {
                         ClockRecordAdapter adapter = new ClockRecordAdapter(clockRecords, false);
@@ -119,15 +119,17 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
     private void showMonthPicker() {
         View dlgView = LayoutInflater.from(this).inflate(R.layout.dlg_day_picker, null);
         NumberPicker npYear = dlgView.findViewById(R.id.picker_year);
-        npYear.setMinValue(2019);
-        npYear.setMaxValue(2099);
+        int[] years = getResources().getIntArray(R.array.year_min_max);
+        npYear.setMinValue(years[0]);
+        npYear.setMaxValue(years[1]);
         npYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        npYear.setWrapSelectorWheel(false);
+        npYear.setWrapSelectorWheel(true);
 
         NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
-        npMonth.setMinValue(1);
-        npMonth.setMaxValue(12);
-        npMonth.setWrapSelectorWheel(false);
+        int[] months = getResources().getIntArray(R.array.month_min_max);
+        npMonth.setMinValue(months[0]);
+        npMonth.setMaxValue(months[1]);
+        npMonth.setWrapSelectorWheel(true);
         npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         Calendar cal = Calendar.getInstance();
@@ -144,7 +146,7 @@ public class ClockHistoryActivity extends AppCompatActivity implements OnItemCli
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {
                     setMonth(npYear.getValue(), npMonth.getValue());
-                    clockViewModel.getMonthClockRecordList(Utils.getYearMonthFirstDate(this.year, this.month),
+                    clockViewModel.getMonthClockRecordListGroupByClockTime(Utils.getYearMonthFirstDate(this.year, this.month),
                             Utils.getYearMonthLastDate(this.year, this.month));
                 });
         builder.create().show();

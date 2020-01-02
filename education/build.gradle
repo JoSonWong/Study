@@ -9,8 +9,8 @@ android {
         applicationId "com.jwong.education"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 8
-        versionName "V1.0.3"
+        versionCode 9
+        versionName "V1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -71,7 +71,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 11 //数据库版本号
+    schemaVersion 12 //数据库版本号
 //    daoPackage 'com.jwong.education.greendao' //设置DaoMaster.DaoSession,Dao包名
 //    targetGenDir 'src/main/java' //设置daoPackage所在的文件路径
 }

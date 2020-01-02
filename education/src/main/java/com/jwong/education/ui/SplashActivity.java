@@ -1,9 +1,6 @@
 package com.jwong.education.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -28,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-        }, 1000);
+        }, 800);
     }
 
 

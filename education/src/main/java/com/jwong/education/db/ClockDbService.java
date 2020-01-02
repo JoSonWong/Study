@@ -172,4 +172,14 @@ public class ClockDbService {
                 .buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
+    public List<ClockRecord> searchClockRecordGroupByClockTime(Date from, Date to) {
+        return clockRecordDao.queryBuilder().orderDesc(ClockRecordDao.Properties.ClockTime)
+                .where(ClockRecordDao.Properties.ClockTime.between(from, to))
+                .where(new WhereCondition.StringCondition(ClockRecordDao.Properties.CurriculumId.columnName + ">" + 0
+                        + " GROUP BY " + ClockRecordDao.Properties.ClockTime.columnName))
+                .list();
+
+    }
+
+
 }

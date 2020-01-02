@@ -32,4 +32,13 @@
         <item>@string/clock_type_leave</item>
     </string-array>
 
+    <integer-array name="year_min_max">
+        <item>2019</item>
+        <item>2039</item>
+    </integer-array>
+
+    <integer-array name="month_min_max">
+        <item>1</item>
+        <item>12</item>
+    </integer-array>
 </resources>

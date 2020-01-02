@@ -259,15 +259,17 @@ public class StudentCostDetailFragment extends Fragment implements OnItemClickLi
     private void showMonthPicker() {
         View dlgView = LayoutInflater.from(getContext()).inflate(R.layout.dlg_day_picker, null);
         NumberPicker npYear = dlgView.findViewById(R.id.picker_year);
-        npYear.setMinValue(2019);
-        npYear.setMaxValue(2099);
+        int[] years = getResources().getIntArray(R.array.year_min_max);
+        npYear.setMinValue(years[0]);
+        npYear.setMaxValue(years[1]);
         npYear.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        npYear.setWrapSelectorWheel(false);
+        npYear.setWrapSelectorWheel(true);
 
         NumberPicker npMonth = dlgView.findViewById(R.id.picker_month);
-        npMonth.setMinValue(1);
-        npMonth.setMaxValue(12);
-        npMonth.setWrapSelectorWheel(false);
+        int[] months = getResources().getIntArray(R.array.month_min_max);
+        npMonth.setMinValue(months[0]);
+        npMonth.setMaxValue(months[1]);
+        npMonth.setWrapSelectorWheel(true);
         npMonth.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         Calendar cal = Calendar.getInstance();
